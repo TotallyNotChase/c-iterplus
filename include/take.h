@@ -8,8 +8,8 @@
  * it hits that limit, or until the source iterable gets exhausted, whichever comes first.
  */
 
-#ifndef IT_TAKE_H
-#define IT_TAKE_H
+#ifndef LIB_ITPLUS_TAKE_H
+#define LIB_ITPLUS_TAKE_H
 
 #include "iterator.h"
 #include "macro_utils.h"
@@ -58,12 +58,12 @@
 
 /**
  * @def define_itertake_func(T, Name)
- * @brief Define a function to turn given `IterTake` into an #Iterable(T).
+ * @brief Define a function to turn an #IterTake(T) into an #Iterable(T).
  *
- * Define the `next` function implementation for the `IterTake` struct, and use it to implement the Iterator typeclass
- * for a #IterTake(T), for given `T`.
+ * Define the `next` function implementation for the #IterTake(T) struct, and use it to implement the Iterator
+ * typeclass, for given `T`.
  *
- * The defined function takes in a value of `IterTake(T)*` and wraps it in an `Iterable(T)`.
+ * The defined function takes in a value of type `IterTake(T)*` and wraps it in an `Iterable(T)`.
  *
  * # Example
  *
@@ -95,4 +95,4 @@
     }                                                                                                                  \
     impl_iterator(IterTake(T)*, T, Name, CONCAT(IterTake(T), _nxt))
 
-#endif /* !IT_TAKE_H */
+#endif /* !LIB_ITPLUS_TAKE_H */

@@ -6,8 +6,8 @@
  * exactly what you're doing. Use `from_just` or `from_just_` *after* `is_just`/`is_nothing` instead.
  */
 
-#ifndef IT_MAYBE_H
-#define IT_MAYBE_H
+#ifndef LIB_ITPLUS_MAYBE_H
+#define LIB_ITPLUS_MAYBE_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -150,4 +150,4 @@ typedef enum
  */
 #define from_just_(x) (x).val
 
-#endif /* !IT_MAYBE_H */
+#endif /* !LIB_ITPLUS_MAYBE_H */

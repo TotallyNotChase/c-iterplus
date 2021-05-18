@@ -15,7 +15,11 @@
 
 #include <stdint.h>
 
-typedef enum { EVEN, ODD } NumType;
+typedef enum
+{
+    EVEN,
+    ODD
+} NumType;
 
 // clang-format off
 /* Define `Iterator` for uint32_t, NumType elements */

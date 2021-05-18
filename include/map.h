@@ -6,8 +6,8 @@
  * An IterMap struct is a struct that stores a mapping function within it, as well as the source iterable.
  */
 
-#ifndef IT_MAP_H
-#define IT_MAP_H
+#ifndef LIB_ITPLUS_MAP_H
+#define LIB_ITPLUS_MAP_H
 
 #include "iterator.h"
 #include "macro_utils.h"
@@ -55,19 +55,19 @@
 #define DefineIterMap(ElmntType, FnRetType)                                                                            \
     typedef struct                                                                                                     \
     {                                                                                                                  \
-        FnRetType (*const mapfn)(ElmntType x);                                                                         \
+        FnRetType (*const f)(ElmntType x);                                                                             \
         Iterable(ElmntType) const src;                                                                                 \
     } IterMap(ElmntType, FnRetType)
 
-
 /**
  * @def define_itermap_func(ElmntType, FnRetType, Name)
- * @brief Define a function to turn given `IterMap` into an #Iterable(FnRetType).
+ * @brief Define a function to turn an #IterMap(ElmntType, FnRetType) into an #Iterable(FnRetType).
  *
- * Define the `next` function implementation for the `IterMap` struct, and use it to implement the Iterator typeclass
- * for a #IterTake(ElmntType, FnRetType), for given `ElmntType` and `FnRetType`.
+ * Define the `next` function implementation for the #IterMap(ElmntType, FnRetType) struct, and use it to implement the
+ * Iterator typeclass, for given `ElmntType` and `FnRetType`.
  *
- * The defined function takes in a value of `IterMap(ElmntType, FnRetType)*` and wraps it in an `Iterable(FnRetType)`.
+ * The defined function takes in a value of type `IterMap(ElmntType, FnRetType)*` and wraps it in an
+ * `Iterable(FnRetType)`.
  *
  * # Example
  *
@@ -96,8 +96,8 @@
         if (is_nothing(res)) {                                                                                         \
             return Nothing(FnRetType);                                                                                 \
         }                                                                                                              \
-        return Just(self->mapfn(from_just_(res)), FnRetType);                                                          \
+        return Just(self->f(from_just_(res)), FnRetType);                                                              \
     }                                                                                                                  \
     impl_iterator(IterMap(ElmntType, FnRetType)*, FnRetType, Name, CONCAT(IterMap(ElmntType, FnRetType), _nxt))
 
-#endif /* !IT_MAP_H */
+#endif /* !LIB_ITPLUS_MAP_H */

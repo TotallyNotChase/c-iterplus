@@ -21,6 +21,6 @@
 
 /* Map the function `fn` of type `FnRetType (*)(ElmntType)` over `it` to make a new iterable */
 #define map_over(it, fn, ElmntType, FnRetType)                                                                         \
-    prep_itermap_of(ElmntType, FnRetType)(&(IterMap(ElmntType, FnRetType)){.mapfn = fn, .src = it})
+    prep_itermap_of(ElmntType, FnRetType)(&(IterMap(ElmntType, FnRetType)){.f = fn, .src = it})
 
 #endif /* !LIB_ITPLUS_SUGAR_H */

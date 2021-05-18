@@ -3,8 +3,8 @@
  * Utilities to define and implement an Iterable.
  */
 
-#ifndef IT_ITERATOR_H
-#define IT_ITERATOR_H
+#ifndef LIB_ITPLUS_ITERATOR_H
+#define LIB_ITPLUS_ITERATOR_H
 
 #include "maybe.h"
 #include "typeclass.h"
@@ -126,4 +126,4 @@
         return (Iterable(ElmntType)){.tc = &tc, .self = x};                                                            \
     }
 
-#endif /* !IT_ITERATOR_H */
+#endif /* !LIB_ITPLUS_ITERATOR_H */

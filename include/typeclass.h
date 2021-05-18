@@ -3,8 +3,8 @@
  * Utilities to define a typeclass and its instance.
  */
 
-#ifndef IT_TYPECLASS_H
-#define IT_TYPECLASS_H
+#ifndef LIB_ITPLUS_TYPECLASS_H
+#define LIB_ITPLUS_TYPECLASS_H
 
 /**
  * @def typeclass(funcs)
@@ -47,4 +47,4 @@
         Typeclass const* tc;                                                                                           \
     }
 
-#endif /* !IT_TYPECLASS_H */
+#endif /* !LIB_ITPLUS_TYPECLASS_H */
