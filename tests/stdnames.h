@@ -16,6 +16,7 @@
 #ifndef LIB_ITPLUS_STDNAMES_H
 #define LIB_ITPLUS_STDNAMES_H
 
+#include "itplus_filter.h"
 #include "itplus_macro_utils.h"
 #include "itplus_map.h"
 #include "itplus_take.h"
@@ -25,5 +26,8 @@
 
 /* Name of the function defined using `define_itermap_of`*/
 #define prep_itermap_of(ElmntType, FnRetType) CONCAT(CONCAT(prep_, IterMap(ElmntType, FnRetType)), _itr)
+
+/* Name of the function defined using `define_iterfilt_of`*/
+#define prep_iterfilt_of(ElmntType) CONCAT(CONCAT(prep_, IterFilt(ElmntType)), _itr)
 
 #endif /* !LIB_ITPLUS_STDNAMES_H */

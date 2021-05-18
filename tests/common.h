@@ -6,6 +6,7 @@
 #ifndef LIB_ITPLUS_COMMON_H
 #define LIB_ITPLUS_COMMON_H
 
+#include "itplus_filter.h"
 #include "itplus_foreach.h"
 #include "itplus_iterator.h"
 #include "itplus_map.h"
@@ -33,5 +34,8 @@ DefineIterTake(uint32_t);
 DefineIterTake(NumType);
 /* Implement `IterMap` struct for uint32_t -> NumType */
 DefineIterMap(uint32_t, NumType);
+/* Implement `IterFilt` struct for uint32_t, NumType iterables */
+DefineIterFilt(uint32_t);
+DefineIterFilt(NumType);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

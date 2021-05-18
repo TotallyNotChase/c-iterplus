@@ -28,3 +28,7 @@ define_itertake_func(uint32_t, prep_itertake_of(uint32_t))
 define_itertake_func(NumType, prep_itertake_of(NumType))
 /* Implement `map` functionality for uint32_t -> NumType */
 define_itermap_func(uint32_t, NumType, prep_itermap_of(uint32_t, NumType))
+/* Implement `filter` functionality for uint32_t iterables */
+define_iterfilt_func(uint32_t, prep_iterfilt_of(uint32_t))
+/* Implement `filter` functionality for NumType iterables */
+define_iterfilt_func(NumType, prep_iterfilt_of(NumType))

@@ -23,4 +23,7 @@
 #define map_over(it, fn, ElmntType, FnRetType)                                                                         \
     prep_itermap_of(ElmntType, FnRetType)(&(IterMap(ElmntType, FnRetType)){.f = fn, .src = it})
 
+/* Filter an iterable by given `pred` of type `bool (*)(ElmntType)` and make a new iterable */
+#define filter_out(it, fn, ElmntType) prep_iterfilt_of(ElmntType)(&(IterFilt(ElmntType)){.pred = fn, .src = it})
+
 #endif /* !LIB_ITPLUS_SUGAR_H */
