@@ -16,7 +16,9 @@
 #ifndef LIB_ITPLUS_STDNAMES_H
 #define LIB_ITPLUS_STDNAMES_H
 
-#include "common.h"
+#include "itplus_macro_utils.h"
+#include "itplus_map.h"
+#include "itplus_take.h"
 
 /* Name of the function defined using `define_itertake_of` */
 #define prep_itertake_of(ElmntType) CONCAT(CONCAT(prep_, IterTake(ElmntType)), _itr)

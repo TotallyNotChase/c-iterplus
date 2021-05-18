@@ -6,7 +6,7 @@
 #ifndef LIB_ITPLUS_FOREACH_UTILS_H
 #define LIB_ITPLUS_FOREACH_UTILS_H
 
-#include "macro_utils.h"
+#include "itplus_macro_utils.h"
 
 #define UNIQVAR(x) CONCAT(CONCAT(x, _4x2_), __LINE__) /* "Unique" variable name */
 

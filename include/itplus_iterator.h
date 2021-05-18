@@ -6,8 +6,8 @@
 #ifndef LIB_ITPLUS_ITERATOR_H
 #define LIB_ITPLUS_ITERATOR_H
 
-#include "maybe.h"
-#include "typeclass.h"
+#include "itplus_maybe.h"
+#include "itplus_typeclass.h"
 
 /**
  * @def Iterator(T)

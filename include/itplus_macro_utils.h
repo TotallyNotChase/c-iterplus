@@ -1,3 +1,8 @@
+/**
+ * @file
+ * General utility macros.
+ */
+
 #ifndef LIB_ITPLUS_MACRO_UTILS_H
 #define LIB_ITPLUS_MACRO_UTILS_H
 

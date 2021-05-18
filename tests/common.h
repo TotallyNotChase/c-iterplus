@@ -6,12 +6,12 @@
 #ifndef LIB_ITPLUS_COMMON_H
 #define LIB_ITPLUS_COMMON_H
 
-#include "foreach.h"
-#include "iterator.h"
-#include "map.h"
-#include "maybe.h"
-#include "take.h"
-#include "typeclass.h"
+#include "itplus_foreach.h"
+#include "itplus_iterator.h"
+#include "itplus_map.h"
+#include "itplus_maybe.h"
+#include "itplus_take.h"
+#include "itplus_typeclass.h"
 
 #include <stdint.h>
 

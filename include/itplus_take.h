@@ -11,9 +11,9 @@
 #ifndef LIB_ITPLUS_TAKE_H
 #define LIB_ITPLUS_TAKE_H
 
-#include "iterator.h"
-#include "macro_utils.h"
-#include "maybe.h"
+#include "itplus_iterator.h"
+#include "itplus_macro_utils.h"
+#include "itplus_maybe.h"
 
 /**
  * @def IterTake(T)
