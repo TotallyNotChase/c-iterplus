@@ -23,8 +23,33 @@ static void test_take(void)
     puts("");
 }
 
+static NumType u32_to_numtype(uint32_t x) { return x % 2 == 0 ? EVEN : ODD; }
+
+static void test_map(void)
+{
+    Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
+    // clang-format off
+    Iterable(NumType) it10 = take_from(   /* Take the first 10 items of the iterable */
+        /* Map the `u32_to_numtype` function over `it` */
+        map_over(it, u32_to_numtype, uint32_t, NumType), 10, NumType
+    );
+    // clang-format on
+    /* Print the first 10 items */
+    foreach (NumType, n, it10) {
+        if (n == EVEN) {
+            printf("EVEN ");
+        } else if (n == ODD) {
+            printf("ODD ");
+        } else {
+            printf("WHAT? ");
+        }
+    }
+    puts("");
+}
+
 int main(void)
 {
     test_take();
+    test_map();
     return 0;
 }
