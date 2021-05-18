@@ -3,6 +3,7 @@
 #include "sugar.h"
 
 #include <inttypes.h>
+#include <stdbool.h>
 #include <stdint.h>
 
 static void test_take(void)
@@ -47,9 +48,28 @@ static void test_map(void)
     puts("");
 }
 
+static bool is_even(uint32_t x) { return x % 2 == 0; }
+
+static void test_filter(void)
+{
+    Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
+    // clang-format off
+    Iterable(uint32_t) it10 = take_from(  /* Take the first 10 items of the iterable */
+        /* Filter out only the even numbers */
+        filter_out(it, is_even, uint32_t),
+    10, uint32_t);
+    // clang-format on
+    /* Print the first 10 items */
+    foreach (uint32_t, n, it10) {
+        printf("%" PRIu32 " ", n);
+    }
+    puts("");
+}
+
 int main(void)
 {
     test_take();
     test_map();
+    test_filter();
     return 0;
 }
