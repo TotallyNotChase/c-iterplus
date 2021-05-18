@@ -15,12 +15,19 @@
 
 #include <stdint.h>
 
+typedef enum { EVEN, ODD } NumType;
+
 // clang-format off
-/* Define `Iterator` for uint32_t elements */
+/* Define `Iterator` for uint32_t, NumType elements */
 DefineMaybe(uint32_t)
+DefineMaybe(NumType)
 DefineIteratorOf(uint32_t);
+DefineIteratorOf(NumType);
 // clang-format on
-/* Implement `IterTake` struct for uint32_t iterables */
+/* Implement `IterTake` struct for uint32_t, NumType iterables */
 DefineIterTake(uint32_t);
+DefineIterTake(NumType);
+/* Implement `IterMap` struct for uint32_t -> NumType */
+DefineIterMap(uint32_t, NumType);
 
 #endif /* !LIB_ITPLUS_COMMON_H */
