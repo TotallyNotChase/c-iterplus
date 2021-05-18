@@ -24,3 +24,7 @@ static Maybe(uint32_t) fibnxt(Fibonacci* self)
 impl_iterator(Fibonacci*, uint32_t, prep_fib_itr, fibnxt)
 /* Implement `take` functionality for uint32_t iterables */
 define_itertake_func(uint32_t, prep_itertake_of(uint32_t))
+/* Implement `take` functionality for NumType iterables */
+define_itertake_func(NumType, prep_itertake_of(NumType))
+/* Implement `map` functionality for uint32_t -> NumType */
+define_itermap_func(uint32_t, NumType, prep_itermap_of(uint32_t, NumType))
