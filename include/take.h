@@ -35,7 +35,7 @@
 
 /**
  * @def DefineIterTake(T)
- * @brief Define an IterTake struct that works on `Iterable(int)`s.
+ * @brief Define an IterTake struct that works on `Iterable(T)`s.
  *
  * # Example
  *
@@ -80,7 +80,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only
  * alphanumerics.
- * @note A #IterTake(T) for the given `T` **must** exist.
+ * @note An #IterTake(T) for the given `T` **must** exist.
  * @note This should not be delimited by a semicolon.
  */
 #define define_itertake_func(T, Name)                                                                                  \
