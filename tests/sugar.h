@@ -26,17 +26,23 @@ Iterable(uint32_t) prep_u32tk(IterTake(uint32_t) * tk, Iterable(uint32_t) x);
 Iterable(NumType) prep_numtypetk(IterTake(NumType) * tk, Iterable(NumType) x);
 Iterable(NumType)
     prep_u32numtypemap(IterMap(uint32_t, NumType) * tk, Iterable(uint32_t) x, NumType (*const fn)(uint32_t));
-Iterable(uint32_t)
-    prep_numtypeu32map(IterMap(NumType, uint32_t) * mp, Iterable(NumType) x, uint32_t (*const fn)(NumType));
 Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t));
 Iterable(NumType) prep_numtypefilt(IterFilt(NumType) * flt, Iterable(NumType) x, bool (*const pred)(NumType));
 
-/* Generic selection over iterable type */
+/*
+Generic selection over iterable type
+
+Add more iterable types here if needed
+*/
 #define itrble_selection(it, when_u32, when_numtype)                                                                   \
     _Generic((it), Iterable(uint32_t) : (when_u32), Iterable(NumType) : (when_numtype))
 
-/* Generic selection over mapping function type */
-#define fn_selection(fn, when_u32_numtype)                                                                             \
+/*
+Generic selection over mapping function type over uint32_t iterable
+
+Add more function types here if needed (currently only has `u32 -> NumType`)
+*/
+#define u32_fn_selection(fn, when_u32_numtype)                                                                         \
     _Generic((fn), NumType(*const)(uint32_t) : (when_u32_numtype), NumType(*)(uint32_t) : (when_u32_numtype))
 
 /* Build an iterable that consists of at most `n` elements from given `it` iterable */
@@ -44,13 +50,13 @@ Iterable(NumType) prep_numtypefilt(IterFilt(NumType) * flt, Iterable(NumType) x,
     itrble_selection((it), prep_u32tk, prep_numtypetk)(                                                                \
         itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)}), (it))
 
-#define map_selection(it, fn, when_u32_numtype, when_numtype_u32)                                                      \
-    itrble_selection((it), fn_selection(&(fn), (when_u32_numtype)), fn_selection(&(fn), (when_numtype_u32)))
+#define map_selection(it, fn, when_u32_numtype)                                                                        \
+    itrble_selection((it), u32_fn_selection(&(fn), (when_u32_numtype)), NULL)
 
 /* Map the function `fn` of type `FnRetType (*)(ElmntType)` over `it` to make a new iterable */
 #define map_over(it, fn)                                                                                               \
-    map_selection((it), (fn), prep_u32numtypemap, prep_numtypeu32map)(                                                 \
-        map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}, &(IterMap(NumType, uint32_t)){0}), (it), (fn))
+    map_selection((it), (fn), prep_u32numtypemap)(                                                 \
+        map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}), (it), (fn))
 
 /* Filter an iterable by given `pred` of type `bool (*)(ElmntType)` and make a new iterable */
 #define filter_out(it, pred)                                                                                           \

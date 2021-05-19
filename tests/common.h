@@ -32,9 +32,8 @@ DefineIteratorOf(NumType);
 /* Implement `IterTake` struct for uint32_t, NumType iterables */
 DefineIterTake(uint32_t);
 DefineIterTake(NumType);
-/* Implement `IterMap` struct for uint32_t -> NumType and vice versa */
+/* Implement `IterMap` struct for uint32_t -> NumType */
 DefineIterMap(uint32_t, NumType);
-DefineIterMap(NumType, uint32_t);
 /* Implement `IterFilt` struct for uint32_t, NumType iterables */
 DefineIterFilt(uint32_t);
 DefineIterFilt(NumType);
