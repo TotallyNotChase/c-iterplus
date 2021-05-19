@@ -1,3 +1,10 @@
+/**
+ * @file
+ * Wrapper functions to fill pre-allocated iterplus structs and turn them into Iterables.
+ *
+ * See `sugar.h`.
+ */
+
 #include "sugar.h"
 
 #include "common.h"
@@ -5,7 +12,7 @@
 
 #include <stdint.h>
 
-/* Utility functions to fill pre-allocated iterplus utility structs and turn them into iterables */
+/* Utility functions to fill pre-allocated iterplus structs and turn them into iterables */
 
 Iterable(uint32_t) prep_u32tk(IterTake(uint32_t) * tk, Iterable(uint32_t) x)
 {
