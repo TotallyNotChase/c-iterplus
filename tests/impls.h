@@ -8,7 +8,6 @@
 #define IT_FIB_H
 
 #include "common.h"
-#include "stdnames.h"
 
 #include <stdint.h>
 
@@ -25,18 +24,21 @@ typedef struct fibonacci
 Iterable(uint32_t) prep_fib_itr(Fibonacci* self);
 
 /* Function to turn an `IterTake(uint32_t)*` into its `Iterable` impl, defined using `define_itertake_of` */
-Iterable(uint32_t) prep_itertake_of(uint32_t)(IterTake(uint32_t) * x);
+Iterable(uint32_t) u32tk_to_itr(IterTake(uint32_t) * x);
 
 /* Function to turn an `IterTake(uint32_t)*` into its `Iterable` impl, defined using `define_itertake_of` */
-Iterable(NumType) prep_itertake_of(NumType)(IterTake(NumType) * x);
+Iterable(NumType) numtypetk_to_itr(IterTake(NumType) * x);
 
 /* Function to turn an `IterMap(uint32_t, NumType)*` into its `Iterable` impl, defined using `define_itermap_of` */
-Iterable(NumType) prep_itermap_of(uint32_t, NumType)(IterMap(uint32_t, NumType) * x);
+Iterable(NumType) u32numtypemap_to_itr(IterMap(uint32_t, NumType) * x);
+
+/* Function to turn an `IterMap(NumType, uint32_t)*` into its `Iterable` impl, defined using `define_itermap_of` */
+Iterable(uint32_t) numtypeu32map_to_itr(IterMap(NumType, uint32_t) * x);
 
 /* Function to turn an `IterFilt(uint32_t)*` into its `Iterable` impl, defined using `define_itertake_of` */
-Iterable(uint32_t) prep_iterfilt_of(uint32_t)(IterFilt(uint32_t) * x);
+Iterable(uint32_t) u32filt_to_itr(IterFilt(uint32_t) * x);
 
 /* Function to turn an `IterFilt(uint32_t)*` into its `Iterable` impl, defined using `define_itertake_of` */
-Iterable(NumType) prep_iterfilt_of(NumType)(IterFilt(NumType) * x);
+Iterable(NumType) numtypefilt_to_itr(IterFilt(NumType) * x);
 
 #endif /* !IT_FIB_H */

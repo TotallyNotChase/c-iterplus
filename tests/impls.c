@@ -6,7 +6,6 @@
 #include "impls.h"
 
 #include "common.h"
-#include "stdnames.h"
 
 #include <stdint.h>
 
@@ -23,12 +22,14 @@ static Maybe(uint32_t) fibnxt(Fibonacci* self)
 /* Implement `Iterator` for `Fibonacci*` */
 impl_iterator(Fibonacci*, uint32_t, prep_fib_itr, fibnxt)
 /* Implement `take` functionality for uint32_t iterables */
-define_itertake_func(uint32_t, prep_itertake_of(uint32_t))
+define_itertake_func(uint32_t, u32tk_to_itr)
 /* Implement `take` functionality for NumType iterables */
-define_itertake_func(NumType, prep_itertake_of(NumType))
+define_itertake_func(NumType, numtypetk_to_itr)
 /* Implement `map` functionality for uint32_t -> NumType */
-define_itermap_func(uint32_t, NumType, prep_itermap_of(uint32_t, NumType))
+define_itermap_func(uint32_t, NumType, u32numtypemap_to_itr)
+/* Implement `map` functionality for NumType -> uint32_t */
+define_itermap_func(NumType, uint32_t, numtypeu32map_to_itr)
 /* Implement `filter` functionality for uint32_t iterables */
-define_iterfilt_func(uint32_t, prep_iterfilt_of(uint32_t))
+define_iterfilt_func(uint32_t, u32filt_to_itr)
 /* Implement `filter` functionality for NumType iterables */
-define_iterfilt_func(NumType, prep_iterfilt_of(NumType))
+define_iterfilt_func(NumType, numtypefilt_to_itr)
