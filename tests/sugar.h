@@ -26,6 +26,8 @@ Iterable(uint32_t) prep_u32tk(IterTake(uint32_t) * tk, Iterable(uint32_t) x);
 Iterable(NumType) prep_numtypetk(IterTake(NumType) * tk, Iterable(NumType) x);
 Iterable(NumType)
     prep_u32numtypemap(IterMap(uint32_t, NumType) * tk, Iterable(uint32_t) x, NumType (*const fn)(uint32_t));
+Iterable(uint32_t)
+    prep_numtypeu32map(IterMap(NumType, uint32_t) * mp, Iterable(NumType) x, uint32_t (*const fn)(NumType));
 Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t));
 Iterable(NumType) prep_numtypefilt(IterFilt(NumType) * flt, Iterable(NumType) x, bool (*const pred)(NumType));
 
@@ -47,8 +49,8 @@ Iterable(NumType) prep_numtypefilt(IterFilt(NumType) * flt, Iterable(NumType) x,
 
 /* Map the function `fn` of type `FnRetType (*)(ElmntType)` over `it` to make a new iterable */
 #define map_over(it, fn)                                                                                               \
-    map_selection((it), (fn), prep_u32numtypemap,                                                                      \
-                  "NOT YET")(map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}, "NOT YET"), (it), (fn))
+    map_selection((it), (fn), prep_u32numtypemap, prep_numtypeu32map)(                                                 \
+        map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}, &(IterMap(NumType, uint32_t)){0}), (it), (fn))
 
 /* Filter an iterable by given `pred` of type `bool (*)(ElmntType)` and make a new iterable */
 #define filter_out(it, pred)                                                                                           \

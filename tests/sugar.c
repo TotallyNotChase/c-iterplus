@@ -27,6 +27,14 @@ Iterable(NumType)
     return u32numtypemap_to_itr(mp);
 }
 
+Iterable(uint32_t)
+    prep_numtypeu32map(IterMap(NumType, uint32_t) * mp, Iterable(NumType) x, uint32_t (*const fn)(NumType))
+{
+    mp->f   = fn;
+    mp->src = x;
+    return numtypeu32map_to_itr(mp);
+}
+
 Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t))
 {
     flt->pred = pred;
