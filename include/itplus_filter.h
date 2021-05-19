@@ -51,8 +51,8 @@
 #define DefineIterFilt(T)                                                                                              \
     typedef struct                                                                                                     \
     {                                                                                                                  \
-        bool (*const pred)(T x);                                                                                       \
-        Iterable(T) const src;                                                                                         \
+        bool (*pred)(T x);                                                                                             \
+        Iterable(T) src;                                                                                               \
     } IterFilt(T)
 
 /**

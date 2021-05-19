@@ -52,8 +52,8 @@
     typedef struct                                                                                                     \
     {                                                                                                                  \
         size_t i;                                                                                                      \
-        size_t const limit;                                                                                            \
-        Iterable(T) const src;                                                                                         \
+        size_t limit;                                                                                                  \
+        Iterable(T) src;                                                                                               \
     } IterTake(T)
 
 /**

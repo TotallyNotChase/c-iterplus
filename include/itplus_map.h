@@ -55,8 +55,8 @@
 #define DefineIterMap(ElmntType, FnRetType)                                                                            \
     typedef struct                                                                                                     \
     {                                                                                                                  \
-        FnRetType (*const f)(ElmntType x);                                                                             \
-        Iterable(ElmntType) const src;                                                                                 \
+        FnRetType (*f)(ElmntType x);                                                                                   \
+        Iterable(ElmntType) src;                                                                                       \
     } IterMap(ElmntType, FnRetType)
 
 /**
