@@ -5,9 +5,6 @@ project(c-iterplus LANGUAGES C)
 ##################################################
 # Configure some universal settings
 
-# Set C language standard
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED ON)
 # Disable non standard extensions
 set(CMAKE_C_EXTENSIONS OFF)
 
@@ -33,5 +30,8 @@ add_library(${LIBNAME} INTERFACE)
 
 # Add the headers to the library interface
 target_include_directories(${LIBNAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Set standard to C99
+target_compile_features(${LIBNAME} INTERFACE c_std_99)
 
 add_subdirectory(tests)
