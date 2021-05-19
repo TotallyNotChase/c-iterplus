@@ -27,7 +27,6 @@ Iterable(NumType) prep_numtypetk(IterTake(NumType) * tk, Iterable(NumType) x);
 Iterable(NumType)
     prep_u32numtypemap(IterMap(uint32_t, NumType) * tk, Iterable(uint32_t) x, NumType (*const fn)(uint32_t));
 Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t));
-Iterable(NumType) prep_numtypefilt(IterFilt(NumType) * flt, Iterable(NumType) x, bool (*const pred)(NumType));
 
 /*
 Generic selection over iterable type
@@ -51,16 +50,16 @@ Add more function types here if needed (currently only has `u32 -> NumType`)
         itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)}), (it))
 
 #define map_selection(it, fn, when_u32_numtype)                                                                        \
-    itrble_selection((it), u32_fn_selection(&(fn), (when_u32_numtype)), NULL)
+    itrble_selection((it), u32_fn_selection(&(fn), (when_u32_numtype)), "No map impl for this Iterable")
 
 /* Map the function `fn` of type `FnRetType (*)(ElmntType)` over `it` to make a new iterable */
 #define map_over(it, fn)                                                                                               \
-    map_selection((it), (fn), prep_u32numtypemap)(                                                 \
-        map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}), (it), (fn))
+    map_selection((it), (fn), prep_u32numtypemap)(map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}), (it),   \
+                                                  (fn))
 
 /* Filter an iterable by given `pred` of type `bool (*)(ElmntType)` and make a new iterable */
 #define filter_out(it, pred)                                                                                           \
-    itrble_selection((it), prep_u32filt, prep_numtypefilt)(                                                            \
-        itrble_selection((it), &(IterFilt(uint32_t)){0}, &(IterFilt(NumType)){0}), (it), (pred))
+    itrble_selection((it), prep_u32filt, "No filter impl for this Iterable")(                                          \
+        itrble_selection((it), &(IterFilt(uint32_t)){0}, "No filter impl for this Iterable"), (it), (pred))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */

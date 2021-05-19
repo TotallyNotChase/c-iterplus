@@ -29,5 +29,3 @@ define_itertake_func(NumType, numtypetk_to_itr)
 define_itermap_func(uint32_t, NumType, u32numtypemap_to_itr)
 /* Implement `filter` functionality for uint32_t iterables */
 define_iterfilt_func(uint32_t, u32filt_to_itr)
-/* Implement `filter` functionality for NumType iterables */
-define_iterfilt_func(NumType, numtypefilt_to_itr)

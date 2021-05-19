@@ -33,10 +33,3 @@ Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, 
     flt->src  = x;
     return u32filt_to_itr(flt);
 }
-
-Iterable(NumType) prep_numtypefilt(IterFilt(NumType) * flt, Iterable(NumType) x, bool (*const pred)(NumType))
-{
-    flt->pred = pred;
-    flt->src  = x;
-    return numtypefilt_to_itr(flt);
-}

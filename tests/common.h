@@ -34,8 +34,7 @@ DefineIterTake(uint32_t);
 DefineIterTake(NumType);
 /* Implement `IterMap` struct for uint32_t -> NumType */
 DefineIterMap(uint32_t, NumType);
-/* Implement `IterFilt` struct for uint32_t, NumType iterables */
+/* Implement `IterFilt` struct for uint32_t iterables */
 DefineIterFilt(uint32_t);
-DefineIterFilt(NumType);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

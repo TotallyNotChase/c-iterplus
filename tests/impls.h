@@ -35,7 +35,4 @@ Iterable(NumType) u32numtypemap_to_itr(IterMap(uint32_t, NumType) * x);
 /* Function to turn an `IterFilt(uint32_t)*` into its `Iterable` impl, defined using `define_itertake_of` */
 Iterable(uint32_t) u32filt_to_itr(IterFilt(uint32_t) * x);
 
-/* Function to turn an `IterFilt(uint32_t)*` into its `Iterable` impl, defined using `define_itertake_of` */
-Iterable(NumType) numtypefilt_to_itr(IterFilt(NumType) * x);
-
 #endif /* !IT_FIB_H */
