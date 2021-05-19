@@ -6,6 +6,7 @@
 #ifndef LIB_ITPLUS_ITERATOR_H
 #define LIB_ITPLUS_ITERATOR_H
 
+#include "itplus_macro_utils.h"
 #include "itplus_maybe.h"
 #include "itplus_typeclass.h"
 
@@ -25,7 +26,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define Iterator(T) T##Iterator
+#define Iterator(T) CONCAT(T, Iterator)
 
 /**
  * @def Iterable(T)
@@ -42,7 +43,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define Iterable(T) T##Iterable
+#define Iterable(T) CONCAT(T, Iterable)
 
 /**
  * @def DefineIteratorOf(T)

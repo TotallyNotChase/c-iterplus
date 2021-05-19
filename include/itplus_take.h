@@ -31,7 +31,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterTake(T) IterTake##T
+#define IterTake(T) CONCAT(IterTake, T)
 
 /**
  * @def DefineIterTake(T)
