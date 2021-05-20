@@ -12,10 +12,10 @@
 /* `next` implementation for the `Fibonacci` struct */
 static Maybe(uint32_t) fibnxt(Fibonacci* self)
 {
-    uint32_t new_nxt = self->curr + self->next;
-    self->curr       = self->next;
-    self->next       = new_nxt;
-    return Just(new_nxt, uint32_t);
+    uint32_t prev_curr = self->curr;
+    self->curr         = self->next;
+    self->next += prev_curr;
+    return Just(prev_curr, uint32_t);
 }
 
 /* `next` implementation for the `StrArrIter` struct */

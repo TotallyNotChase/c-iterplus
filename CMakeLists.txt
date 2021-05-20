@@ -12,7 +12,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 if(MSVC)
   add_compile_options(/W4 /WX)
 else()
-  add_compile_options(-Wall -Wextra -pedantic)
+  add_compile_options(-Wall -Wextra -Werror -pedantic)
 endif()
 if(WIN32)
     # But ignore the Microsoft "Use *_s functions" warning
