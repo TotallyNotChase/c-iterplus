@@ -8,6 +8,7 @@
 
 #include "itplus_drop.h"
 #include "itplus_filter.h"
+#include "itplus_filtermap.h"
 #include "itplus_foreach.h"
 #include "itplus_iterator.h"
 #include "itplus_map.h"
@@ -46,5 +47,8 @@ DefineIterMap(uint32_t, NumType);
 /* Define `IterFilt` struct for uint32_t, and string iterables */
 DefineIterFilt(uint32_t);
 DefineIterFilt(string);
+/* Define `IterFiltMap` struct for string -> uint32_t, and string -> NumType */
+DefineIterFiltMap(string, uint32_t);
+DefineIterFiltMap(string, NumType);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

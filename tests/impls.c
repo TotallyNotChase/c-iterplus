@@ -43,3 +43,6 @@ define_itermap_func(uint32_t, NumType, u32numtypemap_to_itr)
 define_iterfilt_func(uint32_t, u32filt_to_itr)
 /* Implement `filter` functionality for string iterables */
 define_iterfilt_func(string, strfilt_to_itr)
+/* Implement `filtermap` functionality for string -> uint32_t, and string -> NumType */
+define_iterfiltmap_func(string, uint32_t, stru32filtmap_to_itr)
+define_iterfiltmap_func(string, NumType, strnumtypefiltmap_to_itr)

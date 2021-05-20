@@ -48,6 +48,15 @@
         return implfunc(flt);                                                                                          \
     }
 
+/* Macro to define a function that turns a pre-allocated IterFiltMap struct into iterable */
+#define prep_fltmap(A, B, Name, implfunc)                                                                              \
+    Iterable(B) Name(IterFiltMap(A, B) * fltmp, Iterable(A) x, Maybe(B)(*const fn)(A))                                 \
+    {                                                                                                                  \
+        fltmp->f   = fn;                                                                                               \
+        fltmp->src = x;                                                                                                \
+        return implfunc(fltmp);                                                                                        \
+    }
+
 // clang-format off
 prep_tk(uint32_t, prep_u32tk, u32tk_to_itr)
 prep_tk(NumType, prep_numtypetk, numtypetk_to_itr)
@@ -59,3 +68,6 @@ prep_mp(uint32_t, NumType, prep_u32numtypemap, u32numtypemap_to_itr)
 
 prep_flt(uint32_t, prep_u32filt, u32filt_to_itr)
 prep_flt(string, prep_strfilt, strfilt_to_itr)
+
+prep_fltmap(string, uint32_t, prep_stru32fltmap, stru32filtmap_to_itr)
+prep_fltmap(string, NumType, prep_strnumtypefltmap, strnumtypefiltmap_to_itr)

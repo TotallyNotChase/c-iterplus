@@ -58,4 +58,12 @@ Iterable(uint32_t) u32filt_to_itr(IterFilt(uint32_t) * x);
 /* Function to turn an `IterFilt(string)*` into its `Iterable` impl, defined using `define_iterfilt_of` */
 Iterable(string) strfilt_to_itr(IterFilt(string) * x);
 
+/* Function to turn an `IterFiltMap(string, uint32_t)*` into its `Iterable` impl, defined using `define_iterfiltmap_of`
+ */
+Iterable(uint32_t) stru32filtmap_to_itr(IterFiltMap(string, uint32_t) * x);
+
+/* Function to turn an `IterFiltMap(string, NumType)*` into its `Iterable` impl, defined using `define_iterfiltmap_of`
+ */
+Iterable(NumType) strnumtypefiltmap_to_itr(IterFiltMap(string, NumType) * x);
+
 #endif /* !IT_FIB_H */

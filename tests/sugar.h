@@ -43,6 +43,11 @@ Iterable(NumType)
 Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t));
 Iterable(string) prep_strfilt(IterFilt(string) * flt, Iterable(string) x, bool (*const pred)(string));
 
+Iterable(uint32_t)
+    prep_stru32fltmap(IterFiltMap(string, uint32_t) * tk, Iterable(string) x, Maybe(uint32_t) (*const fn)(string));
+Iterable(NumType)
+    prep_strnumtypefltmap(IterFiltMap(string, NumType) * tk, Iterable(string) x, Maybe(NumType) (*const fn)(string));
+
 #define NOIMPL(feat) No_##feat##_impl
 
 /*
@@ -53,6 +58,7 @@ void NOIMPL(map)(void);
 void NOIMPL(take)(void);
 void NOIMPL(drop)(void);
 void NOIMPL(filter)(void);
+void NOIMPL(filter_map)(void);
 
 /*
 Generic selection over iterable type
@@ -125,7 +131,7 @@ Add more function types here if needed
                                                   (fn))
 
 /**
- * @def filter_out(it, pred)
+ * @def filter_from(it, pred)
  * Filter an iterable by given `pred` and make a new iterable.
  *
  * @param it The source iterable.
@@ -135,8 +141,21 @@ Add more function types here if needed
  * @return Iterable of the same type as the source iterable.
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
-#define filter_out(it, pred)                                                                                           \
+#define filter_from(it, pred)                                                                                          \
     itrble_selection((it), prep_u32filt, NOIMPL(filter), prep_strfilt)(                                                \
         itrble_selection((it), &(IterFilt(uint32_t)){0}, NOIMPL(filter), &(IterFilt(string)){0}), (it), (pred))
+
+#define filtmap_selection(it, fn, when_str_u32, when_str_numtype)                                                      \
+    itrble_selection((it), NOIMPL(map), NOIMPL(map),                                                                   \
+                     _Generic(&(fn), Maybe(uint32_t)(*const)(string)                                                   \
+                              : (when_str_u32), Maybe(uint32_t)(*)(string)                                             \
+                              : (when_str_u32), Maybe(NumType)(*const)(string)                                         \
+                              : (when_str_numtype), Maybe(NumType)(*)(string)                                          \
+                              : (when_str_numtype)))
+
+#define filter_map(it, fn)                                                                                             \
+    filtmap_selection((it), (fn), prep_stru32fltmap, prep_strnumtypefltmap)(                                           \
+        filtmap_selection((it), (fn), &(IterFiltMap(string, uint32_t)){0}, &(IterFiltMap(string, NumType)){0}), (it),  \
+        (fn))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */
