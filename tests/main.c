@@ -1,13 +1,16 @@
 #include "common.h"
 #include "sugar.h"
 
+#include <errno.h>
 #include <inttypes.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 #define FIBSEQ_MINSZ 10
 
-#define TEST_COUNT 4
+#define TEST_COUNT 5
 
 static bool test_take(void)
 {
@@ -115,17 +118,118 @@ static bool test_filter(void)
     }
 
     Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
-    // clang-format off
-    Iterable(uint32_t) itslice = take_from(  /* Take the first 10 items of the iterable */
-        /* Filter out only the even numbers */
-        filter_out(it, is_even),
-    FIBSEQ_MINSZ);
-    // clang-format on
+
+    /* Filter out only the even fibonacci numbers, and take the first FIBSEQ_MINSZ number of them */
+    Iterable(uint32_t) itslice = take_from(filter_from(it, is_even), FIBSEQ_MINSZ);
     /* Verify the values */
     size_t i = 0;
     foreach (uint32_t, n, itslice) {
         if (n != filteredarr[i]) {
-            fprintf(stderr, "%s: Expected: %d Actual: %d at index: %zu\n", __func__, filteredarr[i], n, i);
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, filteredarr[i], n, i);
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
+
+/* Returns true if length of string is less than 7 */
+#define SMALLSTR_MAXLEN 7
+static bool is_smallstr(string str) { return strlen(str) < SMALLSTR_MAXLEN; }
+
+/* Try-parse a string to a number */
+static Maybe(uint32_t) parse_posu32(string str)
+{
+    char* end;
+    unsigned long l = strtoul(str, &end, 10);
+    errno           = 0;
+    if (errno == ERANGE || *end != '\0') {
+        return Nothing(uint32_t);
+    }
+    return Just(l, uint32_t);
+}
+
+/* Try-parse a string to a NumType */
+static Maybe(NumType) parse_numtype(string str)
+{
+    if (strcmp(str, "EVEN") == 0) {
+        return Just(EVEN, NumType);
+    } else if (strcmp(str, "ODD") == 0) {
+        return Just(ODD, NumType);
+    } else {
+        return Nothing(NumType);
+    }
+}
+
+static bool test_filtermap(void)
+{
+    string cheese[] = {"Red Leicester",
+                       "42",
+                       "Tilsit",
+                       "EVEN",
+                       "EVEN",
+                       "Caerphilly",
+                       "Bel Paese",
+                       "ODD",
+                       "94",
+                       "41",
+                       "3",
+                       "Red Windsor",
+                       "Stilton",
+                       "Gruyere",
+                       "Ementhal",
+                       "Norweigan Jarlsburg",
+                       "ODD",
+                       "EVEN",
+                       "ODD",
+                       "0",
+                       "19",
+                       "Lipta",
+                       "Lancashire",
+                       "White Stilton"};
+    uint32_t expectednums[10];
+    NumType expectednumtypes[10];
+    for (size_t i = 0, j = 0, k = 0; i < sizeof(cheese) / sizeof(*cheese); i++) {
+        string s = cheese[i];
+        if (is_smallstr(s)) {
+            Maybe(uint32_t) parsednum = parse_posu32(s);
+            if (is_just(parsednum)) {
+                expectednums[j++] = from_just_(parsednum);
+            }
+            Maybe(NumType) parsednumtype = parse_numtype(s);
+            if (is_just(parsednumtype)) {
+                expectednumtypes[k++] = from_just_(parsednumtype);
+            }
+        }
+    }
+
+    Iterable(string) strit =
+        strarr_to_iter(cheese, sizeof(cheese) / sizeof(*cheese)); /* Build an iterable from the array */
+    /*
+    Obtain only the first 10 "small" strings, map a parsing function over it, and obtain only the
+    successfully parsed numbers
+    */
+    Iterable(uint32_t) parsedit = filter_map(take_from(filter_from(strit, is_smallstr), 10), parse_posu32);
+    size_t i                    = 0;
+    foreach (uint32_t, n, parsedit) {
+        if (n != expectednums[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, expectednums[i], n, i);
+            return false;
+        }
+        i++;
+    }
+
+    Iterable(string) re_strit =
+        strarr_to_iter(cheese, sizeof(cheese) / sizeof(*cheese)); /* Build another iterable from the array */
+    /*
+    Obtain only the first 10 "small" strings, map another parsing function over it, and obtain only the
+    successfully parsed numtypes
+    */
+    Iterable(NumType) numtypeit = filter_map(take_from(filter_from(re_strit, is_smallstr), 10), parse_numtype);
+    i                    = 0;
+    foreach (NumType, x, numtypeit) {
+        if (x != expectednumtypes[i]) {
+            fprintf(stderr, "%s: Expected: %d Actual: %d at index: %zu\n", __func__, expectednumtypes[i], x, i);
             return false;
         }
         i++;
@@ -146,6 +250,9 @@ int main(void)
         passed++;
     }
     if (test_drop()) {
+        passed++;
+    }
+    if (test_filtermap()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
