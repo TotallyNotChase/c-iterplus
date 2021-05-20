@@ -22,19 +22,26 @@ typedef enum
     ODD
 } NumType;
 
+/* Type for string literals, the only type of strings used in the examples */
+typedef char const* string;
+
 // clang-format off
-/* Define `Iterator` for uint32_t, NumType elements */
+/* Define `Iterator` for uint32_t, NumType, and string elements */
 DefineMaybe(uint32_t)
 DefineMaybe(NumType)
+DefineMaybe(string)
 DefineIteratorOf(uint32_t);
 DefineIteratorOf(NumType);
+DefineIteratorOf(string);
 // clang-format on
-/* Implement `IterTake` struct for uint32_t, NumType iterables */
+/* Define `IterTake` struct for uint32_t, NumType, and string iterables */
 DefineIterTake(uint32_t);
 DefineIterTake(NumType);
-/* Implement `IterMap` struct for uint32_t -> NumType */
+DefineIterTake(string);
+/* Define `IterMap` struct for uint32_t -> NumType */
 DefineIterMap(uint32_t, NumType);
-/* Implement `IterFilt` struct for uint32_t iterables */
+/* Define `IterFilt` struct for uint32_t, and string iterables */
 DefineIterFilt(uint32_t);
+DefineIterFilt(string);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

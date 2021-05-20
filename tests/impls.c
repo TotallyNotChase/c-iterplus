@@ -18,14 +18,26 @@ static Maybe(uint32_t) fibnxt(Fibonacci* self)
     return Just(new_nxt, uint32_t);
 }
 
+/* `next` implementation for the `StrArrIter` struct */
+static Maybe(string) strarrnxt(StrArrIter* self)
+{
+    return self->i < self->size ? Just(self->arr[self->i++], string) : Nothing(string);
+}
+
 // clang-format off
 /* Implement `Iterator` for `Fibonacci*` */
 impl_iterator(Fibonacci*, uint32_t, prep_fib_itr, fibnxt)
+/* Implement `Iterator` for `StrArrIter` */
+impl_iterator(StrArrIter*, string, prep_strarr_itr, strarrnxt)
 /* Implement `take` functionality for uint32_t iterables */
 define_itertake_func(uint32_t, u32tk_to_itr)
 /* Implement `take` functionality for NumType iterables */
 define_itertake_func(NumType, numtypetk_to_itr)
+/* Implement `take` functionality for string iterables */
+define_itertake_func(string, strtk_to_itr)
 /* Implement `map` functionality for uint32_t -> NumType */
 define_itermap_func(uint32_t, NumType, u32numtypemap_to_itr)
 /* Implement `filter` functionality for uint32_t iterables */
 define_iterfilt_func(uint32_t, u32filt_to_itr)
+/* Implement `filter` functionality for string iterables */
+define_iterfilt_func(string, strfilt_to_itr)

@@ -1,6 +1,6 @@
 /**
  * @file
- * Wrapper functions to fill pre-allocated iterplus structs and turn them into Iterables.
+ * @brief Wrapper functions to fill pre-allocated iterplus structs and turn them into Iterables.
  *
  * See `sugar.h`.
  */
@@ -14,29 +14,37 @@
 
 /* Utility functions to fill pre-allocated iterplus structs and turn them into iterables */
 
-Iterable(uint32_t) prep_u32tk(IterTake(uint32_t) * tk, Iterable(uint32_t) x)
-{
-    tk->src = x;
-    return u32tk_to_itr(tk);
-}
+/* Define the utility function to turn a pre-allocated IterTake struct into iterable */
+#define prep_tk(T, Name, implfunc)                                                                                     \
+    Iterable(T) Name(IterTake(T) * tk, Iterable(T) x)                                                                  \
+    {                                                                                                                  \
+        tk->src = x;                                                                                                   \
+        return implfunc(tk);                                                                                           \
+    }
 
-Iterable(NumType) prep_numtypetk(IterTake(NumType) * tk, Iterable(NumType) x)
-{
-    tk->src = x;
-    return numtypetk_to_itr(tk);
-}
+/* Define the utility function to turn a pre-allocated IterMap struct into iterable */
+#define prep_mp(A, B, Name, implfunc)                                                                                  \
+    Iterable(B) Name(IterMap(A, B) * mp, Iterable(A) x, B(*const fn)(A))                                               \
+    {                                                                                                                  \
+        mp->f   = fn;                                                                                                  \
+        mp->src = x;                                                                                                   \
+        return implfunc(mp);                                                                                           \
+    }
 
-Iterable(NumType)
-    prep_u32numtypemap(IterMap(uint32_t, NumType) * mp, Iterable(uint32_t) x, NumType (*const fn)(uint32_t))
-{
-    mp->f   = fn;
-    mp->src = x;
-    return u32numtypemap_to_itr(mp);
-}
+#define prep_flt(T, Name, implfunc)                                                                                    \
+    Iterable(T) Name(IterFilt(T) * flt, Iterable(T) x, bool (*const pred)(T))                                          \
+    {                                                                                                                  \
+        flt->pred = pred;                                                                                              \
+        flt->src  = x;                                                                                                 \
+        return implfunc(flt);                                                                                          \
+    }
 
-Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t))
-{
-    flt->pred = pred;
-    flt->src  = x;
-    return u32filt_to_itr(flt);
-}
+// clang-format off
+prep_tk(uint32_t, prep_u32tk, u32tk_to_itr)
+prep_tk(NumType, prep_numtypetk, numtypetk_to_itr)
+prep_tk(string, prep_strtk, strtk_to_itr)
+
+prep_mp(uint32_t, NumType, prep_u32numtypemap, u32numtypemap_to_itr)
+
+prep_flt(uint32_t, prep_u32filt, u32filt_to_itr)
+prep_flt(string, prep_strfilt, strfilt_to_itr)

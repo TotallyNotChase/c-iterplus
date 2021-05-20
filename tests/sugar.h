@@ -1,6 +1,6 @@
 /**
  * @file
- * "Syntactic sugar". Convenience macros for using the iterplus utilities.
+ * @brief "Syntactic sugar". Convenience macros for using the iterplus utilities.
  *
  * These examples use C11's `_Generic` to statically dispatch to the correct functions based on the
  * type of the iterplus structs. Syntax sugar, as you may know them. This is the definitions of those sugar
@@ -33,24 +33,32 @@ Functions to prepare a pre-allocated itertake, and turn it into its correspondin
 
 Iterable(uint32_t) prep_u32tk(IterTake(uint32_t) * tk, Iterable(uint32_t) x);
 Iterable(NumType) prep_numtypetk(IterTake(NumType) * tk, Iterable(NumType) x);
+Iterable(string) prep_strtk(IterTake(string) * tk, Iterable(string) x);
+
 Iterable(NumType)
     prep_u32numtypemap(IterMap(uint32_t, NumType) * tk, Iterable(uint32_t) x, NumType (*const fn)(uint32_t));
+
 Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t));
+Iterable(string) prep_strfilt(IterFilt(string) * flt, Iterable(string) x, bool (*const pred)(string));
+
+#define NOIMPL(feat) "No " #feat " impl for this iterable"
 
 /*
 Generic selection over iterable type
 
 Add more iterable types here if needed
 */
-#define itrble_selection(it, when_u32, when_numtype)                                                                   \
-    _Generic((it), Iterable(uint32_t) : (when_u32), Iterable(NumType) : (when_numtype))
-
+#define itrble_selection(it, when_u32, when_numtype, when_string)                                                      \
+    _Generic((it), Iterable(uint32_t)                                                                                  \
+             : (when_u32), Iterable(NumType)                                                                           \
+             : (when_numtype), Iterable(string)                                                                        \
+             : (when_string))
 /*
-Generic selection over mapping function type over uint32_t iterable
+Generic selection over mapping function type
 
-Add more function types here if needed (currently only has `u32 -> NumType`)
+Add more function types here if needed
 */
-#define u32_fn_selection(fn, when_u32_numtype)                                                                         \
+#define fn_selection(fn, when_u32_numtype)                                                                             \
     _Generic((fn), NumType(*const)(uint32_t) : (when_u32_numtype), NumType(*)(uint32_t) : (when_u32_numtype))
 
 /* NOTE: The values returned by these convenience macros have local scope and lifetime */
@@ -66,11 +74,13 @@ Add more function types here if needed (currently only has `u32 -> NumType`)
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define take_from(it, n)                                                                                               \
-    itrble_selection((it), prep_u32tk, prep_numtypetk)(                                                                \
-        itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)}), (it))
+    itrble_selection((it), prep_u32tk, prep_numtypetk, prep_strtk)(                                                    \
+        itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)},                \
+                         &(IterTake(string)){.limit = (n)}),                                                           \
+        (it))
 
 #define map_selection(it, fn, when_u32_numtype)                                                                        \
-    itrble_selection((it), u32_fn_selection(&(fn), (when_u32_numtype)), "No map impl for this Iterable")
+    itrble_selection((it), fn_selection(&(fn), (when_u32_numtype)), NOIMPL(map), NOIMPL(map))
 
 /**
  * @def map_over(it, fn)
@@ -99,7 +109,7 @@ Add more function types here if needed (currently only has `u32 -> NumType`)
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define filter_out(it, pred)                                                                                           \
-    itrble_selection((it), prep_u32filt, "No filter impl for this Iterable")(                                          \
-        itrble_selection((it), &(IterFilt(uint32_t)){0}, "No filter impl for this Iterable"), (it), (pred))
+    itrble_selection((it), prep_u32filt, NOIMPL(filter), prep_strfilt)(                                                \
+        itrble_selection((it), &(IterFilt(uint32_t)){0}, NOIMPL(filter), &(IterFilt(string)){0}), (it), (pred))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */
