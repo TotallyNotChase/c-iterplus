@@ -41,7 +41,16 @@ Iterable(NumType)
 Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t));
 Iterable(string) prep_strfilt(IterFilt(string) * flt, Iterable(string) x, bool (*const pred)(string));
 
-#define NOIMPL(feat) "No " #feat " impl for this iterable"
+#define NOIMPL(feat) No_##feat##_impl
+
+/*
+Definition less functions, these are just here to raise a compile time error
+when a non supported type is used with the _Generic macros below
+*/
+void NOIMPL(map)(void);
+void NOIMPL(take)(void);
+void NOIMPL(drop)(void);
+void NOIMPL(filter)(void);
 
 /*
 Generic selection over iterable type
@@ -72,6 +81,7 @@ Add more function types here if needed
  *
  * @return Iterable of the same type as the source iterable.
  * @note Iterating over the returned iterable also progresses the given iterable.
+ * @note If a negative `n` is passed, usual unsigned wrap around takes place. i.e `-1` wraps around to `SIZE_MAX`
  */
 #define take_from(it, n)                                                                                               \
     itrble_selection((it), prep_u32tk, prep_numtypetk, prep_strtk)(                                                    \
