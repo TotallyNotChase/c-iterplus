@@ -7,7 +7,7 @@
 
 #define FIBSEQ_MINSZ 10
 
-#define TEST_COUNT 3
+#define TEST_COUNT 4
 
 static bool test_take(void)
 {
@@ -43,6 +43,29 @@ static bool test_take(void)
     return true;
 }
 
+static bool test_drop(void)
+{
+    /* Build a fibonacci array */
+    uint32_t fibarr[FIBSEQ_MINSZ * 2] = {0, 1};
+    for (size_t i = 2; i < FIBSEQ_MINSZ * 2; i++) {
+        fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
+    }
+
+    Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
+    /* Drop the first FIBSEQ_MINSZ number of items and take the next FIBSEQ_MINSZ number of items */
+    Iterable(uint32_t) itslice = take_from(drop_from(it, FIBSEQ_MINSZ), FIBSEQ_MINSZ);
+    /* Verify the values */
+    size_t i = FIBSEQ_MINSZ;
+    foreach (uint32_t, n, itslice) {
+        if (n != fibarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, fibarr[i], n, i);
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
+
 static NumType u32_to_numtype(uint32_t x) { return x % 2 == 0 ? EVEN : ODD; }
 
 static bool test_map(void)
@@ -58,12 +81,9 @@ static bool test_map(void)
     }
 
     Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
-    // clang-format off
-    Iterable(NumType) itslice = take_from(   /* Take the first FIBSEQ_MINSZ number of items of the iterable */
-        /* Map the `u32_to_numtype` function over `it` */
-        map_over(it, u32_to_numtype), FIBSEQ_MINSZ
-    );
-    // clang-format on
+    /* Map u32_to_numtype over it and take the first FIBSEQ_MINSZ number of items */
+    Iterable(NumType) itslice = take_from(map_over(it, u32_to_numtype), FIBSEQ_MINSZ);
+
     /* Verify the values */
     size_t i = 0;
     foreach (NumType, n, itslice) {
@@ -81,7 +101,8 @@ static bool is_even(uint32_t x) { return x % 2 == 0; }
 static bool test_filter(void)
 {
     /* Build an array consisting of even fibonacci numbers */
-    uint32_t prev = 0, curr = 1;
+    uint32_t prev                      = 0;
+    uint32_t curr                      = 1;
     uint32_t filteredarr[FIBSEQ_MINSZ] = {0};
     for (size_t i = 0; i < FIBSEQ_MINSZ;) {
         if (is_even(prev)) {
@@ -117,13 +138,16 @@ int main(void)
     size_t passed = 0;
     if (test_take()) {
         passed++;
-    };
+    }
     if (test_map()) {
         passed++;
-    };
+    }
     if (test_filter()) {
         passed++;
-    };
+    }
+    if (test_drop()) {
+        passed++;
+    }
     if (passed == TEST_COUNT) {
         puts("All tests passing....");
     } else {
