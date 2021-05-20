@@ -35,6 +35,8 @@ Iterable(uint32_t) prep_u32tk(IterTake(uint32_t) * tk, Iterable(uint32_t) x);
 Iterable(NumType) prep_numtypetk(IterTake(NumType) * tk, Iterable(NumType) x);
 Iterable(string) prep_strtk(IterTake(string) * tk, Iterable(string) x);
 
+Iterable(uint32_t) prep_u32drp(IterDrop(uint32_t) * tk, Iterable(uint32_t) x);
+
 Iterable(NumType)
     prep_u32numtypemap(IterMap(uint32_t, NumType) * tk, Iterable(uint32_t) x, NumType (*const fn)(uint32_t));
 
@@ -88,6 +90,21 @@ Add more function types here if needed
         itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)},                \
                          &(IterTake(string)){.limit = (n)}),                                                           \
         (it))
+
+/**
+ * @def drop_from(it, n)
+ * @brief Build an iterable consisting of elements from the given iterable, after dropping the first `n` elements.
+ *
+ * @param it The source iterable.
+ * @param n The number of elements to drop from the iterable.
+ *
+ * @return Iterable of the same type as the source iterable.
+ * @note Iterating over the returned iterable also progresses the given iterable.
+ * @note If a negative `n` is passed, usual unsigned wrap around takes place. i.e `-1` wraps around to `SIZE_MAX`
+ */
+#define drop_from(it, n)                                                                                               \
+    itrble_selection((it), prep_u32drp, NOIMPL(drop), NOIMPL(drop))(                                                   \
+        itrble_selection((it), &(IterDrop(uint32_t)){.limit = (n)}, NOIMPL(drop), NOIMPL(drop)), (it))
 
 #define map_selection(it, fn, when_u32_numtype)                                                                        \
     itrble_selection((it), fn_selection(&(fn), (when_u32_numtype)), NOIMPL(map), NOIMPL(map))

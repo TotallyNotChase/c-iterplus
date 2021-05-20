@@ -6,6 +6,7 @@
 #ifndef LIB_ITPLUS_COMMON_H
 #define LIB_ITPLUS_COMMON_H
 
+#include "itplus_drop.h"
 #include "itplus_filter.h"
 #include "itplus_foreach.h"
 #include "itplus_iterator.h"
@@ -38,6 +39,8 @@ DefineIteratorOf(string);
 DefineIterTake(uint32_t);
 DefineIterTake(NumType);
 DefineIterTake(string);
+/* Define `IterDrop` struct for uint32_t iterables */
+DefineIterDrop(uint32_t);
 /* Define `IterMap` struct for uint32_t -> NumType */
 DefineIterMap(uint32_t, NumType);
 /* Define `IterFilt` struct for uint32_t, and string iterables */

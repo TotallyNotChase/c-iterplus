@@ -14,7 +14,7 @@
 
 /* Utility functions to fill pre-allocated iterplus structs and turn them into iterables */
 
-/* Define the utility function to turn a pre-allocated IterTake struct into iterable */
+/* Macro to define a function that turns a pre-allocated IterTake struct into iterable */
 #define prep_tk(T, Name, implfunc)                                                                                     \
     Iterable(T) Name(IterTake(T) * tk, Iterable(T) x)                                                                  \
     {                                                                                                                  \
@@ -22,7 +22,15 @@
         return implfunc(tk);                                                                                           \
     }
 
-/* Define the utility function to turn a pre-allocated IterMap struct into iterable */
+/* Macro to define a function that turns a pre-allocated IterTake struct into iterable */
+#define prep_drp(T, Name, implfunc)                                                                                    \
+    Iterable(T) Name(IterDrop(T) * tk, Iterable(T) x)                                                                  \
+    {                                                                                                                  \
+        tk->src = x;                                                                                                   \
+        return implfunc(tk);                                                                                           \
+    }
+
+/* Macro to define a function that turns a pre-allocated IterMap struct into iterable */
 #define prep_mp(A, B, Name, implfunc)                                                                                  \
     Iterable(B) Name(IterMap(A, B) * mp, Iterable(A) x, B(*const fn)(A))                                               \
     {                                                                                                                  \
@@ -31,6 +39,7 @@
         return implfunc(mp);                                                                                           \
     }
 
+/* Macro to define a function that turns a pre-allocated IterFilt struct into iterable */
 #define prep_flt(T, Name, implfunc)                                                                                    \
     Iterable(T) Name(IterFilt(T) * flt, Iterable(T) x, bool (*const pred)(T))                                          \
     {                                                                                                                  \
@@ -43,6 +52,8 @@
 prep_tk(uint32_t, prep_u32tk, u32tk_to_itr)
 prep_tk(NumType, prep_numtypetk, numtypetk_to_itr)
 prep_tk(string, prep_strtk, strtk_to_itr)
+
+prep_drp(uint32_t, prep_u32drp, u32drp_to_itr)
 
 prep_mp(uint32_t, NumType, prep_u32numtypemap, u32numtypemap_to_itr)
 

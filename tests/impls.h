@@ -46,6 +46,9 @@ Iterable(NumType) numtypetk_to_itr(IterTake(NumType) * x);
 /* Function to turn an `IterTake(string)*` into its `Iterable` impl, defined using `define_itertake_of` */
 Iterable(string) strtk_to_itr(IterTake(string) * x);
 
+/* Function to turn an `IterDrop(uint32_t)*` into its `Iterable` impl, defined using `define_iterdrop_of` */
+Iterable(uint32_t) u32drp_to_itr(IterDrop(uint32_t) * x);
+
 /* Function to turn an `IterMap(uint32_t, NumType)*` into its `Iterable` impl, defined using `define_itermap_of` */
 Iterable(NumType) u32numtypemap_to_itr(IterMap(uint32_t, NumType) * x);
 
