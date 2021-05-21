@@ -10,7 +10,7 @@
 
 #define FIBSEQ_MINSZ 10
 
-#define TEST_COUNT 7
+#define TEST_COUNT 9
 
 static bool test_take(void)
 {
@@ -96,6 +96,7 @@ static bool test_map(void)
 }
 
 static bool is_even(uint32_t x) { return x % 2 == 0; }
+static bool is_odd(uint32_t x) { return x % 2 != 0; }
 
 static bool test_filter(void)
 {
@@ -317,6 +318,75 @@ static bool test_reduce(void)
     return true;
 }
 
+static bool test_take_while(void)
+{
+    /* Build an array of the first odd fibonacci numbers, for verification later */
+    uint32_t prev                       = 0;
+    uint32_t curr                       = 1;
+    uint32_t first_oddarr[FIBSEQ_MINSZ] = {0};
+    for (size_t i = 0; i < FIBSEQ_MINSZ; i++) {
+        if (!is_odd(prev)) {
+            break;
+        }
+        first_oddarr[i]   = prev;
+        uint32_t new_curr = prev + curr;
+        prev              = curr;
+        curr              = new_curr;
+    }
+
+    /* Take the longest prefix of odd numbers from the infinite fibonacci sequence */
+    Iterable(uint32_t) first_odds = take_while(get_fibitr(), is_odd);
+
+    size_t i = 0;
+    foreach (uint32_t, n, first_odds) {
+        if (n != first_oddarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, first_oddarr[i],
+                    n, i);
+            return false;
+        }
+        i++;
+    }
+
+    return true;
+}
+
+static bool test_drop_while(void)
+{
+    /* Build an array of the first odd fibonacci numbers, for verification later */
+    uint32_t prev                              = 0;
+    uint32_t curr                              = 1;
+    uint32_t odds_after_evensarr[FIBSEQ_MINSZ] = {0};
+    for (; is_even(prev);) {
+        uint32_t new_curr = prev + curr;
+        prev              = curr;
+        curr              = new_curr;
+    }
+    for (size_t i = 0; i < FIBSEQ_MINSZ; i++) {
+        if (!is_odd(prev)) {
+            break;
+        }
+        odds_after_evensarr[i] = prev;
+        uint32_t new_curr      = prev + curr;
+        prev                   = curr;
+        curr                   = new_curr;
+    }
+
+    /* Take the longest prefix of odd numbers from the infinite fibonacci sequence */
+    Iterable(uint32_t) odds_after_evens = take_while(drop_while(get_fibitr(), is_even), is_odd);
+
+    size_t i = 0;
+    foreach (uint32_t, n, odds_after_evens) {
+        if (n != odds_after_evensarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__,
+                    odds_after_evensarr[i], n, i);
+            return false;
+        }
+        i++;
+    }
+
+    return true;
+}
+
 int main(void)
 {
     size_t passed = 0;
@@ -339,6 +409,12 @@ int main(void)
         passed++;
     }
     if (test_reduce()) {
+        passed++;
+    }
+    if (test_take_while()) {
+        passed++;
+    }
+    if (test_drop_while()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
