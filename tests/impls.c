@@ -50,3 +50,7 @@ define_iterfiltmap_func(string, NumType, strnumtypefiltmap_to_itr)
 define_iterchain_func(uint32_t, u32chn_to_itr)
 /* Implement `reduce` functionality for uint32_t iterables */
 define_iterreduce_func(uint32_t, reduce_u32)
+/* Implement `takewhile` functionality for uint32_t iterables */
+define_itertakewhile_func(uint32_t, u32tkwhl_to_itr)
+/* Implement `dropwhile` functionality for uint32_t iterables */
+define_iterdropwhile_func(uint32_t, u32drpwhl_to_itr)

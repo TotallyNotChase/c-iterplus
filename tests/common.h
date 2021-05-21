@@ -8,15 +8,17 @@
 
 #include "itplus_chain.h"
 #include "itplus_drop.h"
+#include "itplus_dropwhile.h"
 #include "itplus_filter.h"
 #include "itplus_filtermap.h"
 #include "itplus_foreach.h"
 #include "itplus_iterator.h"
 #include "itplus_map.h"
 #include "itplus_maybe.h"
-#include "itplus_take.h"
-#include "itplus_typeclass.h"
 #include "itplus_reduce.h"
+#include "itplus_take.h"
+#include "itplus_takewhile.h"
+#include "itplus_typeclass.h"
 
 #include <stdint.h>
 
@@ -54,5 +56,9 @@ DefineIterFiltMap(string, uint32_t);
 DefineIterFiltMap(string, NumType);
 /* Define `IterChain` struct for uint32_t iterables */
 DefineIterChain(uint32_t);
+/* Define `IterTakeWhile` struct for uint32_t iterables */
+DefineIterTakeWhile(uint32_t);
+/* Define `IterDropWhile` struct for uint32_t iterables */
+DefineIterDropWhile(uint32_t);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

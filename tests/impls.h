@@ -73,4 +73,12 @@ Iterable(uint32_t) u32chn_to_itr(IterChain(uint32_t) * x);
 /* Function to reduce an `Iterable(uint32_t)` with an accumulating function */
 Maybe(uint32_t) reduce_u32(Iterable(uint32_t) it, uint32_t (*f)(uint32_t acc, uint32_t x));
 
+/* Function to turn an `IterTakeWhile(uint32_t)*` into its `Iterable` impl, defined using `define_itertakewhile_func`
+ */
+Iterable(uint32_t) u32tkwhl_to_itr(IterTakeWhile(uint32_t) * x);
+
+/* Function to turn an `IterDropWhile(uint32_t)*` into its `Iterable` impl, defined using `define_iterdropwhile_func`
+ */
+Iterable(uint32_t) u32drpwhl_to_itr(IterDropWhile(uint32_t) * x);
+
 #endif /* !IT_FIB_H */

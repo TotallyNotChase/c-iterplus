@@ -49,6 +49,10 @@ Iterable(NumType)
 
 Iterable(uint32_t) prep_u32chn(IterChain(uint32_t) * chn, Iterable(uint32_t) x, Iterable(uint32_t) y);
 
+Iterable(uint32_t) prep_u32tkwhl(IterTakeWhile(uint32_t) * tkwhl, Iterable(uint32_t) x, bool (*pred)(uint32_t));
+
+Iterable(uint32_t) prep_u32drpwhl(IterDropWhile(uint32_t) * drpwhl, Iterable(uint32_t) x, bool (*pred)(uint32_t));
+
 #define NOIMPL(feat) No_##feat##_impl
 
 /*
@@ -185,5 +189,35 @@ Add more function types here if needed
  * @note This consumes the given iterable.
  */
 #define reduce(it, fn) itrble_selection((it), reduce_u32, NOIMPL(drop), NOIMPL(drop))(it, fn)
+
+/**
+ * @def take_while(it, pred)
+ * @brief Build an iterable that continuously consumes elements from given `it` while `pred` is satisfied.
+ *
+ * @param it The source iterable.
+ * @param pred The The function to test each element with. Must be a function returning `bool`, and taking a singular
+ * argument, the type of which should be the same as the type the iterable yields.
+ *
+ * @return Iterable of the same type as the source iterables.
+ * @note Iterating over the returned iterable also progresses the given iterable.
+ */
+#define take_while(it, pred)                                                                                           \
+    itrble_selection((it), prep_u32tkwhl, NOIMPL(drop), NOIMPL(drop))(                                                 \
+        itrble_selection((it), &(IterTakeWhile(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (it), (pred))
+
+/**
+ * @def drop_while(it, pred)
+ * @brief Build an iterable that continuously drops elements from given `it` until `pred` is no longer satisfied.
+ *
+ * @param it The source iterable.
+ * @param pred The The function to test each element with. Must be a function returning `bool`, and taking a singular
+ * argument, the type of which should be the same as the type the iterable yields.
+ *
+ * @return Iterable of the same type as the source iterables.
+ * @note Iterating over the returned iterable also progresses the given iterable.
+ */
+#define drop_while(it, pred)                                                                                           \
+    itrble_selection((it), prep_u32drpwhl, NOIMPL(drop), NOIMPL(drop))(                                                \
+        itrble_selection((it), &(IterDropWhile(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (it), (pred))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */

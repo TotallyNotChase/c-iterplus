@@ -66,6 +66,24 @@
         return implfunc(chn);                                                                                          \
     }
 
+/* Macro to define a function that turns a pre-allocated IterTakeWhile struct into iterable */
+#define prep_tkwhl(T, Name, implfunc)                                                                                  \
+    Iterable(T) Name(IterTakeWhile(T) * tkwhl, Iterable(T) x, bool (*pred)(T))                                         \
+    {                                                                                                                  \
+        tkwhl->pred = pred;                                                                                            \
+        tkwhl->src  = x;                                                                                               \
+        return implfunc(tkwhl);                                                                                        \
+    }
+
+/* Macro to define a function that turns a pre-allocated IterTakeWhile struct into iterable */
+#define prep_drpwhl(T, Name, implfunc)                                                                                 \
+    Iterable(T) Name(IterDropWhile(T) * drpwhl, Iterable(T) x, bool (*pred)(T))                                        \
+    {                                                                                                                  \
+        drpwhl->pred = pred;                                                                                           \
+        drpwhl->src  = x;                                                                                              \
+        return implfunc(drpwhl);                                                                                       \
+    }
+
 // clang-format off
 prep_tk(uint32_t, prep_u32tk, u32tk_to_itr)
 prep_tk(NumType, prep_numtypetk, numtypetk_to_itr)
@@ -82,3 +100,7 @@ prep_fltmap(string, uint32_t, prep_stru32fltmap, stru32filtmap_to_itr)
 prep_fltmap(string, NumType, prep_strnumtypefltmap, strnumtypefiltmap_to_itr)
 
 prep_chn(uint32_t, prep_u32chn, u32chn_to_itr)
+
+prep_tkwhl(uint32_t, prep_u32tkwhl, u32tkwhl_to_itr)
+
+prep_drpwhl(uint32_t, prep_u32drpwhl, u32drpwhl_to_itr)
