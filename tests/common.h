@@ -6,6 +6,7 @@
 #ifndef LIB_ITPLUS_COMMON_H
 #define LIB_ITPLUS_COMMON_H
 
+#include "itplus_chain.h"
 #include "itplus_drop.h"
 #include "itplus_filter.h"
 #include "itplus_filtermap.h"
@@ -50,5 +51,7 @@ DefineIterFilt(string);
 /* Define `IterFiltMap` struct for string -> uint32_t, and string -> NumType */
 DefineIterFiltMap(string, uint32_t);
 DefineIterFiltMap(string, NumType);
+/* Define `IterChain` struct for uint32_t iterables */
+DefineIterChain(uint32_t);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

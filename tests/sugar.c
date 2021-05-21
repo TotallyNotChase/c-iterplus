@@ -57,6 +57,15 @@
         return implfunc(fltmp);                                                                                        \
     }
 
+/* Macro to define a function that turns a pre-allocated IterChain struct into iterable */
+#define prep_chn(T, Name, implfunc)                                                                                    \
+    Iterable(T) Name(IterChain(T) * chn, Iterable(T) x, Iterable(T) y)                                                 \
+    {                                                                                                                  \
+        chn->curr = x;                                                                                                 \
+        chn->nxt  = y;                                                                                                 \
+        return implfunc(chn);                                                                                          \
+    }
+
 // clang-format off
 prep_tk(uint32_t, prep_u32tk, u32tk_to_itr)
 prep_tk(NumType, prep_numtypetk, numtypetk_to_itr)
@@ -71,3 +80,5 @@ prep_flt(string, prep_strfilt, strfilt_to_itr)
 
 prep_fltmap(string, uint32_t, prep_stru32fltmap, stru32filtmap_to_itr)
 prep_fltmap(string, NumType, prep_strnumtypefltmap, strnumtypefiltmap_to_itr)
+
+prep_chn(uint32_t, prep_u32chn, u32chn_to_itr)

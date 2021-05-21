@@ -66,4 +66,8 @@ Iterable(uint32_t) stru32filtmap_to_itr(IterFiltMap(string, uint32_t) * x);
  */
 Iterable(NumType) strnumtypefiltmap_to_itr(IterFiltMap(string, NumType) * x);
 
+/* Function to turn an `IterChain(uint32_t)*` into its `Iterable` impl, defined using `define_iterchain_of`
+ */
+Iterable(uint32_t) u32chn_to_itr(IterChain(uint32_t) * x);
+
 #endif /* !IT_FIB_H */

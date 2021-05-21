@@ -48,6 +48,8 @@ Iterable(uint32_t)
 Iterable(NumType)
     prep_strnumtypefltmap(IterFiltMap(string, NumType) * tk, Iterable(string) x, Maybe(NumType) (*const fn)(string));
 
+Iterable(uint32_t) prep_u32chn(IterChain(uint32_t) * chn, Iterable(uint32_t) x, Iterable(uint32_t) y);
+
 #define NOIMPL(feat) No_##feat##_impl
 
 /*
@@ -59,6 +61,7 @@ void NOIMPL(take)(void);
 void NOIMPL(drop)(void);
 void NOIMPL(filter)(void);
 void NOIMPL(filter_map)(void);
+void NOIMPL(chain)(void);
 
 /*
 Generic selection over iterable type
@@ -157,5 +160,19 @@ Add more function types here if needed
     filtmap_selection((it), (fn), prep_stru32fltmap, prep_strnumtypefltmap)(                                           \
         filtmap_selection((it), (fn), &(IterFiltMap(string, uint32_t)){0}, &(IterFiltMap(string, NumType)){0}), (it),  \
         (fn))
+
+/**
+ * @def chain_with(itx, ity)
+ * @brief Chain together 2 iterables of the same element type.
+ *
+ * @param it The first iterable.
+ * @param n The second iterable.
+ *
+ * @return Iterable of the same type as the source iterables.
+ * @note Iterating over the returned iterable also progresses the given iterables.
+ */
+#define chain_with(itx, ity)                                                                                           \
+    itrble_selection((itx), prep_u32chn, NOIMPL(drop), NOIMPL(drop))(                                                  \
+        itrble_selection((itx), &(IterChain(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (itx), (ity))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */
