@@ -21,8 +21,8 @@ static bool test_take(void)
     }
 
     Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
-    Iterable(uint32_t) itslice =
-        take_from(it, FIBSEQ_MINSZ); /* Iterable of the first FIBSEQ_MINSZ number of items in the sequence */
+    /* Iterable of the first FIBSEQ_MINSZ number of items in the sequence */
+    Iterable(uint32_t) itslice = take(it, FIBSEQ_MINSZ);
     /* Verify the values */
     size_t i = 0;
     foreach (uint32_t, n, itslice) {
@@ -33,8 +33,7 @@ static bool test_take(void)
         i++;
     }
     /* Consumed FIBSEQ_MINSZ number of items from `it` - take the next FIBSEQ_MINSZ number of items */
-    Iterable(uint32_t) itslice_ex =
-        take_from(it, FIBSEQ_MINSZ); /* Iterable of the next FIBSEQ_MINSZ number of items from the sequence */
+    Iterable(uint32_t) itslice_ex = take(it, FIBSEQ_MINSZ);
     /* Verify the values */
     foreach (uint32_t, n, itslice_ex) {
         if (n != fibarr[i]) {
@@ -55,7 +54,7 @@ static bool test_drop(void)
     }
 
     /* Drop the first FIBSEQ_MINSZ number of items and take the next FIBSEQ_MINSZ number of items */
-    Iterable(uint32_t) itslice = take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ);
+    Iterable(uint32_t) itslice = take(drop(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ);
     /* Verify the values */
     size_t i = FIBSEQ_MINSZ;
     foreach (uint32_t, n, itslice) {
@@ -82,7 +81,7 @@ static bool test_map(void)
         curr              = new_curr;
     }
     /* Map u32_to_numtype over it and take the first FIBSEQ_MINSZ number of items */
-    Iterable(NumType) itslice = take_from(map_over(get_fibitr(), u32_to_numtype), FIBSEQ_MINSZ);
+    Iterable(NumType) itslice = take(map(get_fibitr(), u32_to_numtype), FIBSEQ_MINSZ);
 
     /* Verify the values */
     size_t i = 0;
@@ -115,7 +114,7 @@ static bool test_filter(void)
     }
 
     /* Filter out only the even fibonacci numbers, and take the first FIBSEQ_MINSZ number of them */
-    Iterable(uint32_t) itslice = take_from(filter_from(get_fibitr(), is_even), FIBSEQ_MINSZ);
+    Iterable(uint32_t) itslice = take(filter(get_fibitr(), is_even), FIBSEQ_MINSZ);
     /* Verify the values */
     size_t i = 0;
     foreach (uint32_t, n, itslice) {
@@ -207,7 +206,7 @@ static bool test_filtermap(void)
     successfully parsed numbers
     */
     Iterable(uint32_t) parsedit =
-        filter_map(take_from(filter_from(strarr_to_iter(cheese, cheeselen), is_smallstr), 10), parse_posu32);
+        filter_map(take(filter(strarr_to_iter(cheese, cheeselen), is_smallstr), 10), parse_posu32);
     size_t i = 0;
     foreach (uint32_t, n, parsedit) {
         if (n != expectednums[i]) {
@@ -223,7 +222,7 @@ static bool test_filtermap(void)
     successfully parsed numtypes
     */
     Iterable(NumType) numtypeit =
-        filter_map(take_from(filter_from(strarr_to_iter(cheese, cheeselen), is_smallstr), 10), parse_numtype);
+        filter_map(take(filter(strarr_to_iter(cheese, cheeselen), is_smallstr), 10), parse_numtype);
     i = 0;
     foreach (NumType, x, numtypeit) {
         if (x != expectednumtypes[i]) {
@@ -244,9 +243,9 @@ static bool test_chain(void)
     }
 
     /* Chain 2 sequential parts of the fibonacci sequence- 0-10 -> 10-20 */
-    Iterable(uint32_t) chained = chain_with(take_from(get_fibitr(), FIBSEQ_MINSZ),
-                                            take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ));
-    size_t i                   = 0;
+    Iterable(uint32_t) chained =
+        chain(take(get_fibitr(), FIBSEQ_MINSZ), take(drop(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ));
+    size_t i = 0;
     foreach (uint32_t, n, chained) {
         if (n != fibarr[i]) {
             fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, fibarr[i], n, i);
@@ -257,9 +256,8 @@ static bool test_chain(void)
 
     /* Chain various parts of the fibonacci sequence- 0-10 -> (10-20 -> 20-30) */
     Iterable(uint32_t) dual_chained_fr =
-        chain_with(take_from(get_fibitr(), FIBSEQ_MINSZ),
-                   chain_with(take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ),
-                              take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ)));
+        chain(take(get_fibitr(), FIBSEQ_MINSZ), chain(take(drop(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ),
+                                                      take(drop(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ)));
     i = 0;
     foreach (uint32_t, n, dual_chained_fr) {
         if (n != fibarr[i]) {
@@ -271,9 +269,8 @@ static bool test_chain(void)
 
     /* Chain various parts of the fibonacci sequence- (0-10 -> 10-20) -> 20-30 */
     Iterable(uint32_t) dual_chained_bk =
-        chain_with(chain_with(take_from(get_fibitr(), FIBSEQ_MINSZ),
-                              take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ)),
-                   take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ));
+        chain(chain(take(get_fibitr(), FIBSEQ_MINSZ), take(drop(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ)),
+              take(drop(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ));
     i = 0;
     foreach (uint32_t, n, dual_chained_bk) {
         if (n != fibarr[i]) {
@@ -304,14 +301,14 @@ static bool test_reduce(void)
     Reduce an iterable of the first FIBSEQ_MINSZ number of items of the fibonacci
     sequence with add_u32
     */
-    Maybe(uint32_t) reduced = reduce(take_from(get_fibitr(), FIBSEQ_MINSZ), add_u32);
+    Maybe(uint32_t) reduced = reduce(take(get_fibitr(), FIBSEQ_MINSZ), add_u32);
     if (from_just(reduced, uint32_t) != result) {
         fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 "\n", __func__, result, from_just_(reduced));
         return false;
     }
 
     /* Make sure reducing an empty iterable yields `Nothing` */
-    Maybe(uint32_t) nothing = reduce(take_from(get_fibitr(), 0), add_u32);
+    Maybe(uint32_t) nothing = reduce(take(get_fibitr(), 0), add_u32);
     if (is_just(nothing)) {
         fprintf(stderr, "%s: Expected: Nothing Actual: %" PRIu32 "\n", __func__, from_just_(nothing));
         return false;

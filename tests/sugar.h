@@ -84,7 +84,7 @@ Add more function types here if needed
 /* NOTE: The values returned by these convenience macros have local scope and lifetime */
 
 /**
- * @def take_from(it, n)
+ * @def take(it, n)
  * @brief Build an iterable that consists of at most `n` elements from given `it` iterable.
  *
  * @param it The source iterable.
@@ -94,14 +94,14 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  * @note If a negative `n` is passed, usual unsigned wrap around takes place. i.e `-1` wraps around to `SIZE_MAX`
  */
-#define take_from(it, n)                                                                                               \
+#define take(it, n)                                                                                                    \
     itrble_selection((it), prep_u32tk, prep_numtypetk, prep_strtk)(                                                    \
         itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)},                \
                          &(IterTake(string)){.limit = (n)}),                                                           \
         (it))
 
 /**
- * @def drop_from(it, n)
+ * @def drop(it, n)
  * @brief Build an iterable consisting of elements from the given iterable, after dropping the first `n` elements.
  *
  * @param it The source iterable.
@@ -111,7 +111,7 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  * @note If a negative `n` is passed, usual unsigned wrap around takes place. i.e `-1` wraps around to `SIZE_MAX`
  */
-#define drop_from(it, n)                                                                                               \
+#define drop(it, n)                                                                                                    \
     itrble_selection((it), prep_u32drp, NOIMPL(drop), NOIMPL(drop))(                                                   \
         itrble_selection((it), &(IterDrop(uint32_t)){.limit = (n)}, NOIMPL(drop), NOIMPL(drop)), (it))
 
@@ -119,7 +119,7 @@ Add more function types here if needed
     itrble_selection((it), fn_selection(&(fn), (when_u32_numtype)), NOIMPL(map), NOIMPL(map))
 
 /**
- * @def map_over(it, fn)
+ * @def map(it, fn)
  * @brief Map the function `fn` over `it` to make a new iterable.
  *
  * @param it The source iterable.
@@ -129,12 +129,12 @@ Add more function types here if needed
  * @return Iterable yielding elements of the given function's return type.
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
-#define map_over(it, fn)                                                                                               \
+#define map(it, fn)                                                                                                    \
     map_selection((it), (fn), prep_u32numtypemap)(map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}), (it),   \
                                                   (fn))
 
 /**
- * @def filter_from(it, pred)
+ * @def filter(it, pred)
  * Filter an iterable by given `pred` and make a new iterable.
  *
  * @param it The source iterable.
@@ -144,7 +144,7 @@ Add more function types here if needed
  * @return Iterable of the same type as the source iterable.
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
-#define filter_from(it, pred)                                                                                          \
+#define filter(it, pred)                                                                                               \
     itrble_selection((it), prep_u32filt, NOIMPL(filter), prep_strfilt)(                                                \
         itrble_selection((it), &(IterFilt(uint32_t)){0}, NOIMPL(filter), &(IterFilt(string)){0}), (it), (pred))
 
@@ -162,7 +162,7 @@ Add more function types here if needed
         (fn))
 
 /**
- * @def chain_with(itx, ity)
+ * @def chain(itx, ity)
  * @brief Chain together 2 iterables of the same element type.
  *
  * @param it The first iterable.
@@ -171,7 +171,7 @@ Add more function types here if needed
  * @return Iterable of the same type as the source iterables.
  * @note Iterating over the returned iterable also progresses the given iterables.
  */
-#define chain_with(itx, ity)                                                                                           \
+#define chain(itx, ity)                                                                                                \
     itrble_selection((itx), prep_u32chn, NOIMPL(drop), NOIMPL(drop))(                                                  \
         itrble_selection((itx), &(IterChain(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (itx), (ity))
 
