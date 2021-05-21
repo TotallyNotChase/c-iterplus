@@ -175,4 +175,16 @@ Add more function types here if needed
     itrble_selection((itx), prep_u32chn, NOIMPL(drop), NOIMPL(drop))(                                                  \
         itrble_selection((itx), &(IterChain(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (itx), (ity))
 
+/**
+ * @def reduce(it, fn)
+ * @brief Reduce the given iterable, `it`, by the accumulating function `fn`.
+ *
+ * @param it The iterable to reduce.
+ * @param fn The accumulating function.
+ *
+ * @return Reduced value, same type as the element type of the iterable.
+ * @note This consumes the given iterable.
+ */
+#define reduce(it, fn) itrble_selection((it), reduce_u32, NOIMPL(drop), NOIMPL(drop))(it, fn)
+
 #endif /* !LIB_ITPLUS_SUGAR_H */

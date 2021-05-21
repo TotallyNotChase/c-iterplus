@@ -48,3 +48,5 @@ define_iterfiltmap_func(string, uint32_t, stru32filtmap_to_itr)
 define_iterfiltmap_func(string, NumType, strnumtypefiltmap_to_itr)
 /* Imeplement `chain` functionality for uint32_t iterables */
 define_iterchain_func(uint32_t, u32chn_to_itr)
+/* Implement `reduce` functionality for uint32_t iterables */
+define_iterreduce_func(uint32_t, reduce_u32)

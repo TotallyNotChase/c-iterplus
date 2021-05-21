@@ -16,6 +16,7 @@
 #include "itplus_maybe.h"
 #include "itplus_take.h"
 #include "itplus_typeclass.h"
+#include "itplus_reduce.h"
 
 #include <stdint.h>
 
