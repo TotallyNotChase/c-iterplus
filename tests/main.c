@@ -10,7 +10,7 @@
 
 #define FIBSEQ_MINSZ 10
 
-#define TEST_COUNT 6
+#define TEST_COUNT 7
 
 static bool test_take(void)
 {
@@ -285,6 +285,41 @@ static bool test_chain(void)
     return true;
 }
 
+static uint32_t add_u32(uint32_t x, uint32_t y) { return x + y; }
+
+static bool test_reduce(void)
+{
+    /* Build an array consisting of even fibonacci numbers, for verification later */
+    uint32_t prev   = 0;
+    uint32_t curr   = 1;
+    uint32_t result = prev;
+    for (size_t i = 1; i < FIBSEQ_MINSZ; i++) {
+        uint32_t new_curr = prev + curr;
+        prev              = curr;
+        curr              = new_curr;
+        result            = add_u32(result, prev);
+    }
+
+    /*
+    Reduce an iterable of the first FIBSEQ_MINSZ number of items of the fibonacci
+    sequence with add_u32
+    */
+    Maybe(uint32_t) reduced = reduce(take_from(get_fibitr(), FIBSEQ_MINSZ), add_u32);
+    if (from_just(reduced, uint32_t) != result) {
+        fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 "\n", __func__, result, from_just_(reduced));
+        return false;
+    }
+
+    /* Make sure reducing an empty iterable yields `Nothing` */
+    Maybe(uint32_t) nothing = reduce(take_from(get_fibitr(), 0), add_u32);
+    if (is_just(nothing)) {
+        fprintf(stderr, "%s: Expected: Nothing Actual: %" PRIu32 "\n", __func__, from_just_(nothing));
+        return false;
+    }
+
+    return true;
+}
+
 int main(void)
 {
     size_t passed = 0;
@@ -304,6 +339,9 @@ int main(void)
         passed++;
     }
     if (test_chain()) {
+        passed++;
+    }
+    if (test_reduce()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
