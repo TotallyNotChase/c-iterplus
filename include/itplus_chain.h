@@ -69,8 +69,8 @@
  * DefineIterChain(int);
  *
  * // Implement `Iterator` for `IterChain(int)`
- * // The defined function has the signature- `Iterable(int) wrap_intitrtk(IterChain(int)* x)`
- * define_iterchain_func(int, wrap_intitrtk)
+ * // The defined function has the signature- `Iterable(int) wrap_intitrchn(IterChain(int)* x)`
+ * define_iterchain_func(int, wrap_intitrchn)
  * @endcode
  *
  * @param T The type of value the `Iterable` wrapped in this `IterChain` will yield.
