@@ -10,11 +10,11 @@
 
 #define FIBSEQ_MINSZ 10
 
-#define TEST_COUNT 5
+#define TEST_COUNT 6
 
 static bool test_take(void)
 {
-    /* Build a fibonacci array */
+    /* Build a fibonacci array, for verification later */
     uint32_t fibarr[FIBSEQ_MINSZ * 2] = {0, 1};
     for (size_t i = 2; i < FIBSEQ_MINSZ * 2; i++) {
         fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
@@ -48,15 +48,14 @@ static bool test_take(void)
 
 static bool test_drop(void)
 {
-    /* Build a fibonacci array */
+    /* Build a fibonacci array, for verification later */
     uint32_t fibarr[FIBSEQ_MINSZ * 2] = {0, 1};
     for (size_t i = 2; i < FIBSEQ_MINSZ * 2; i++) {
         fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
     }
 
-    Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
     /* Drop the first FIBSEQ_MINSZ number of items and take the next FIBSEQ_MINSZ number of items */
-    Iterable(uint32_t) itslice = take_from(drop_from(it, FIBSEQ_MINSZ), FIBSEQ_MINSZ);
+    Iterable(uint32_t) itslice = take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ);
     /* Verify the values */
     size_t i = FIBSEQ_MINSZ;
     foreach (uint32_t, n, itslice) {
@@ -73,7 +72,7 @@ static NumType u32_to_numtype(uint32_t x) { return x % 2 == 0 ? EVEN : ODD; }
 
 static bool test_map(void)
 {
-    /* Build a NumType array based on the fibonacci sequence */
+    /* Build a NumType array based on the fibonacci sequence, for verification later */
     uint32_t prev = 0, curr = 1;
     NumType numtypearr[FIBSEQ_MINSZ] = {0};
     for (size_t i = 0; i < FIBSEQ_MINSZ; i++) {
@@ -82,10 +81,8 @@ static bool test_map(void)
         prev              = curr;
         curr              = new_curr;
     }
-
-    Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
     /* Map u32_to_numtype over it and take the first FIBSEQ_MINSZ number of items */
-    Iterable(NumType) itslice = take_from(map_over(it, u32_to_numtype), FIBSEQ_MINSZ);
+    Iterable(NumType) itslice = take_from(map_over(get_fibitr(), u32_to_numtype), FIBSEQ_MINSZ);
 
     /* Verify the values */
     size_t i = 0;
@@ -103,7 +100,7 @@ static bool is_even(uint32_t x) { return x % 2 == 0; }
 
 static bool test_filter(void)
 {
-    /* Build an array consisting of even fibonacci numbers */
+    /* Build an array consisting of even fibonacci numbers, for verification later */
     uint32_t prev                      = 0;
     uint32_t curr                      = 1;
     uint32_t filteredarr[FIBSEQ_MINSZ] = {0};
@@ -117,15 +114,14 @@ static bool test_filter(void)
         curr              = new_curr;
     }
 
-    Iterable(uint32_t) it = get_fibitr(); /* Create an infinite fibonacci sequence iterable */
-
     /* Filter out only the even fibonacci numbers, and take the first FIBSEQ_MINSZ number of them */
-    Iterable(uint32_t) itslice = take_from(filter_from(it, is_even), FIBSEQ_MINSZ);
+    Iterable(uint32_t) itslice = take_from(filter_from(get_fibitr(), is_even), FIBSEQ_MINSZ);
     /* Verify the values */
     size_t i = 0;
     foreach (uint32_t, n, itslice) {
         if (n != filteredarr[i]) {
-            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, filteredarr[i], n, i);
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, filteredarr[i],
+                    n, i);
             return false;
         }
         i++;
@@ -163,7 +159,7 @@ static Maybe(NumType) parse_numtype(string str)
 
 static bool test_filtermap(void)
 {
-    string cheese[] = {"Red Leicester",
+    string cheese[]  = {"Red Leicester",
                        "42",
                        "Tilsit",
                        "EVEN",
@@ -187,6 +183,9 @@ static bool test_filtermap(void)
                        "Lipta",
                        "Lancashire",
                        "White Stilton"};
+    size_t cheeselen = sizeof(cheese) / sizeof(*cheese);
+
+    /* Build arrays of expected data, for verification later */
     uint32_t expectednums[10];
     NumType expectednumtypes[10];
     for (size_t i = 0, j = 0, k = 0; i < sizeof(cheese) / sizeof(*cheese); i++) {
@@ -203,33 +202,82 @@ static bool test_filtermap(void)
         }
     }
 
-    Iterable(string) strit =
-        strarr_to_iter(cheese, sizeof(cheese) / sizeof(*cheese)); /* Build an iterable from the array */
     /*
     Obtain only the first 10 "small" strings, map a parsing function over it, and obtain only the
     successfully parsed numbers
     */
-    Iterable(uint32_t) parsedit = filter_map(take_from(filter_from(strit, is_smallstr), 10), parse_posu32);
-    size_t i                    = 0;
+    Iterable(uint32_t) parsedit =
+        filter_map(take_from(filter_from(strarr_to_iter(cheese, cheeselen), is_smallstr), 10), parse_posu32);
+    size_t i = 0;
     foreach (uint32_t, n, parsedit) {
         if (n != expectednums[i]) {
-            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, expectednums[i], n, i);
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, expectednums[i],
+                    n, i);
             return false;
         }
         i++;
     }
 
-    Iterable(string) re_strit =
-        strarr_to_iter(cheese, sizeof(cheese) / sizeof(*cheese)); /* Build another iterable from the array */
     /*
     Obtain only the first 10 "small" strings, map another parsing function over it, and obtain only the
     successfully parsed numtypes
     */
-    Iterable(NumType) numtypeit = filter_map(take_from(filter_from(re_strit, is_smallstr), 10), parse_numtype);
-    i                    = 0;
+    Iterable(NumType) numtypeit =
+        filter_map(take_from(filter_from(strarr_to_iter(cheese, cheeselen), is_smallstr), 10), parse_numtype);
+    i = 0;
     foreach (NumType, x, numtypeit) {
         if (x != expectednumtypes[i]) {
             fprintf(stderr, "%s: Expected: %d Actual: %d at index: %zu\n", __func__, expectednumtypes[i], x, i);
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
+
+static bool test_chain(void)
+{
+    /* Build a fibonacci array, for verification later */
+    uint32_t fibarr[FIBSEQ_MINSZ * 3] = {0, 1};
+    for (size_t i = 2; i < FIBSEQ_MINSZ * 3; i++) {
+        fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
+    }
+
+    /* Chain 2 sequential parts of the fibonacci sequence- 0-10 -> 10-20 */
+    Iterable(uint32_t) chained = chain_with(take_from(get_fibitr(), FIBSEQ_MINSZ),
+                                            take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ));
+    size_t i                   = 0;
+    foreach (uint32_t, n, chained) {
+        if (n != fibarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, fibarr[i], n, i);
+            return false;
+        }
+        i++;
+    }
+
+    /* Chain various parts of the fibonacci sequence- 0-10 -> (10-20 -> 20-30) */
+    Iterable(uint32_t) dual_chained_fr =
+        chain_with(take_from(get_fibitr(), FIBSEQ_MINSZ),
+                   chain_with(take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ),
+                              take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ)));
+    i = 0;
+    foreach (uint32_t, n, dual_chained_fr) {
+        if (n != fibarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, fibarr[i], n, i);
+            return false;
+        }
+        i++;
+    }
+
+    /* Chain various parts of the fibonacci sequence- (0-10 -> 10-20) -> 20-30 */
+    Iterable(uint32_t) dual_chained_bk =
+        chain_with(chain_with(take_from(get_fibitr(), FIBSEQ_MINSZ),
+                              take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ)),
+                   take_from(drop_from(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ));
+    i = 0;
+    foreach (uint32_t, n, dual_chained_bk) {
+        if (n != fibarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, fibarr[i], n, i);
             return false;
         }
         i++;
@@ -253,6 +301,9 @@ int main(void)
         passed++;
     }
     if (test_filtermap()) {
+        passed++;
+    }
+    if (test_chain()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
