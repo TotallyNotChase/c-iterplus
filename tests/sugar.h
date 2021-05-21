@@ -37,16 +37,15 @@ Iterable(string) prep_strtk(IterTake(string) * tk, Iterable(string) x);
 
 Iterable(uint32_t) prep_u32drp(IterDrop(uint32_t) * tk, Iterable(uint32_t) x);
 
-Iterable(NumType)
-    prep_u32numtypemap(IterMap(uint32_t, NumType) * tk, Iterable(uint32_t) x, NumType (*const fn)(uint32_t));
+Iterable(NumType) prep_u32numtypemap(IterMap(uint32_t, NumType) * tk, Iterable(uint32_t) x, NumType (*fn)(uint32_t));
 
-Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*const pred)(uint32_t));
-Iterable(string) prep_strfilt(IterFilt(string) * flt, Iterable(string) x, bool (*const pred)(string));
+Iterable(uint32_t) prep_u32filt(IterFilt(uint32_t) * flt, Iterable(uint32_t) x, bool (*pred)(uint32_t));
+Iterable(string) prep_strfilt(IterFilt(string) * flt, Iterable(string) x, bool (*pred)(string));
 
 Iterable(uint32_t)
-    prep_stru32fltmap(IterFiltMap(string, uint32_t) * tk, Iterable(string) x, Maybe(uint32_t) (*const fn)(string));
+    prep_stru32fltmap(IterFiltMap(string, uint32_t) * tk, Iterable(string) x, Maybe(uint32_t) (*fn)(string));
 Iterable(NumType)
-    prep_strnumtypefltmap(IterFiltMap(string, NumType) * tk, Iterable(string) x, Maybe(NumType) (*const fn)(string));
+    prep_strnumtypefltmap(IterFiltMap(string, NumType) * tk, Iterable(string) x, Maybe(NumType) (*fn)(string));
 
 Iterable(uint32_t) prep_u32chn(IterChain(uint32_t) * chn, Iterable(uint32_t) x, Iterable(uint32_t) y);
 
@@ -102,7 +101,7 @@ Add more function types here if needed
 
 /**
  * @def drop(it, n)
- * @brief Build an iterable consisting of elements from the given iterable, after dropping the first `n` elements.
+ * @brief Build an iterable that drops (skips) the first `n` elements from given `it` iterable.
  *
  * @param it The source iterable.
  * @param n The number of elements to drop from the iterable.

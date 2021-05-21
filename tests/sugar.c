@@ -32,7 +32,7 @@
 
 /* Macro to define a function that turns a pre-allocated IterMap struct into iterable */
 #define prep_mp(A, B, Name, implfunc)                                                                                  \
-    Iterable(B) Name(IterMap(A, B) * mp, Iterable(A) x, B(*const fn)(A))                                               \
+    Iterable(B) Name(IterMap(A, B) * mp, Iterable(A) x, B(*fn)(A))                                                     \
     {                                                                                                                  \
         mp->f   = fn;                                                                                                  \
         mp->src = x;                                                                                                   \
@@ -41,7 +41,7 @@
 
 /* Macro to define a function that turns a pre-allocated IterFilt struct into iterable */
 #define prep_flt(T, Name, implfunc)                                                                                    \
-    Iterable(T) Name(IterFilt(T) * flt, Iterable(T) x, bool (*const pred)(T))                                          \
+    Iterable(T) Name(IterFilt(T) * flt, Iterable(T) x, bool (*pred)(T))                                                \
     {                                                                                                                  \
         flt->pred = pred;                                                                                              \
         flt->src  = x;                                                                                                 \
@@ -50,7 +50,7 @@
 
 /* Macro to define a function that turns a pre-allocated IterFiltMap struct into iterable */
 #define prep_fltmap(A, B, Name, implfunc)                                                                              \
-    Iterable(B) Name(IterFiltMap(A, B) * fltmp, Iterable(A) x, Maybe(B)(*const fn)(A))                                 \
+    Iterable(B) Name(IterFiltMap(A, B) * fltmp, Iterable(A) x, Maybe(B)(*fn)(A))                                       \
     {                                                                                                                  \
         fltmp->f   = fn;                                                                                               \
         fltmp->src = x;                                                                                                \

@@ -18,9 +18,9 @@
  *
  * The defined reduce function takes in an iterable of type `T`, and a function of type `T (*const f)(T acc, T x)`, and
  * reduces the iterable to a singular value of type `T`, by repeatedly applying `f` onto it.
- * 
+ *
  * If the given iterable was empty, `Nothing` is returned. Otherwise, a `Just` value is returned.
- * 
+ *
  * This defined function will consume the given iterable.
  *
  * @param T The type of value the `Iterable`, for which this is being implemented, yields.
@@ -30,7 +30,7 @@
  * @note An #Iterator(T) for the given `T` **must** also exist.
  */
 #define define_iterreduce_func(T, Name)                                                                                \
-    Maybe(T) Name(Iterable(T) it, T (*const f)(T acc, T x))                                                            \
+    Maybe(T) Name(Iterable(T) it, T (*f)(T acc, T x))                                                                  \
     {                                                                                                                  \
         Maybe(T) res = it.tc->next(it.self);                                                                           \
         if (is_nothing(res)) {                                                                                         \
