@@ -2,7 +2,7 @@
  * @file
  * @brief Macros for implementing the `filter_map` abstraction.
  *
- * https://doc.rust-lang.org/core/iter/struct.FilterMap.html
+ * https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter_map
  * An IterFiltMap struct is a struct that stores a filter-mapping function within it, as well as the source iterable.
  * The filter-mapping function is just a function that returns a Maybe(T). A `Just` value indicates that the raw
  * value should be kept, a `Nothing` value indicates it should be filtered out.
