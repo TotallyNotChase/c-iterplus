@@ -10,7 +10,7 @@
 
 #define FIBSEQ_MINSZ 10
 
-#define TEST_COUNT 9
+#define TEST_COUNT 10
 
 #define DECIMAL_BASE 10
 
@@ -390,6 +390,31 @@ static bool test_drop_while(void)
     return true;
 }
 
+static bool test_collect(void)
+{
+    /* Build a fibonacci array, for verification later */
+    uint32_t fibarr[FIBSEQ_MINSZ] = {0, 1};
+    for (size_t i = 2; i < FIBSEQ_MINSZ; i++) {
+        fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
+    }
+
+    size_t fibarrsz             = 0;
+    uint32_t* const clct_fibarr = collect(take(get_fibitr(), FIBSEQ_MINSZ), &fibarrsz);
+    if (clct_fibarr == NULL) {
+        fprintf(stderr, "Collect returned NULL\n");
+        return false;
+    }
+    for (size_t i = 0; i < fibarrsz; i++) {
+        if (clct_fibarr[i] != fibarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, fibarr[i],
+                    clct_fibarr[i], i);
+            return false;
+        }
+    }
+    free(clct_fibarr);
+    return true;
+}
+
 int main(void)
 {
     size_t passed = 0;
@@ -418,6 +443,9 @@ int main(void)
         passed++;
     }
     if (test_drop_while()) {
+        passed++;
+    }
+    if (test_collect()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
