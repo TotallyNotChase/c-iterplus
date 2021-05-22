@@ -69,6 +69,7 @@ void NOIMPL(reduce)(void);
 void NOIMPL(take_while)(void);
 void NOIMPL(drop_while)(void);
 void NOIMPL(collect)(void);
+void NOIMPL(fold)(void);
 
 /*
 Generic selection over iterable type
@@ -248,5 +249,27 @@ Add more function types here if needed
  * @note This consumes the given iterable.
  */
 #define collect(it, len) itrble_selection((it), collect_u32, NOIMPL(collect), NOIMPL(collect))(it, len)
+
+#define fold_selection(it, fn, when_str_str, when_str_u32)                                                             \
+    itrble_selection((it), NOIMPL(fold), NOIMPL(fold),                                                                 \
+                     _Generic(&(fn), uint32_t(*const)(uint32_t, string)                                                \
+                              : (when_str_u32), uint32_t(*)(uint32_t, string)                                          \
+                              : (when_str_u32), string(*const)(string, string)                                         \
+                              : (when_str_str), string(*)(string, string)                                              \
+                              : (when_str_str)))
+
+/**
+ * @def fold(it, init, fn)
+ * Left fold an iterable, `it`, with the accumulating function `fn` and starting value `init`.
+ *
+ * @param it The source iterable to fold.
+ * @param init The starting accumulator value.
+ * @param fn The accumulating function. Must be a function returning the same type as init, and taking 2 arguments-
+ * first one being the accumulator, and second one being the iterable element.
+ *
+ * @return Accumulated value after folding the iterable.
+ * @note This consumes the given iterable.
+ */
+#define fold(it, init, fn) fold_selection((it), (fn), fold_str_str, fold_str_u32)((it), (init), (fn))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */

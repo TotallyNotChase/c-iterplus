@@ -56,3 +56,6 @@ define_itertakewhile_func(uint32_t, u32tkwhl_to_itr)
 define_iterdropwhile_func(uint32_t, u32drpwhl_to_itr)
 /* Implement `collect` functionality for uint32_t iterables */
 define_itercollect_func(uint32_t, collect_u32)
+/* Implement `fold` functionality for string -> string, and string -> uint32_t */
+define_iterfold_func(string, string, fold_str_str)
+define_iterfold_func(string, uint32_t, fold_str_u32)

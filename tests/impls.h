@@ -84,4 +84,10 @@ Iterable(uint32_t) u32drpwhl_to_itr(IterDropWhile(uint32_t) * x);
 /* Function to turn an `Iterable(uint32_t)` into an array of uint32_t elements */
 uint32_t* collect_u32(Iterable(uint32_t) it, size_t* len);
 
+/* Function to fold an `Iterable(string)` with a folding function `f`, and accumulator type `string` */
+string fold_str_str(Iterable(string) it, string init, string (*f)(string acc, string x));
+
+/* Function to fold an `Iterable(string)` with a folding function `f`, and accumulator type `uint32_t` */
+uint32_t fold_str_u32(Iterable(string) it, uint32_t init, uint32_t (*f)(uint32_t acc, string x));
+
 #endif /* !IT_FIB_H */

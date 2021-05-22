@@ -7,10 +7,12 @@
 #define LIB_ITPLUS_COMMON_H
 
 #include "itplus_chain.h"
+#include "itplus_collect.h"
 #include "itplus_drop.h"
 #include "itplus_dropwhile.h"
 #include "itplus_filter.h"
 #include "itplus_filtermap.h"
+#include "itplus_fold.h"
 #include "itplus_foreach.h"
 #include "itplus_iterator.h"
 #include "itplus_map.h"
@@ -19,7 +21,6 @@
 #include "itplus_take.h"
 #include "itplus_takewhile.h"
 #include "itplus_typeclass.h"
-#include "itplus_collect.h"
 
 #include <stdint.h>
 
