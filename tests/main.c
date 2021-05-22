@@ -10,9 +10,36 @@
 
 #define FIBSEQ_MINSZ 10
 
-#define TEST_COUNT 10
+#define TEST_COUNT 11
 
 #define DECIMAL_BASE 10
+
+/* cheese */
+string const cheese[]  = {"Red Leicester",
+                         "42",
+                         "Tilsit",
+                         "EVEN",
+                         "EVEN",
+                         "Caerphilly",
+                         "Bel Paese",
+                         "ODD",
+                         "94",
+                         "41",
+                         "3",
+                         "Red Windsor",
+                         "Stilton",
+                         "Gruyere",
+                         "Ementhal",
+                         "Norweigan Jarlsburg",
+                         "ODD",
+                         "EVEN",
+                         "ODD",
+                         "0",
+                         "19",
+                         "Lipta",
+                         "Lancashire",
+                         "White Stilton"};
+size_t const cheeselen = sizeof(cheese) / sizeof(*cheese);
 
 static bool test_take(void)
 {
@@ -162,32 +189,6 @@ static Maybe(NumType) parse_numtype(string str)
 
 static bool test_filtermap(void)
 {
-    string cheese[]  = {"Red Leicester",
-                       "42",
-                       "Tilsit",
-                       "EVEN",
-                       "EVEN",
-                       "Caerphilly",
-                       "Bel Paese",
-                       "ODD",
-                       "94",
-                       "41",
-                       "3",
-                       "Red Windsor",
-                       "Stilton",
-                       "Gruyere",
-                       "Ementhal",
-                       "Norweigan Jarlsburg",
-                       "ODD",
-                       "EVEN",
-                       "ODD",
-                       "0",
-                       "19",
-                       "Lipta",
-                       "Lancashire",
-                       "White Stilton"};
-    size_t cheeselen = sizeof(cheese) / sizeof(*cheese);
-
     /* Build arrays of expected data, for verification later */
     uint32_t expectednums[FIBSEQ_MINSZ];
     NumType expectednumtypes[FIBSEQ_MINSZ];
@@ -398,6 +399,7 @@ static bool test_collect(void)
         fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
     }
 
+    /* Collect the first `FIBSEQ_MINSZ` number of items from the fibonacci sequence into an array */
     size_t fibarrsz             = 0;
     uint32_t* const clct_fibarr = collect(take(get_fibitr(), FIBSEQ_MINSZ), &fibarrsz);
     if (clct_fibarr == NULL) {
@@ -412,6 +414,45 @@ static bool test_collect(void)
         }
     }
     free(clct_fibarr);
+    return true;
+}
+
+/* Accumulating function to parse strings to numbers and add them */
+static uint32_t addparse_u32(uint32_t acc, string s)
+{
+    Maybe(uint32_t) parsed = parse_posu32(s);
+    return is_just(parsed) ? acc + from_just_(parsed) : acc;
+}
+
+/* Function that takes 2 strings and returns the second one */
+static string unconst_str(string a, string b)
+{
+    (void)a;
+    return b;
+}
+
+static bool test_fold(void)
+{
+    uint32_t expectedsum = 0;
+    for (size_t i = 0; i < sizeof(cheese) / sizeof(*cheese); i++) {
+        string s                  = cheese[i];
+        Maybe(uint32_t) parsednum = parse_posu32(s);
+        if (is_just(parsednum)) {
+            expectedsum += from_just_(parsednum);
+        }
+    }
+
+    uint32_t sum = fold(strarr_to_iter(cheese, cheeselen), 0, addparse_u32);
+    if (sum != expectedsum) {
+        fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 "\n", __func__, expectedsum, sum);
+        return false;
+    }
+
+    string lastcheese = fold(strarr_to_iter(cheese, cheeselen), "", unconst_str);
+    if (lastcheese != cheese[cheeselen - 1]) {
+        fprintf(stderr, "%s: Expected: %s Actual: %s\n", __func__, cheese[cheeselen - 1], lastcheese);
+        return false;
+    }
     return true;
 }
 
@@ -446,6 +487,9 @@ int main(void)
         passed++;
     }
     if (test_collect()) {
+        passed++;
+    }
+    if (test_fold()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
