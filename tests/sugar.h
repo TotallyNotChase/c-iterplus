@@ -65,6 +65,9 @@ void NOIMPL(drop)(void);
 void NOIMPL(filter)(void);
 void NOIMPL(filter_map)(void);
 void NOIMPL(chain)(void);
+void NOIMPL(reduce)(void);
+void NOIMPL(take_while)(void);
+void NOIMPL(drop_while)(void);
 
 /*
 Generic selection over iterable type
@@ -152,7 +155,7 @@ Add more function types here if needed
         itrble_selection((it), &(IterFilt(uint32_t)){0}, NOIMPL(filter), &(IterFilt(string)){0}), (it), (pred))
 
 #define filtmap_selection(it, fn, when_str_u32, when_str_numtype)                                                      \
-    itrble_selection((it), NOIMPL(map), NOIMPL(map),                                                                   \
+    itrble_selection((it), NOIMPL(filter_map), NOIMPL(filter_map),                                                     \
                      _Generic(&(fn), Maybe(uint32_t)(*const)(string)                                                   \
                               : (when_str_u32), Maybe(uint32_t)(*)(string)                                             \
                               : (when_str_u32), Maybe(NumType)(*const)(string)                                         \
@@ -175,8 +178,8 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterables.
  */
 #define chain(itx, ity)                                                                                                \
-    itrble_selection((itx), prep_u32chn, NOIMPL(drop), NOIMPL(drop))(                                                  \
-        itrble_selection((itx), &(IterChain(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (itx), (ity))
+    itrble_selection((itx), prep_u32chn, NOIMPL(chain), NOIMPL(chain))(                                                \
+        itrble_selection((itx), &(IterChain(uint32_t)){0}, NOIMPL(chain), NOIMPL(chain)), (itx), (ity))
 
 /**
  * @def reduce(it, fn)
@@ -188,7 +191,7 @@ Add more function types here if needed
  * @return Reduced value, same type as the element type of the iterable.
  * @note This consumes the given iterable.
  */
-#define reduce(it, fn) itrble_selection((it), reduce_u32, NOIMPL(drop), NOIMPL(drop))(it, fn)
+#define reduce(it, fn) itrble_selection((it), reduce_u32, NOIMPL(reduce), NOIMPL(reduce))(it, fn)
 
 /**
  * @def take_while(it, pred)
@@ -202,8 +205,8 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define take_while(it, pred)                                                                                           \
-    itrble_selection((it), prep_u32tkwhl, NOIMPL(drop), NOIMPL(drop))(                                                 \
-        itrble_selection((it), &(IterTakeWhile(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (it), (pred))
+    itrble_selection((it), prep_u32tkwhl, NOIMPL(take_while), NOIMPL(take_while))(                                     \
+        itrble_selection((it), &(IterTakeWhile(uint32_t)){0}, NOIMPL(take_while), NOIMPL(take_while)), (it), (pred))
 
 /**
  * @def drop_while(it, pred)
@@ -217,7 +220,7 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define drop_while(it, pred)                                                                                           \
-    itrble_selection((it), prep_u32drpwhl, NOIMPL(drop), NOIMPL(drop))(                                                \
-        itrble_selection((it), &(IterDropWhile(uint32_t)){0}, NOIMPL(drop), NOIMPL(drop)), (it), (pred))
+    itrble_selection((it), prep_u32drpwhl, NOIMPL(drop_while), NOIMPL(drop_while))(                                    \
+        itrble_selection((it), &(IterDropWhile(uint32_t)){0}, NOIMPL(drop_while), NOIMPL(drop_while)), (it), (pred))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */
