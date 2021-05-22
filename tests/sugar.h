@@ -163,6 +163,18 @@ Add more function types here if needed
                               : (when_str_numtype), Maybe(NumType)(*)(string)                                          \
                               : (when_str_numtype)))
 
+/**
+ * @def filter_map(it, fn)
+ * Map and filter an iterable at the same time.
+ *
+ * @param it The source iterable.
+ * @param pred The function to filter the map and then filter the iterable with. Must be a function returning a `Maybe`,
+ * and taking a singular argument, the type of which should be the same as the type the iterable yields. `Nothing`
+ * values are filtered out, `Just` values are kept in (only the raw value).
+ *
+ * @return Iterable of the same type as the source iterable.
+ * @note Iterating over the returned iterable also progresses the given iterable.
+ */
 #define filter_map(it, fn)                                                                                             \
     filtmap_selection((it), (fn), prep_stru32fltmap, prep_strnumtypefltmap)(                                           \
         filtmap_selection((it), (fn), &(IterFiltMap(string, uint32_t)){0}, &(IterFiltMap(string, NumType)){0}), (it),  \
