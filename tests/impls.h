@@ -81,4 +81,7 @@ Iterable(uint32_t) u32tkwhl_to_itr(IterTakeWhile(uint32_t) * x);
  */
 Iterable(uint32_t) u32drpwhl_to_itr(IterDropWhile(uint32_t) * x);
 
+/* Function to turn an `Iterable(uint32_t)` into an array of uint32_t elements */
+uint32_t* collect_u32(Iterable(uint32_t) it, size_t* len);
+
 #endif /* !IT_FIB_H */

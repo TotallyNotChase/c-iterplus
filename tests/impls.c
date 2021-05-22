@@ -54,3 +54,5 @@ define_iterreduce_func(uint32_t, reduce_u32)
 define_itertakewhile_func(uint32_t, u32tkwhl_to_itr)
 /* Implement `dropwhile` functionality for uint32_t iterables */
 define_iterdropwhile_func(uint32_t, u32drpwhl_to_itr)
+/* Implement `collect` functionality for uint32_t iterables */
+define_itercollect_func(uint32_t, collect_u32)

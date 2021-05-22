@@ -68,6 +68,7 @@ void NOIMPL(chain)(void);
 void NOIMPL(reduce)(void);
 void NOIMPL(take_while)(void);
 void NOIMPL(drop_while)(void);
+void NOIMPL(collect)(void);
 
 /*
 Generic selection over iterable type
@@ -222,5 +223,18 @@ Add more function types here if needed
 #define drop_while(it, pred)                                                                                           \
     itrble_selection((it), prep_u32drpwhl, NOIMPL(drop_while), NOIMPL(drop_while))(                                    \
         itrble_selection((it), &(IterDropWhile(uint32_t)){0}, NOIMPL(drop_while), NOIMPL(drop_while)), (it), (pred))
+
+/**
+ * @def collect(it, len)
+ * @brief Collect the given iterable, `it`, into an array, and store its length in len.
+ *
+ * @param it The iterable to reduce.
+ * @param len Pointer to a `size_t` variable, to store the length in.
+ *
+ * @return Array of collected values. The elements are of the same type as the element type of the iterable.
+ * @note Returned array must be freed.
+ * @note This consumes the given iterable.
+ */
+#define collect(it, len) itrble_selection((it), collect_u32, NOIMPL(collect), NOIMPL(collect))(it, len)
 
 #endif /* !LIB_ITPLUS_SUGAR_H */
