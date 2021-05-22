@@ -12,6 +12,8 @@
 
 #define TEST_COUNT 9
 
+#define DECIMAL_BASE 10
+
 static bool test_take(void)
 {
     /* Build a fibonacci array, for verification later */
@@ -72,7 +74,8 @@ static NumType u32_to_numtype(uint32_t x) { return x % 2 == 0 ? EVEN : ODD; }
 static bool test_map(void)
 {
     /* Build a NumType array based on the fibonacci sequence, for verification later */
-    uint32_t prev = 0, curr = 1;
+    uint32_t prev                    = 0;
+    uint32_t curr                    = 1;
     NumType numtypearr[FIBSEQ_MINSZ] = {0};
     for (size_t i = 0; i < FIBSEQ_MINSZ; i++) {
         numtypearr[i]     = u32_to_numtype(prev);
@@ -137,7 +140,7 @@ static bool is_smallstr(string str) { return strlen(str) < SMALLSTR_MAXLEN; }
 static Maybe(uint32_t) parse_posu32(string str)
 {
     char* end;
-    unsigned long l = strtoul(str, &end, 10);
+    unsigned long l = strtoul(str, &end, DECIMAL_BASE);
     errno           = 0;
     if (errno == ERANGE || *end != '\0') {
         return Nothing(uint32_t);
@@ -150,11 +153,11 @@ static Maybe(NumType) parse_numtype(string str)
 {
     if (strcmp(str, "EVEN") == 0) {
         return Just(EVEN, NumType);
-    } else if (strcmp(str, "ODD") == 0) {
-        return Just(ODD, NumType);
-    } else {
-        return Nothing(NumType);
     }
+    if (strcmp(str, "ODD") == 0) {
+        return Just(ODD, NumType);
+    }
+    return Nothing(NumType);
 }
 
 static bool test_filtermap(void)
@@ -186,8 +189,8 @@ static bool test_filtermap(void)
     size_t cheeselen = sizeof(cheese) / sizeof(*cheese);
 
     /* Build arrays of expected data, for verification later */
-    uint32_t expectednums[10];
-    NumType expectednumtypes[10];
+    uint32_t expectednums[FIBSEQ_MINSZ];
+    NumType expectednumtypes[FIBSEQ_MINSZ];
     for (size_t i = 0, j = 0, k = 0; i < sizeof(cheese) / sizeof(*cheese); i++) {
         string s = cheese[i];
         if (is_smallstr(s)) {
