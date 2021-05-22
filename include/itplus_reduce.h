@@ -28,6 +28,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  * @note An #Iterator(T) for the given `T` **must** also exist.
+ * @note This should not be delimited with a semicolon.
  */
 #define define_iterreduce_func(T, Name)                                                                                \
     Maybe(T) Name(Iterable(T) it, T (*f)(T acc, T x))                                                                  \
