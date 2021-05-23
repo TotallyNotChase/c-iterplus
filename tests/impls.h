@@ -92,6 +92,6 @@ uint32_t fold_str_u32(Iterable(string) it, uint32_t init, uint32_t (*f)(uint32_t
 
 /* Function to turn an `IterElemIndices(uint32_t)*` into its `Iterable` impl, defined using `define_iterelemindc_func`
  */
-Iterable(size_t) u32elmnindcs_to_itr(IterElemIndices(uint32_t) * x);
+Iterable(size_t) u32elmindcs_to_itr(IterElemIndices(uint32_t) * x);
 
 #endif /* !LIB_ITPLUS_IMPL_H */

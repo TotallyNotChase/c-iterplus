@@ -113,4 +113,4 @@ prep_tkwhl(uint32_t, prep_u32tkwhl, u32tkwhl_to_itr)
 
 prep_drpwhl(uint32_t, prep_u32drpwhl, u32drpwhl_to_itr)
 
-prep_elmindcs(uint32_t, prep_u32elmindcs, u32elmnindcs_to_itr)
+prep_elmindcs(uint32_t, prep_u32elmindcs, u32elmindcs_to_itr)
