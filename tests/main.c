@@ -8,9 +8,9 @@
 #include <stdint.h>
 #include <string.h>
 
-#define FIBSEQ_MINSZ 10u
+#define FIBSEQ_MINSZ 10U
 
-#define TEST_COUNT 12u
+#define TEST_COUNT 13U
 
 #define DECIMAL_BASE 10
 
@@ -456,6 +456,35 @@ static bool test_elem_indices(void)
     return true;
 }
 
+static bool test_enumerate(void)
+{
+    /* Build a fibonacci array, for verification later */
+    uint32_t fibarr[FIBSEQ_MINSZ] = {0, 1};
+    for (size_t i = 2; i < FIBSEQ_MINSZ; i++) {
+        fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
+    }
+
+    /* Get the enumerated iterator of the first FIBSEQ_MINSZ number of items from the fibonacci sequence */
+    Iterable(Pair(size_t, uint32_t)) indices = enumerate(take(get_fibitr(), FIBSEQ_MINSZ));
+    size_t i                                 = 0;
+    foreach (Pair(size_t, uint32_t), x, indices) {
+        if (fst(x) != i) {
+            fprintf(stderr, "%s: Expected: %zu Actual: %zu\n", __func__, i, fst(x));
+            return false;
+        }
+        if (snd(x) != fibarr[i]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 "\n", __func__, fibarr[i], snd(x));
+            return false;
+        }
+        i++;
+    }
+    if (i != FIBSEQ_MINSZ) {
+        fprintf(stderr, "%s: Expected: %zu Actual: %zu\n", __func__, (size_t)FIBSEQ_MINSZ, i);
+        return false;
+    }
+    return true;
+}
+
 int main(void)
 {
     size_t passed = 0;
@@ -493,6 +522,9 @@ int main(void)
         passed++;
     }
     if (test_elem_indices()) {
+        passed++;
+    }
+    if (test_enumerate()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
