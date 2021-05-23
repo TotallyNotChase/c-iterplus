@@ -84,6 +84,14 @@
         return implfunc(drpwhl);                                                                                       \
     }
 
+/* Macro to define a function that turns a pre-allocated IterElemIndices struct into iterable */
+#define prep_elmindcs(T, Name, implfunc)                                                                               \
+    Iterable(size_t) Name(IterElemIndices(T) * elmindcs, Iterable(T) x)                                                \
+    {                                                                                                                  \
+        elmindcs->src = x;                                                                                             \
+        return implfunc(elmindcs);                                                                                     \
+    }
+
 // clang-format off
 prep_tk(uint32_t, prep_u32tk, u32tk_to_itr)
 prep_tk(NumType, prep_numtypetk, numtypetk_to_itr)
@@ -104,3 +112,5 @@ prep_chn(uint32_t, prep_u32chn, u32chn_to_itr)
 prep_tkwhl(uint32_t, prep_u32tkwhl, u32tkwhl_to_itr)
 
 prep_drpwhl(uint32_t, prep_u32drpwhl, u32drpwhl_to_itr)
+
+prep_elmindcs(uint32_t, prep_u32elmindcs, u32elmnindcs_to_itr)

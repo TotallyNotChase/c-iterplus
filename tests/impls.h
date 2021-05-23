@@ -4,8 +4,8 @@
  * iterplus utilities have been implemented.
  */
 
-#ifndef IT_FIB_H
-#define IT_FIB_H
+#ifndef LIB_ITPLUS_IMPL_H
+#define LIB_ITPLUS_IMPL_H
 
 #include "common.h"
 
@@ -90,4 +90,8 @@ string fold_str_str(Iterable(string) it, string init, string (*f)(string acc, st
 /* Function to fold an `Iterable(string)` with a folding function `f`, and accumulator type `uint32_t` */
 uint32_t fold_str_u32(Iterable(string) it, uint32_t init, uint32_t (*f)(uint32_t acc, string x));
 
-#endif /* !IT_FIB_H */
+/* Function to turn an `IterElemIndices(uint32_t)*` into its `Iterable` impl, defined using `define_iterelemindc_func`
+ */
+Iterable(size_t) u32elmnindcs_to_itr(IterElemIndices(uint32_t) * x);
+
+#endif /* !LIB_ITPLUS_IMPL_H */

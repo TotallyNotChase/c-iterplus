@@ -10,6 +10,7 @@
 #include "itplus_collect.h"
 #include "itplus_drop.h"
 #include "itplus_dropwhile.h"
+#include "itplus_elemindices.h"
 #include "itplus_filter.h"
 #include "itplus_filtermap.h"
 #include "itplus_fold.h"
@@ -34,13 +35,15 @@ typedef enum
 typedef char const* string;
 
 // clang-format off
-/* Define `Iterator` for uint32_t, NumType, and string elements */
+/* Define `Iterator` for uint32_t, NumType, string, and size_t elements */
 DefineMaybe(uint32_t)
 DefineMaybe(NumType)
 DefineMaybe(string)
+DefineMaybe(size_t)
 DefineIteratorOf(uint32_t);
 DefineIteratorOf(NumType);
 DefineIteratorOf(string);
+DefineIteratorOf(size_t);
 // clang-format on
 /* Define `IterTake` struct for uint32_t, NumType, and string iterables */
 DefineIterTake(uint32_t);
@@ -62,5 +65,7 @@ DefineIterChain(uint32_t);
 DefineIterTakeWhile(uint32_t);
 /* Define `IterDropWhile` struct for uint32_t iterables */
 DefineIterDropWhile(uint32_t);
+/* Define `IterElemIndices` struct for `uint32_t` iterables */
+DefineIterElemIndices(uint32_t);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

@@ -59,3 +59,5 @@ define_itercollect_func(uint32_t, collect_u32)
 /* Implement `fold` functionality for string -> string, and string -> uint32_t */
 define_iterfold_func(string, string, fold_str_str)
 define_iterfold_func(string, uint32_t, fold_str_u32)
+/* Implement `elem_indices` functionality for uint32_t iterables */
+define_iterelemindc_func(uint32_t, u32elmindcs_to_itr)
