@@ -2,6 +2,8 @@
  * @file
  * Utilities to define and use a Maybe type.
  *
+ * https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-Maybe.html
+ *
  * @note The Maybe struct members **must not** be accessed manually unless you know
  * exactly what you're doing. Use `from_just` or `from_just_` *after* `is_just`/`is_nothing` instead.
  */
