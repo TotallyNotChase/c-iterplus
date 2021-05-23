@@ -17,6 +17,8 @@
 #include "itplus_macro_utils.h"
 #include "itplus_maybe.h"
 
+#include <stddef.h>
+
 /**
  * @def IterDrop(T)
  * @brief Convenience macro to get the type of the IterDrop struct with given element type.

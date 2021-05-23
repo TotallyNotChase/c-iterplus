@@ -15,6 +15,8 @@
 #include "itplus_macro_utils.h"
 #include "itplus_maybe.h"
 
+#include <stddef.h>
+
 /**
  * @def IterTake(T)
  * @brief Convenience macro to get the type of the IterTake struct with given element type.
