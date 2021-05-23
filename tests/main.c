@@ -8,9 +8,9 @@
 #include <stdint.h>
 #include <string.h>
 
-#define FIBSEQ_MINSZ 10
+#define FIBSEQ_MINSZ 10u
 
-#define TEST_COUNT 11
+#define TEST_COUNT 12u
 
 #define DECIMAL_BASE 10
 
@@ -442,15 +442,36 @@ static bool test_fold(void)
         }
     }
 
+    /* Fold the string iterable with addparse_u32, starting with a value of 0 */
     uint32_t sum = fold(strarr_to_iter(cheese, cheeselen), 0, addparse_u32);
     if (sum != expectedsum) {
         fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 "\n", __func__, expectedsum, sum);
         return false;
     }
 
+    /* Fold the string iterable with unconst_str, starting with a value of "" */
     string lastcheese = fold(strarr_to_iter(cheese, cheeselen), "", unconst_str);
     if (lastcheese != cheese[cheeselen - 1]) {
         fprintf(stderr, "%s: Expected: %s Actual: %s\n", __func__, cheese[cheeselen - 1], lastcheese);
+        return false;
+    }
+    return true;
+}
+
+static bool test_elem_indices(void)
+{
+    /* Get the element indices of the first FIBSEQ_MINSZ number of items from the fibonacci sequence */
+    Iterable(size_t) indices = elem_indices(take(get_fibitr(), FIBSEQ_MINSZ));
+    size_t i                 = 0;
+    foreach (size_t, x, indices) {
+        if (x != i) {
+            fprintf(stderr, "%s: Expected: %zu Actual: %zu\n", __func__, i, x);
+            return false;
+        }
+        i++;
+    }
+    if (i != FIBSEQ_MINSZ) {
+        fprintf(stderr, "%s: Expected: %zu Actual: %zu\n", __func__, (size_t)FIBSEQ_MINSZ, i);
         return false;
     }
     return true;
@@ -490,6 +511,9 @@ int main(void)
         passed++;
     }
     if (test_fold()) {
+        passed++;
+    }
+    if (test_elem_indices()) {
         passed++;
     }
     if (passed == TEST_COUNT) {
