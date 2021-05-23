@@ -108,7 +108,7 @@ Add more function types here if needed
 #define take(it, n)                                                                                                    \
     itrble_selection((it), prep_u32tk, prep_numtypetk, prep_strtk)(                                                    \
         itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)},                \
-                         &(IterTake(string)){.limit = (n)}),                                                           \
+            &(IterTake(string)){.limit = (n)}),                                                                        \
         (it))
 
 /**
@@ -141,8 +141,8 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define map(it, fn)                                                                                                    \
-    map_selection((it), (fn), prep_u32numtypemap)(map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}), (it),   \
-                                                  (fn))
+    map_selection((it), (fn), prep_u32numtypemap)(                                                                     \
+        map_selection((it), (fn), &(IterMap(uint32_t, NumType)){0}), (it), (fn))
 
 /**
  * @def filter(it, pred)
@@ -161,11 +161,11 @@ Add more function types here if needed
 
 #define filtmap_selection(it, fn, when_str_u32, when_str_numtype)                                                      \
     itrble_selection((it), NOIMPL(filter_map), NOIMPL(filter_map),                                                     \
-                     _Generic(&(fn), Maybe(uint32_t)(*const)(string)                                                   \
-                              : (when_str_u32), Maybe(uint32_t)(*)(string)                                             \
-                              : (when_str_u32), Maybe(NumType)(*const)(string)                                         \
-                              : (when_str_numtype), Maybe(NumType)(*)(string)                                          \
-                              : (when_str_numtype)))
+        _Generic(&(fn), Maybe(uint32_t)(*const)(string)                                                                \
+                 : (when_str_u32), Maybe(uint32_t)(*)(string)                                                          \
+                 : (when_str_u32), Maybe(NumType)(*const)(string)                                                      \
+                 : (when_str_numtype), Maybe(NumType)(*)(string)                                                       \
+                 : (when_str_numtype)))
 
 /**
  * @def filter_map(it, fn)
@@ -255,11 +255,11 @@ Add more function types here if needed
 
 #define fold_selection(it, fn, when_str_str, when_str_u32)                                                             \
     itrble_selection((it), NOIMPL(fold), NOIMPL(fold),                                                                 \
-                     _Generic(&(fn), uint32_t(*const)(uint32_t, string)                                                \
-                              : (when_str_u32), uint32_t(*)(uint32_t, string)                                          \
-                              : (when_str_u32), string(*const)(string, string)                                         \
-                              : (when_str_str), string(*)(string, string)                                              \
-                              : (when_str_str)))
+        _Generic(&(fn), uint32_t(*const)(uint32_t, string)                                                             \
+                 : (when_str_u32), uint32_t(*)(uint32_t, string)                                                       \
+                 : (when_str_u32), string(*const)(string, string)                                                      \
+                 : (when_str_str), string(*)(string, string)                                                           \
+                 : (when_str_str)))
 
 /**
  * @def fold(it, init, fn)

@@ -6,6 +6,7 @@ IndentCaseLabels: true
 BreakBeforeBraces: Mozilla
 BreakStringLiterals: true
 ColumnLimit: 120
+AlignAfterOpenBracket: DontAlign
 AlignTrailingComments: true
 AlignEscapedNewlines: Right
 AlignConsecutiveMacros: true

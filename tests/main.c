@@ -15,30 +15,9 @@
 #define DECIMAL_BASE 10
 
 /* cheese */
-string const cheese[]  = {"Red Leicester",
-                         "42",
-                         "Tilsit",
-                         "EVEN",
-                         "EVEN",
-                         "Caerphilly",
-                         "Bel Paese",
-                         "ODD",
-                         "94",
-                         "41",
-                         "3",
-                         "Red Windsor",
-                         "Stilton",
-                         "Gruyere",
-                         "Ementhal",
-                         "Norweigan Jarlsburg",
-                         "ODD",
-                         "EVEN",
-                         "ODD",
-                         "0",
-                         "19",
-                         "Lipta",
-                         "Lancashire",
-                         "White Stilton"};
+string const cheese[]  = {"Red Leicester", "42", "Tilsit", "EVEN", "EVEN", "Caerphilly", "Bel Paese", "ODD", "94", "41",
+    "3", "Red Windsor", "Stilton", "Gruyere", "Ementhal", "Norweigan Jarlsburg", "ODD", "EVEN", "ODD", "0", "19",
+    "Lipta", "Lancashire", "White Stilton"};
 size_t const cheeselen = sizeof(cheese) / sizeof(*cheese);
 
 static bool test_take(void)
@@ -151,7 +130,7 @@ static bool test_filter(void)
     foreach (uint32_t, n, itslice) {
         if (n != filteredarr[i]) {
             fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, filteredarr[i],
-                    n, i);
+                n, i);
             return false;
         }
         i++;
@@ -216,7 +195,7 @@ static bool test_filtermap(void)
     foreach (uint32_t, n, parsedit) {
         if (n != expectednums[i]) {
             fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, expectednums[i],
-                    n, i);
+                n, i);
             return false;
         }
         i++;
@@ -262,7 +241,7 @@ static bool test_chain(void)
     /* Chain various parts of the fibonacci sequence- 0-10 -> (10-20 -> 20-30) */
     Iterable(uint32_t) dual_chained_fr =
         chain(take(get_fibitr(), FIBSEQ_MINSZ), chain(take(drop(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ),
-                                                      take(drop(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ)));
+                                                    take(drop(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ)));
     i = 0;
     foreach (uint32_t, n, dual_chained_fr) {
         if (n != fibarr[i]) {
@@ -275,7 +254,7 @@ static bool test_chain(void)
     /* Chain various parts of the fibonacci sequence- (0-10 -> 10-20) -> 20-30 */
     Iterable(uint32_t) dual_chained_bk =
         chain(chain(take(get_fibitr(), FIBSEQ_MINSZ), take(drop(get_fibitr(), FIBSEQ_MINSZ), FIBSEQ_MINSZ)),
-              take(drop(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ));
+            take(drop(get_fibitr(), FIBSEQ_MINSZ * 2), FIBSEQ_MINSZ));
     i = 0;
     foreach (uint32_t, n, dual_chained_bk) {
         if (n != fibarr[i]) {
@@ -345,7 +324,7 @@ static bool test_take_while(void)
     foreach (uint32_t, n, first_odds) {
         if (n != first_oddarr[i]) {
             fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, first_oddarr[i],
-                    n, i);
+                n, i);
             return false;
         }
         i++;
@@ -382,7 +361,7 @@ static bool test_drop_while(void)
     foreach (uint32_t, n, odds_after_evens) {
         if (n != odds_after_evensarr[i]) {
             fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__,
-                    odds_after_evensarr[i], n, i);
+                odds_after_evensarr[i], n, i);
             return false;
         }
         i++;
@@ -409,7 +388,7 @@ static bool test_collect(void)
     for (size_t i = 0; i < fibarrsz; i++) {
         if (clct_fibarr[i] != fibarr[i]) {
             fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 " at index: %zu\n", __func__, fibarr[i],
-                    clct_fibarr[i], i);
+                clct_fibarr[i], i);
             return false;
         }
     }
