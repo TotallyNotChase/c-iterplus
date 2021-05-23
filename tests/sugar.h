@@ -55,6 +55,8 @@ Iterable(uint32_t) prep_u32drpwhl(IterDropWhile(uint32_t) * drpwhl, Iterable(uin
 
 Iterable(size_t) prep_u32elmindcs(IterElemIndices(uint32_t) * elmindcs, Iterable(uint32_t) x);
 
+Iterable(Pair(size_t, uint32_t)) prep_u32enumr(IterEnumr(uint32_t) * enumr, Iterable(uint32_t) x);
+
 #define NOIMPL(feat) No_##feat##_impl
 
 /*
@@ -73,6 +75,7 @@ void NOIMPL(drop_while)(void);
 void NOIMPL(collect)(void);
 void NOIMPL(fold)(void);
 void NOIMPL(elem_indices)(void);
+void NOIMPL(enumerate)(void);
 
 /*
 Generic selection over iterable type
@@ -277,7 +280,7 @@ Add more function types here if needed
 
 /**
  * @def elem_indices(it)
- * @brief Build an iterable that consists of the indices of the elements in given iterablem `it`.
+ * @brief Build an iterable that consists of the indices of the elements in given iterable `it`.
  *
  * @param it The source iterable.
  *
@@ -287,5 +290,18 @@ Add more function types here if needed
 #define elem_indices(it)                                                                                               \
     itrble_selection((it), prep_u32elmindcs, NOIMPL(elem_indices), NOIMPL(elem_indices))(                              \
         itrble_selection((it), &(IterElemIndices(uint32_t)){0}, NOIMPL(elem_indices), NOIMPL(elem_indices)), (it))
+
+/**
+ * @def enumerate(it)
+ * @brief Build an iterable that consists of a Pair of the indices and the elements in given iterable `it`.
+ *
+ * @param it The source iterable.
+ *
+ * @return Iterable yielding a Pair of size_t and and the same type as the given iterable element.
+ * @note Iterating over the returned iterable also progresses the given iterable.
+ */
+#define enumerate(it)                                                                                                  \
+    itrble_selection((it), prep_u32enumr, NOIMPL(enumerate), NOIMPL(enumerate))(                                       \
+        itrble_selection((it), &(IterEnumr(uint32_t)){0}, NOIMPL(enumerate), NOIMPL(enumerate)), (it))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */

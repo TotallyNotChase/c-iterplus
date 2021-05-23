@@ -94,4 +94,8 @@ uint32_t fold_str_u32(Iterable(string) it, uint32_t init, uint32_t (*f)(uint32_t
  */
 Iterable(size_t) u32elmindcs_to_itr(IterElemIndices(uint32_t) * x);
 
+/* Function to turn an `IterEnumr(uint32_t)*` into its `Iterable` impl, defined using `define_iterenumr_func`
+ */
+Iterable(Pair(size_t, uint32_t)) u32enumr_to_itr(IterEnumr(uint32_t) * x);
+
 #endif /* !LIB_ITPLUS_IMPL_H */

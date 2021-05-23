@@ -92,6 +92,14 @@
         return implfunc(elmindcs);                                                                                     \
     }
 
+/* Macro to define a function that turns a pre-allocated IterEnumr struct into iterable */
+#define prep_enumr(T, Name, implfunc)                                                                                  \
+    Iterable(Pair(size_t, T)) Name(IterEnumr(T) * enumr, Iterable(T) x)                                         \
+    {                                                                                                                  \
+        enumr->src = x;                                                                                                \
+        return implfunc(enumr);                                                                                        \
+    }
+
 // clang-format off
 prep_tk(uint32_t, prep_u32tk, u32tk_to_itr)
 prep_tk(NumType, prep_numtypetk, numtypetk_to_itr)
@@ -114,3 +122,5 @@ prep_tkwhl(uint32_t, prep_u32tkwhl, u32tkwhl_to_itr)
 prep_drpwhl(uint32_t, prep_u32drpwhl, u32drpwhl_to_itr)
 
 prep_elmindcs(uint32_t, prep_u32elmindcs, u32elmindcs_to_itr)
+
+prep_enumr(uint32_t, prep_u32enumr, u32enumr_to_itr)
