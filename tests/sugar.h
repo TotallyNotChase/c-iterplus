@@ -24,6 +24,7 @@
 
 #include "common.h"
 #include "impls.h"
+#include "preproc_map.h"
 
 #include <stdint.h>
 
@@ -57,45 +58,31 @@ Iterable(size_t) prep_u32elmindcs(IterElemIndices(uint32_t) * elmindcs, Iterable
 
 Iterable(Pair(size_t, uint32_t)) prep_u32enumr(IterEnumr(uint32_t) * enumr, Iterable(uint32_t) x);
 
-#define NOIMPL(feat) No_##feat##_impl
+/*
+Macro to generate a generic selection association list element.
+
+Each element of the var args will be of form `(Type, expr)` - each element, a "tuple".
+
+Mapping `IT_GEN_ASSOC` over such an element results in `IT_GEN_ASSOC((Type, expr))`, which is then fed into
+`IT_GEN_ASSOC_` without the extra parens- `IT_GEN_ASSOC_ (Type, expr)`.
+
+`IT_GEN_ASSOC_`, then creates the assoc list element - `Iterable(Type): (expr)`. A valid element to be used in the
+`_Generic` selection assoc list.
+*/
+#define IT_GEN_ASSOC_(T, expr) Iterable(T) : (expr)
+#define IT_GEN_ASSOC(Texpr)    IT_GEN_ASSOC_ Texpr
 
 /*
-Definition less functions, these are just here to raise a compile time error
-when a non supported type is used with the _Generic macros below
+Similar to the `IT_GEN_ASSOC` macro in semantics and usage. This one is for functions, `A -> B`
 */
-void NOIMPL(map)(void);
-void NOIMPL(take)(void);
-void NOIMPL(drop)(void);
-void NOIMPL(filter)(void);
-void NOIMPL(filter_map)(void);
-void NOIMPL(chain)(void);
-void NOIMPL(reduce)(void);
-void NOIMPL(take_while)(void);
-void NOIMPL(drop_while)(void);
-void NOIMPL(collect)(void);
-void NOIMPL(fold)(void);
-void NOIMPL(elem_indices)(void);
-void NOIMPL(enumerate)(void);
+#define FN_GEN_ASSOC_(A, B, expr) B (*)(A) : (expr)
+#define FN_GEN_ASSOC(ABexpr)      FN_GEN_ASSOC_ ABexpr
 
-/*
-Generic selection over iterable type
+#define itrble_selection(it, ...) _Generic((it), MAP(IT_GEN_ASSOC, __VA_ARGS__))
 
-Add more iterable types here if needed
-*/
-#define itrble_selection(it, when_u32, when_numtype, when_string)                                                      \
-    _Generic((it), Iterable(uint32_t)                                                                                  \
-             : (when_u32), Iterable(NumType)                                                                           \
-             : (when_numtype), Iterable(string)                                                                        \
-             : (when_string))
-/*
-Generic selection over mapping function type
+#define fn_selection(fn, ...) _Generic((fn), MAP(FN_GEN_ASSOC, __VA_ARGS__))
 
-Add more function types here if needed
-*/
-#define fn_selection(fn, when_u32_numtype)                                                                             \
-    _Generic((fn), NumType(*const)(uint32_t) : (when_u32_numtype), NumType(*)(uint32_t) : (when_u32_numtype))
-
-/* NOTE: The values returned by these convenience macros have local scope and lifetime */
+/* NOTE: The values returned by the following convenience macros have local scope and lifetime */
 
 /**
  * @def take(it, n)
@@ -109,9 +96,9 @@ Add more function types here if needed
  * @note If a negative `n` is passed, usual unsigned wrap around takes place. i.e `-1` wraps around to `SIZE_MAX`
  */
 #define take(it, n)                                                                                                    \
-    itrble_selection((it), prep_u32tk, prep_numtypetk, prep_strtk)(                                                    \
-        itrble_selection((it), &(IterTake(uint32_t)){.limit = (n)}, &(IterTake(NumType)){.limit = (n)},                \
-            &(IterTake(string)){.limit = (n)}),                                                                        \
+    itrble_selection((it), (uint32_t, prep_u32tk), (NumType, prep_numtypetk), (string, prep_strtk))(                   \
+        itrble_selection((it), (uint32_t, &(IterTake(uint32_t)){.limit = (n)}),                                        \
+            (NumType, &(IterTake(NumType)){.limit = (n)}), (string, &(IterTake(string)){.limit = (n)})),               \
         (it))
 
 /**
@@ -126,11 +113,11 @@ Add more function types here if needed
  * @note If a negative `n` is passed, usual unsigned wrap around takes place. i.e `-1` wraps around to `SIZE_MAX`
  */
 #define drop(it, n)                                                                                                    \
-    itrble_selection((it), prep_u32drp, NOIMPL(drop), NOIMPL(drop))(                                                   \
-        itrble_selection((it), &(IterDrop(uint32_t)){.limit = (n)}, NOIMPL(drop), NOIMPL(drop)), (it))
+    itrble_selection((it), (uint32_t, prep_u32drp))(                                                                   \
+        itrble_selection((it), (uint32_t, &(IterDrop(uint32_t)){.limit = (n)})), (it))
 
 #define map_selection(it, fn, when_u32_numtype)                                                                        \
-    itrble_selection((it), fn_selection(&(fn), (when_u32_numtype)), NOIMPL(map), NOIMPL(map))
+    itrble_selection((it), (uint32_t, fn_selection(&(fn), (uint32_t, NumType, when_u32_numtype))))
 
 /**
  * @def map(it, fn)
@@ -159,16 +146,12 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define filter(it, pred)                                                                                               \
-    itrble_selection((it), prep_u32filt, NOIMPL(filter), prep_strfilt)(                                                \
-        itrble_selection((it), &(IterFilt(uint32_t)){0}, NOIMPL(filter), &(IterFilt(string)){0}), (it), (pred))
+    itrble_selection((it), (uint32_t, prep_u32filt), (string, prep_strfilt))(                                          \
+        itrble_selection((it), (uint32_t, &(IterFilt(uint32_t)){0}), (string, &(IterFilt(string)){0})), (it), (pred))
 
 #define filtmap_selection(it, fn, when_str_u32, when_str_numtype)                                                      \
-    itrble_selection((it), NOIMPL(filter_map), NOIMPL(filter_map),                                                     \
-        _Generic(&(fn), Maybe(uint32_t)(*const)(string)                                                                \
-                 : (when_str_u32), Maybe(uint32_t)(*)(string)                                                          \
-                 : (when_str_u32), Maybe(NumType)(*const)(string)                                                      \
-                 : (when_str_numtype), Maybe(NumType)(*)(string)                                                       \
-                 : (when_str_numtype)))
+    itrble_selection((it), (string, fn_selection(&(fn), (string, Maybe(uint32_t), (when_str_u32)),                     \
+                                        (string, Maybe(NumType), (when_str_numtype)))))
 
 /**
  * @def filter_map(it, fn)
@@ -198,8 +181,8 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterables.
  */
 #define chain(itx, ity)                                                                                                \
-    itrble_selection((itx), prep_u32chn, NOIMPL(chain), NOIMPL(chain))(                                                \
-        itrble_selection((itx), &(IterChain(uint32_t)){0}, NOIMPL(chain), NOIMPL(chain)), (itx), (ity))
+    itrble_selection((itx), (uint32_t, prep_u32chn))(                                                                  \
+        itrble_selection((itx), (uint32_t, &(IterChain(uint32_t)){0})), (itx), (ity))
 
 /**
  * @def reduce(it, fn)
@@ -211,7 +194,7 @@ Add more function types here if needed
  * @return Reduced value, same type as the element type of the iterable.
  * @note This consumes the given iterable.
  */
-#define reduce(it, fn) itrble_selection((it), reduce_u32, NOIMPL(reduce), NOIMPL(reduce))(it, fn)
+#define reduce(it, fn) itrble_selection((it), (uint32_t, reduce_u32))(it, fn)
 
 /**
  * @def take_while(it, pred)
@@ -225,8 +208,8 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define take_while(it, pred)                                                                                           \
-    itrble_selection((it), prep_u32tkwhl, NOIMPL(take_while), NOIMPL(take_while))(                                     \
-        itrble_selection((it), &(IterTakeWhile(uint32_t)){0}, NOIMPL(take_while), NOIMPL(take_while)), (it), (pred))
+    itrble_selection((it), (uint32_t, prep_u32tkwhl))(                                                                 \
+        itrble_selection((it), (uint32_t, &(IterTakeWhile(uint32_t)){0})), (it), (pred))
 
 /**
  * @def drop_while(it, pred)
@@ -240,29 +223,28 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define drop_while(it, pred)                                                                                           \
-    itrble_selection((it), prep_u32drpwhl, NOIMPL(drop_while), NOIMPL(drop_while))(                                    \
-        itrble_selection((it), &(IterDropWhile(uint32_t)){0}, NOIMPL(drop_while), NOIMPL(drop_while)), (it), (pred))
+    itrble_selection((it), (uint32_t, prep_u32drpwhl))(                                                                \
+        itrble_selection((it), (uint32_t, &(IterDropWhile(uint32_t)){0})), (it), (pred))
 
 /**
  * @def collect(it, len)
  * @brief Collect the given iterable, `it`, into an array, and store its length in len.
  *
  * @param it The iterable to reduce.
- * @param len Pointer to a `size_t` variable, to store the length in.
+ * @param lenstore Pointer to a `size_t` variable, to store the length in.
  *
  * @return Array of collected values. The elements are of the same type as the element type of the iterable.
  * @note Returned array must be freed.
  * @note This consumes the given iterable.
  */
-#define collect(it, len) itrble_selection((it), collect_u32, NOIMPL(collect), NOIMPL(collect))(it, len)
+#define collect(it, lenstore) itrble_selection((it), (uint32_t, collect_u32))(it, lenstore)
 
 #define fold_selection(it, fn, when_str_str, when_str_u32)                                                             \
-    itrble_selection((it), NOIMPL(fold), NOIMPL(fold),                                                                 \
-        _Generic(&(fn), uint32_t(*const)(uint32_t, string)                                                             \
-                 : (when_str_u32), uint32_t(*)(uint32_t, string)                                                       \
-                 : (when_str_u32), string(*const)(string, string)                                                      \
-                 : (when_str_str), string(*)(string, string)                                                           \
-                 : (when_str_str)))
+    itrble_selection((it), (string, _Generic(&(fn), uint32_t(*const)(uint32_t, string)                                 \
+                                             : (when_str_u32), uint32_t(*)(uint32_t, string)                           \
+                                             : (when_str_u32), string(*const)(string, string)                          \
+                                             : (when_str_str), string(*)(string, string)                               \
+                                             : (when_str_str))))
 
 /**
  * @def fold(it, init, fn)
@@ -288,8 +270,8 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define elem_indices(it)                                                                                               \
-    itrble_selection((it), prep_u32elmindcs, NOIMPL(elem_indices), NOIMPL(elem_indices))(                              \
-        itrble_selection((it), &(IterElemIndices(uint32_t)){0}, NOIMPL(elem_indices), NOIMPL(elem_indices)), (it))
+    itrble_selection((it), (uint32_t, prep_u32elmindcs))(                                                              \
+        itrble_selection((it), (uint32_t, &(IterElemIndices(uint32_t)){0})), (it))
 
 /**
  * @def enumerate(it)
@@ -301,7 +283,7 @@ Add more function types here if needed
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
 #define enumerate(it)                                                                                                  \
-    itrble_selection((it), prep_u32enumr, NOIMPL(enumerate), NOIMPL(enumerate))(                                       \
-        itrble_selection((it), &(IterEnumr(uint32_t)){0}, NOIMPL(enumerate), NOIMPL(enumerate)), (it))
+    itrble_selection((it), (uint32_t, prep_u32enumr))(                                                                 \
+        itrble_selection((it), (uint32_t, &(IterEnumr(uint32_t)){0})), (it))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */
