@@ -63,3 +63,5 @@ define_iterfold_func(string, uint32_t, fold_str_u32)
 define_iterelemindc_func(uint32_t, u32elmindcs_to_itr)
 /* Implement `enumerate` functionality for uint32_t iterables */
 define_iterenumr_func(uint32_t, u32enumr_to_itr)
+/* Implement `zip` functionality for (`size_t`, `uint32_t`) */
+define_iterzip_func(size_t, uint32_t, sizeu32zip_to_itr)

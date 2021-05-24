@@ -58,6 +58,9 @@ Iterable(size_t) prep_u32elmindcs(IterElemIndices(uint32_t) * elmindcs, Iterable
 
 Iterable(Pair(size_t, uint32_t)) prep_u32enumr(IterEnumr(uint32_t) * enumr, Iterable(uint32_t) x);
 
+Iterable(Pair(size_t, uint32_t))
+    prep_sizeu32zip(IterZip(size_t, uint32_t) * zipstr, Iterable(size_t) x, Iterable(uint32_t) y);
+
 /*
 Macro to generate a generic selection association list element.
 
@@ -73,10 +76,13 @@ Mapping `IT_GEN_ASSOC` over such an element results in `IT_GEN_ASSOC((Type, expr
 #define IT_GEN_ASSOC(Texpr)    IT_GEN_ASSOC_ Texpr
 
 /*
-Similar to the `IT_GEN_ASSOC` macro in semantics and usage. This one is for functions, `A -> B`
+Similar to the `IT_GEN_ASSOC` macro in semantics and usage. This one is for functions.
+
+The first argument is the return type of the function, second is the expression to select if type matches, the rest of
+the arguments are the function's argument types.
 */
-#define FN_GEN_ASSOC_(A, B, expr) B (*)(A) : (expr)
-#define FN_GEN_ASSOC(ABexpr)      FN_GEN_ASSOC_ ABexpr
+#define FN_GEN_ASSOC_(Ret, expr, ...) Ret (*)(__VA_ARGS__) : (expr), Ret(*const)(__VA_ARGS__) : (expr)
+#define FN_GEN_ASSOC(RetExprArgs)     FN_GEN_ASSOC_ RetExprArgs
 
 #define itrble_selection(it, ...) _Generic((it), MAP(IT_GEN_ASSOC, __VA_ARGS__))
 
@@ -117,7 +123,7 @@ Similar to the `IT_GEN_ASSOC` macro in semantics and usage. This one is for func
         itrble_selection((it), (uint32_t, &(IterDrop(uint32_t)){.limit = (n)})), (it))
 
 #define map_selection(it, fn, when_u32_numtype)                                                                        \
-    itrble_selection((it), (uint32_t, fn_selection(&(fn), (uint32_t, NumType, when_u32_numtype))))
+    itrble_selection((it), (uint32_t, fn_selection((fn), (NumType, (when_u32_numtype), uint32_t))))
 
 /**
  * @def map(it, fn)
@@ -150,8 +156,8 @@ Similar to the `IT_GEN_ASSOC` macro in semantics and usage. This one is for func
         itrble_selection((it), (uint32_t, &(IterFilt(uint32_t)){0}), (string, &(IterFilt(string)){0})), (it), (pred))
 
 #define filtmap_selection(it, fn, when_str_u32, when_str_numtype)                                                      \
-    itrble_selection((it), (string, fn_selection(&(fn), (string, Maybe(uint32_t), (when_str_u32)),                     \
-                                        (string, Maybe(NumType), (when_str_numtype)))))
+    itrble_selection((it), (string, fn_selection((fn), (Maybe(uint32_t), (when_str_u32), string),                      \
+                                        (Maybe(NumType), (when_str_numtype), string))))
 
 /**
  * @def filter_map(it, fn)
@@ -240,11 +246,8 @@ Similar to the `IT_GEN_ASSOC` macro in semantics and usage. This one is for func
 #define collect(it, lenstore) itrble_selection((it), (uint32_t, collect_u32))(it, lenstore)
 
 #define fold_selection(it, fn, when_str_str, when_str_u32)                                                             \
-    itrble_selection((it), (string, _Generic(&(fn), uint32_t(*const)(uint32_t, string)                                 \
-                                             : (when_str_u32), uint32_t(*)(uint32_t, string)                           \
-                                             : (when_str_u32), string(*const)(string, string)                          \
-                                             : (when_str_str), string(*)(string, string)                               \
-                                             : (when_str_str))))
+    itrble_selection((it), (string, fn_selection((fn), (uint32_t, (when_str_u32), uint32_t, string),                   \
+                                        (string, (when_str_str), string, string))))
 
 /**
  * @def fold(it, init, fn)
@@ -285,5 +288,20 @@ Similar to the `IT_GEN_ASSOC` macro in semantics and usage. This one is for func
 #define enumerate(it)                                                                                                  \
     itrble_selection((it), (uint32_t, prep_u32enumr))(                                                                 \
         itrble_selection((it), (uint32_t, &(IterEnumr(uint32_t)){0})), (it))
+
+/**
+ * @def zip(itx, ity)
+ * @brief Build an iterable that zips together the given iterables `itx`, and `ity` to yield Pair structs.
+ *
+ * @param itx The first iterable.
+ * @param ity The second iterable.
+ *
+ * @return Iterable yielding Pair structs. First element being from `itx`, second element being from `ity`.
+ * @note Iterating over the returned iterable also progresses the given iterables.
+ */
+#define zip(itx, ity)                                                                                                  \
+    itrble_selection((itx), (size_t, itrble_selection((ity), (uint32_t, prep_sizeu32zip))))(                           \
+        itrble_selection((itx), (size_t, itrble_selection((ity), (uint32_t, &(IterZip(size_t, uint32_t)){0})))),       \
+        (itx), (ity))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */

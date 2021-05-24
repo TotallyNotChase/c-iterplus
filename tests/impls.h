@@ -98,4 +98,8 @@ Iterable(size_t) u32elmindcs_to_itr(IterElemIndices(uint32_t) * x);
  */
 Iterable(Pair(size_t, uint32_t)) u32enumr_to_itr(IterEnumr(uint32_t) * x);
 
+/* Function to turn an `IterZip(size_t, uint32_t)*` into its `Iterable` impl, defined using `define_iterzip_func`
+ */
+Iterable(Pair(size_t, uint32_t)) sizeu32zip_to_itr(IterZip(size_t, uint32_t) * x);
+
 #endif /* !LIB_ITPLUS_IMPL_H */

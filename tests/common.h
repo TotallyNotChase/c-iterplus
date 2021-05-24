@@ -24,6 +24,7 @@
 #include "itplus_take.h"
 #include "itplus_takewhile.h"
 #include "itplus_typeclass.h"
+#include "itplus_zip.h"
 
 #include <stdint.h>
 
@@ -78,5 +79,7 @@ DefineIterDropWhile(uint32_t);
 DefineIterElemIndices(uint32_t);
 /* Define `IterEnumr` struct for `uint32_t` iterables */
 DefineIterEnumr(uint32_t);
+/* Define `IterZip` struct for (`size_t`, `uint32_t`) iterables */
+DefineIterZip(size_t, uint32_t);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

@@ -94,10 +94,18 @@
 
 /* Macro to define a function that turns a pre-allocated IterEnumr struct into iterable */
 #define prep_enumr(T, Name, implfunc)                                                                                  \
-    Iterable(Pair(size_t, T)) Name(IterEnumr(T) * enumr, Iterable(T) x)                                         \
+    Iterable(Pair(size_t, T)) Name(IterEnumr(T) * enumr, Iterable(T) x)                                                \
     {                                                                                                                  \
         enumr->src = x;                                                                                                \
         return implfunc(enumr);                                                                                        \
+    }
+
+#define prep_zip(T, U, Name, implfunc)                                                                                 \
+    Iterable(Pair(T, U)) Name(IterZip(T, U) * zipstrct, Iterable(T) x, Iterable(U) y)                                  \
+    {                                                                                                                  \
+        zipstrct->asrc = x;                                                                                            \
+        zipstrct->bsrc = y;                                                                                            \
+        return implfunc(zipstrct);                                                                                     \
     }
 
 // clang-format off
@@ -124,3 +132,5 @@ prep_drpwhl(uint32_t, prep_u32drpwhl, u32drpwhl_to_itr)
 prep_elmindcs(uint32_t, prep_u32elmindcs, u32elmindcs_to_itr)
 
 prep_enumr(uint32_t, prep_u32enumr, u32enumr_to_itr)
+
+prep_zip(size_t, uint32_t, prep_sizeu32zip, sizeu32zip_to_itr)
