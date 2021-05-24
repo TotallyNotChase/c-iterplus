@@ -31,7 +31,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterTakeWhile(T) CONCAT(IterTakeWhile, T)
+#define IterTakeWhile(T) ITPL_CONCAT(IterTakeWhile, T)
 
 /**
  * @def DefineIterTakeWhile(T)
@@ -84,7 +84,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_itertakewhile_func(T, Name)                                                                             \
-    static Maybe(T) CONCAT(IterTakeWhile(T), _nxt)(IterTakeWhile(T) * self)                                            \
+    static Maybe(T) ITPL_CONCAT(IterTakeWhile(T), _nxt)(IterTakeWhile(T) * self)                                            \
     {                                                                                                                  \
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \
@@ -97,6 +97,6 @@
         }                                                                                                              \
         return res;                                                                                                    \
     }                                                                                                                  \
-    impl_iterator(IterTakeWhile(T)*, T, Name, CONCAT(IterTakeWhile(T), _nxt))
+    impl_iterator(IterTakeWhile(T)*, T, Name, ITPL_CONCAT(IterTakeWhile(T), _nxt))
 
 #endif /* !LIB_ITPLUS_TAKEWHILE_H */

@@ -32,7 +32,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterDropWhile(T) CONCAT(IterDropWhile, T)
+#define IterDropWhile(T) ITPL_CONCAT(IterDropWhile, T)
 
 /**
  * @def DefineIterDropWhile(T)
@@ -85,7 +85,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterdropwhile_func(T, Name)                                                                             \
-    static Maybe(T) CONCAT(IterDropWhile(T), _nxt)(IterDropWhile(T) * self)                                            \
+    static Maybe(T) ITPL_CONCAT(IterDropWhile(T), _nxt)(IterDropWhile(T) * self)                                            \
     {                                                                                                                  \
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \
@@ -99,6 +99,6 @@
         }                                                                                                              \
         return Nothing(T);                                                                                             \
     }                                                                                                                  \
-    impl_iterator(IterDropWhile(T)*, T, Name, CONCAT(IterDropWhile(T), _nxt))
+    impl_iterator(IterDropWhile(T)*, T, Name, ITPL_CONCAT(IterDropWhile(T), _nxt))
 
 #endif /* !LIB_ITPLUS_DROPWHILE_H */

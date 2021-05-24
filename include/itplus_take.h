@@ -33,7 +33,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterTake(T) CONCAT(IterTake, T)
+#define IterTake(T) ITPL_CONCAT(IterTake, T)
 
 /**
  * @def DefineIterTake(T)
@@ -86,7 +86,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_itertake_func(T, Name)                                                                                  \
-    static Maybe(T) CONCAT(IterTake(T), _nxt)(IterTake(T) * self)                                                      \
+    static Maybe(T) ITPL_CONCAT(IterTake(T), _nxt)(IterTake(T) * self)                                                      \
     {                                                                                                                  \
         if (self->i < self->limit) {                                                                                   \
             ++(self->i);                                                                                               \
@@ -95,6 +95,6 @@
         }                                                                                                              \
         return Nothing(T);                                                                                             \
     }                                                                                                                  \
-    impl_iterator(IterTake(T)*, T, Name, CONCAT(IterTake(T), _nxt))
+    impl_iterator(IterTake(T)*, T, Name, ITPL_CONCAT(IterTake(T), _nxt))
 
 #endif /* !LIB_ITPLUS_TAKE_H */

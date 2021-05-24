@@ -31,7 +31,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterFilt(T) CONCAT(IterFilt, T)
+#define IterFilt(T) ITPL_CONCAT(IterFilt, T)
 
 /**
  * @def DefineIterFilt(T)
@@ -83,7 +83,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterfilt_func(T, Name)                                                                                  \
-    static Maybe(T) CONCAT(IterFilt(T), _nxt)(IterFilt(T) * self)                                                      \
+    static Maybe(T) ITPL_CONCAT(IterFilt(T), _nxt)(IterFilt(T) * self)                                                      \
     {                                                                                                                  \
         Iterable(T) const srcit = self->src;                                                                           \
         while (1) {                                                                                                    \
@@ -93,6 +93,6 @@
             }                                                                                                          \
         }                                                                                                              \
     }                                                                                                                  \
-    impl_iterator(IterFilt(T)*, T, Name, CONCAT(IterFilt(T), _nxt))
+    impl_iterator(IterFilt(T)*, T, Name, ITPL_CONCAT(IterFilt(T), _nxt))
 
 #endif /* !LIB_ITPLUS_FILT_H */

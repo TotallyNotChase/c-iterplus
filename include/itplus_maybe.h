@@ -41,7 +41,7 @@ typedef enum
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define Maybe(T) CONCAT(Maybe, T)
+#define Maybe(T) ITPL_CONCAT(Maybe, T)
 
 /**
  * @def DefineMaybe(T)
@@ -65,7 +65,7 @@ typedef enum
         /* Don't access this member manually */                                                                        \
         T val;                                                                                                         \
     } Maybe(T);                                                                                                        \
-    static inline T CONCAT(T, _from_just)(Maybe(T) maybex)                                                             \
+    static inline T ITPL_CONCAT(T, _from_just)(Maybe(T) maybex)                                                             \
     {                                                                                                                  \
         if (is_just(maybex)) {                                                                                         \
             return maybex.val;                                                                                         \
@@ -138,7 +138,7 @@ typedef enum
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  * @note Aborts the program if given #Maybe(T) struct was tagged with `Nothing`.
  */
-#define from_just(x, T) CONCAT(T, _from_just(x))
+#define from_just(x, T) ITPL_CONCAT(T, _from_just(x))
 
 /**
  * @def from_just_(x)

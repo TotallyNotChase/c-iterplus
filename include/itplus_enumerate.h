@@ -34,7 +34,7 @@
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only
  * alphanumerics.
  */
-#define IterEnumr(T) CONCAT(IterEnumr, T)
+#define IterEnumr(T) ITPL_CONCAT(IterEnumr, T)
 
 /**
  * @def DefineIterEnumr(T)
@@ -88,13 +88,13 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterenumr_func(T, Name)                                                                                 \
-    static Maybe(Pair(size_t, T)) CONCAT(IterEnumr(T), _nxt)(IterEnumr(T) * self)                                      \
+    static Maybe(Pair(size_t, T)) ITPL_CONCAT(IterEnumr(T), _nxt)(IterEnumr(T) * self)                                      \
     {                                                                                                                  \
         Iterable(T) srcit = self->src;                                                                                 \
         Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
         return is_just(res) ? Just(PairOf(self->i++, from_just_(res), size_t, T), Pair(size_t, T))                     \
                             : Nothing(Pair(size_t, T));                                                                \
     }                                                                                                                  \
-    impl_iterator(IterEnumr(T)*, Pair(size_t, T), Name, CONCAT(IterEnumr(T), _nxt))
+    impl_iterator(IterEnumr(T)*, Pair(size_t, T), Name, ITPL_CONCAT(IterEnumr(T), _nxt))
 
 #endif /* !LIB_ITPLUS_ENUMR_H */

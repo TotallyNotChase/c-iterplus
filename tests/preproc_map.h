@@ -24,7 +24,7 @@
 #define MAP_NARG_(...)                                    MAP_ARG_N(__VA_ARGS__)
 #define MAP_NARG(...)                                     MAP_NARG_(__VA_ARGS__, MAP_RSEQ_N())
 
-#define MAP_(N, f, ...) CONCAT(MAP_, N)(f, __VA_ARGS__)
+#define MAP_(N, f, ...) ITPL_CONCAT(MAP_, N)(f, __VA_ARGS__)
 #define MAP(f, ...)     MAP_(MAP_NARG(__VA_ARGS__), f, __VA_ARGS__)
 
 #endif /* !LIB_ITPLUS_PREPROC_MAP_H */

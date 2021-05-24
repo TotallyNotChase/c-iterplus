@@ -35,7 +35,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterDrop(T) CONCAT(IterDrop, T)
+#define IterDrop(T) ITPL_CONCAT(IterDrop, T)
 
 /**
  * @def DefineIterDrop(T)
@@ -88,7 +88,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterdrop_func(T, Name)                                                                                  \
-    static Maybe(T) CONCAT(IterDrop(T), _nxt)(IterDrop(T) * self)                                                      \
+    static Maybe(T) ITPL_CONCAT(IterDrop(T), _nxt)(IterDrop(T) * self)                                                      \
     {                                                                                                                  \
         Iterable(T) srcit = self->src;                                                                                 \
         foreach (T, x, srcit) {                                                                                        \
@@ -99,6 +99,6 @@
         }                                                                                                              \
         return Nothing(T);                                                                                             \
     }                                                                                                                  \
-    impl_iterator(IterDrop(T)*, T, Name, CONCAT(IterDrop(T), _nxt))
+    impl_iterator(IterDrop(T)*, T, Name, ITPL_CONCAT(IterDrop(T), _nxt))
 
 #endif /* !LIB_ITPLUS_DROP_H */

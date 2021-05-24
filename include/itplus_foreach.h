@@ -8,7 +8,7 @@
 
 #include "itplus_macro_utils.h"
 
-#define UNIQVAR(x) CONCAT(CONCAT(x, _4x2_), __LINE__) /* "Unique" variable name */
+#define UNIQVAR(x) ITPL_CONCAT(ITPL_CONCAT(x, _4x2_), __LINE__) /* "Unique" variable name */
 
 /**
  * @def foreach(T, x, it)

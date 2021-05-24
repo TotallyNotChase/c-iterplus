@@ -30,7 +30,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterChain(T) CONCAT(IterChain, T)
+#define IterChain(T) ITPL_CONCAT(IterChain, T)
 
 /**
  * @def DefineIterChain(T)
@@ -82,7 +82,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterchain_func(T, Name)                                                                                 \
-    static Maybe(T) CONCAT(IterChain(T), _nxt)(IterChain(T) * self)                                                    \
+    static Maybe(T) ITPL_CONCAT(IterChain(T), _nxt)(IterChain(T) * self)                                                    \
     {                                                                                                                  \
         Iterable(T) srcit = self->curr;                                                                                \
         Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
@@ -93,6 +93,6 @@
         Iterable(T) re_srcit = self->curr;                                                                             \
         return re_srcit.tc->next(re_srcit.self);                                                                       \
     }                                                                                                                  \
-    impl_iterator(IterChain(T)*, T, Name, CONCAT(IterChain(T), _nxt))
+    impl_iterator(IterChain(T)*, T, Name, ITPL_CONCAT(IterChain(T), _nxt))
 
 #endif /* !LIB_ITPLUS_CHAIN_H */

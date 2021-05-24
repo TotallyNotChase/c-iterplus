@@ -32,7 +32,7 @@
  * @note If `ElmntType` (or `FnRetType`) is a pointer, it needs to be typedef-ed into a type that does not contain the
  * `*`. Only alphanumerics.
  */
-#define IterMap(ElmntType, FnRetType) CONCAT(CONCAT(IterMap, ElmntType), FnRetType)
+#define IterMap(ElmntType, FnRetType) ITPL_CONCAT(ITPL_CONCAT(IterMap, ElmntType), FnRetType)
 
 /**
  * @def DefineIterMap(ElmntType, FnRetType)
@@ -89,7 +89,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_itermap_func(ElmntType, FnRetType, Name)                                                                \
-    static Maybe(FnRetType) CONCAT(IterMap(ElmntType, FnRetType), _nxt)(IterMap(ElmntType, FnRetType) * self)          \
+    static Maybe(FnRetType) ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt)(IterMap(ElmntType, FnRetType) * self)          \
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
         Maybe(ElmntType) res            = srcit.tc->next(srcit.self);                                                  \
@@ -98,6 +98,6 @@
         }                                                                                                              \
         return Just(self->f(from_just_(res)), FnRetType);                                                              \
     }                                                                                                                  \
-    impl_iterator(IterMap(ElmntType, FnRetType)*, FnRetType, Name, CONCAT(IterMap(ElmntType, FnRetType), _nxt))
+    impl_iterator(IterMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt))
 
 #endif /* !LIB_ITPLUS_MAP_H */

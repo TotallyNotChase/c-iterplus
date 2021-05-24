@@ -35,7 +35,7 @@
  * @note If `ElmntType` (or `FnRetType`) is a pointer, it needs to be typedef-ed into a type that does not contain the
  * `*`. Only alphanumerics.
  */
-#define IterFiltMap(ElmntType, FnRetType) CONCAT(CONCAT(IterFiltMap, ElmntType), FnRetType)
+#define IterFiltMap(ElmntType, FnRetType) ITPL_CONCAT(ITPL_CONCAT(IterFiltMap, ElmntType), FnRetType)
 
 /**
  * @def DefineIterFiltMap(ElmntType, FnRetType)
@@ -95,7 +95,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterfiltmap_func(ElmntType, FnRetType, Name)                                                            \
-    static Maybe(FnRetType) CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt)(IterFiltMap(ElmntType, FnRetType) * self)  \
+    static Maybe(FnRetType) ITPL_CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt)(IterFiltMap(ElmntType, FnRetType) * self)  \
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
         while (1) {                                                                                                    \
@@ -109,6 +109,6 @@
             }                                                                                                          \
         }                                                                                                              \
     }                                                                                                                  \
-    impl_iterator(IterFiltMap(ElmntType, FnRetType)*, FnRetType, Name, CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt))
+    impl_iterator(IterFiltMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt))
 
 #endif /* !LIB_ITPLUS_FILTMAP_H */

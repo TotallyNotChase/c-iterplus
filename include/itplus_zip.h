@@ -34,7 +34,7 @@
  * @note If `T`, or `U`, is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only
  * alphanumerics.
  */
-#define IterZip(T, U) CONCAT(CONCAT(IterZip, T), U)
+#define IterZip(T, U) ITPL_CONCAT(ITPL_CONCAT(IterZip, T), U)
 
 /**
  * @def DefineIterZip(T, U)
@@ -90,7 +90,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterzip_func(T, U, Name)                                                                                \
-    static Maybe(Pair(T, U)) CONCAT(IterZip(T, U), _nxt)(IterZip(T, U) * self)                                         \
+    static Maybe(Pair(T, U)) ITPL_CONCAT(IterZip(T, U), _nxt)(IterZip(T, U) * self)                                         \
     {                                                                                                                  \
         Iterable(T) asrcit = self->asrc;                                                                               \
         Iterable(U) bsrcit = self->bsrc;                                                                               \
@@ -104,6 +104,6 @@
         }                                                                                                              \
         return Just(PairOf(from_just_(ares), from_just_(bres), T, U), Pair(T, U));                                     \
     }                                                                                                                  \
-    impl_iterator(IterZip(T, U)*, Pair(T, U), Name, CONCAT(IterZip(T, U), _nxt))
+    impl_iterator(IterZip(T, U)*, Pair(T, U), Name, ITPL_CONCAT(IterZip(T, U), _nxt))
 
 #endif /* !LIB_ITPLUS_ZIP_H */

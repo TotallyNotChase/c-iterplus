@@ -26,7 +26,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define Iterator(T) CONCAT(T, Iterator)
+#define Iterator(T) ITPL_CONCAT(T, Iterator)
 
 /**
  * @def Iterable(T)
@@ -43,7 +43,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define Iterable(T) CONCAT(T, Iterable)
+#define Iterable(T) ITPL_CONCAT(T, Iterable)
 
 /**
  * @def DefineIteratorOf(T)
