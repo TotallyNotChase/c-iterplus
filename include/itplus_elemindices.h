@@ -32,7 +32,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterElemIndices(T) ITPL_CONCAT(IterElemIndices, T)
+#define IterElemIndices(T) ITPL_CONCAT(IterElemIndices_, T)
 
 /**
  * @def DefineIterElemIndices(T)

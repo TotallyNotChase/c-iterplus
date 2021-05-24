@@ -34,7 +34,7 @@
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only
  * alphanumerics.
  */
-#define IterEnumr(T) ITPL_CONCAT(IterEnumr, T)
+#define IterEnumr(T) ITPL_CONCAT(IterEnumr_, T)
 
 /**
  * @def DefineIterEnumr(T)

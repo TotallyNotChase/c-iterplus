@@ -32,7 +32,7 @@
  * @note If `ElmntType` (or `FnRetType`) is a pointer, it needs to be typedef-ed into a type that does not contain the
  * `*`. Only alphanumerics.
  */
-#define IterMap(ElmntType, FnRetType) ITPL_CONCAT(ITPL_CONCAT(IterMap, ElmntType), FnRetType)
+#define IterMap(ElmntType, FnRetType) ITPL_CONCAT(ITPL_CONCAT(IterMap_, ElmntType), ITPL_CONCAT(_, FnRetType))
 
 /**
  * @def DefineIterMap(ElmntType, FnRetType)

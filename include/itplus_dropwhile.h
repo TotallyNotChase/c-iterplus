@@ -32,7 +32,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterDropWhile(T) ITPL_CONCAT(IterDropWhile, T)
+#define IterDropWhile(T) ITPL_CONCAT(IterDropWhile_, T)
 
 /**
  * @def DefineIterDropWhile(T)

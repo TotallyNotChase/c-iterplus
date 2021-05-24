@@ -30,7 +30,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterChain(T) ITPL_CONCAT(IterChain, T)
+#define IterChain(T) ITPL_CONCAT(IterChain_, T)
 
 /**
  * @def DefineIterChain(T)

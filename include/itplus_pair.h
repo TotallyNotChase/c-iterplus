@@ -27,7 +27,7 @@
  * @note If `T`, or `U`, is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only
  * alphanumerics.
  */
-#define Pair(T, U) ITPL_CONCAT(ITPL_CONCAT(Pair, T), U)
+#define Pair(T, U) ITPL_CONCAT(ITPL_CONCAT(Pair_, T), ITPL_CONCAT(_, U))
 
 /**
  * @def DefinePair(T, U)

@@ -35,7 +35,7 @@
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define IterDrop(T) ITPL_CONCAT(IterDrop, T)
+#define IterDrop(T) ITPL_CONCAT(IterDrop_, T)
 
 /**
  * @def DefineIterDrop(T)

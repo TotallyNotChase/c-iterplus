@@ -41,7 +41,7 @@ typedef enum
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  */
-#define Maybe(T) ITPL_CONCAT(Maybe, T)
+#define Maybe(T) ITPL_CONCAT(Maybe_, T)
 
 /**
  * @def DefineMaybe(T)
