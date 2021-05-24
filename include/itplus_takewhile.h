@@ -84,7 +84,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_itertakewhile_func(T, Name)                                                                             \
-    static Maybe(T) ITPL_CONCAT(IterTakeWhile(T), _nxt)(IterTakeWhile(T) * self)                                            \
+    static Maybe(T) ITPL_CONCAT(IterTakeWhile(T), _nxt)(IterTakeWhile(T) * self)                                       \
     {                                                                                                                  \
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \

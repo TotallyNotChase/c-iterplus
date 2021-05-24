@@ -88,7 +88,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterenumr_func(T, Name)                                                                                 \
-    static Maybe(Pair(size_t, T)) ITPL_CONCAT(IterEnumr(T), _nxt)(IterEnumr(T) * self)                                      \
+    static Maybe(Pair(size_t, T)) ITPL_CONCAT(IterEnumr(T), _nxt)(IterEnumr(T) * self)                                 \
     {                                                                                                                  \
         Iterable(T) srcit = self->src;                                                                                 \
         Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \

@@ -89,7 +89,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_itermap_func(ElmntType, FnRetType, Name)                                                                \
-    static Maybe(FnRetType) ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt)(IterMap(ElmntType, FnRetType) * self)          \
+    static Maybe(FnRetType) ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt)(IterMap(ElmntType, FnRetType) * self)     \
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
         Maybe(ElmntType) res            = srcit.tc->next(srcit.self);                                                  \

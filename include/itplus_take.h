@@ -86,7 +86,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_itertake_func(T, Name)                                                                                  \
-    static Maybe(T) ITPL_CONCAT(IterTake(T), _nxt)(IterTake(T) * self)                                                      \
+    static Maybe(T) ITPL_CONCAT(IterTake(T), _nxt)(IterTake(T) * self)                                                 \
     {                                                                                                                  \
         if (self->i < self->limit) {                                                                                   \
             ++(self->i);                                                                                               \

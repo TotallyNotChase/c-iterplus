@@ -85,7 +85,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterelemindc_func(T, Name)                                                                              \
-    static Maybe(size_t) ITPL_CONCAT(IterElemIndices(T), _nxt)(IterElemIndices(T) * self)                                   \
+    static Maybe(size_t) ITPL_CONCAT(IterElemIndices(T), _nxt)(IterElemIndices(T) * self)                              \
     {                                                                                                                  \
         Iterable(T) srcit = self->src;                                                                                 \
         return is_just(srcit.tc->next(srcit.self)) ? Just(self->i++, size_t) : Nothing(size_t);                        \

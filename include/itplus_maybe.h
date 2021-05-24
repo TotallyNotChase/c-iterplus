@@ -65,7 +65,7 @@ typedef enum
         /* Don't access this member manually */                                                                        \
         T val;                                                                                                         \
     } Maybe(T);                                                                                                        \
-    static inline T ITPL_CONCAT(T, _from_just)(Maybe(T) maybex)                                                             \
+    static inline T ITPL_CONCAT(T, _from_just)(Maybe(T) maybex)                                                        \
     {                                                                                                                  \
         if (is_just(maybex)) {                                                                                         \
             return maybex.val;                                                                                         \

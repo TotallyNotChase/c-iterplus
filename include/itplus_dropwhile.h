@@ -85,7 +85,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterdropwhile_func(T, Name)                                                                             \
-    static Maybe(T) ITPL_CONCAT(IterDropWhile(T), _nxt)(IterDropWhile(T) * self)                                            \
+    static Maybe(T) ITPL_CONCAT(IterDropWhile(T), _nxt)(IterDropWhile(T) * self)                                       \
     {                                                                                                                  \
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \

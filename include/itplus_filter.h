@@ -83,7 +83,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterfilt_func(T, Name)                                                                                  \
-    static Maybe(T) ITPL_CONCAT(IterFilt(T), _nxt)(IterFilt(T) * self)                                                      \
+    static Maybe(T) ITPL_CONCAT(IterFilt(T), _nxt)(IterFilt(T) * self)                                                 \
     {                                                                                                                  \
         Iterable(T) const srcit = self->src;                                                                           \
         while (1) {                                                                                                    \

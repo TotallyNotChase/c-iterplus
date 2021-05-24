@@ -90,7 +90,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterzip_func(T, U, Name)                                                                                \
-    static Maybe(Pair(T, U)) ITPL_CONCAT(IterZip(T, U), _nxt)(IterZip(T, U) * self)                                         \
+    static Maybe(Pair(T, U)) ITPL_CONCAT(IterZip(T, U), _nxt)(IterZip(T, U) * self)                                    \
     {                                                                                                                  \
         Iterable(T) asrcit = self->asrc;                                                                               \
         Iterable(U) bsrcit = self->bsrc;                                                                               \

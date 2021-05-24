@@ -88,7 +88,7 @@
  * @note This should not be delimited by a semicolon.
  */
 #define define_iterdrop_func(T, Name)                                                                                  \
-    static Maybe(T) ITPL_CONCAT(IterDrop(T), _nxt)(IterDrop(T) * self)                                                      \
+    static Maybe(T) ITPL_CONCAT(IterDrop(T), _nxt)(IterDrop(T) * self)                                                 \
     {                                                                                                                  \
         Iterable(T) srcit = self->src;                                                                                 \
         foreach (T, x, srcit) {                                                                                        \
