@@ -16,7 +16,7 @@ else()
 endif()
 if(WIN32)
     # But ignore the Microsoft "Use *_s functions" warning
-    add_compile_options(-Wno-deprecated-declarations)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
 ##################################################
