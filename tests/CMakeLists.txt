@@ -11,6 +11,7 @@ set(HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/common.h
   ${CMAKE_CURRENT_SOURCE_DIR}/impls.h
   ${CMAKE_CURRENT_SOURCE_DIR}/sugar.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/preproc_map.h
 )
 
 set(EXCNAME iterplus_test)
