@@ -54,12 +54,10 @@ Iterable(uint32_t) prep_u32tkwhl(IterTakeWhile(uint32_t) * tkwhl, Iterable(uint3
 
 Iterable(uint32_t) prep_u32drpwhl(IterDropWhile(uint32_t) * drpwhl, Iterable(uint32_t) x, bool (*pred)(uint32_t));
 
-Iterable(size_t) prep_u32elmindcs(IterElemIndices(uint32_t) * elmindcs, Iterable(uint32_t) x);
-
 Iterable(Pair(size_t, uint32_t)) prep_u32enumr(IterEnumr(uint32_t) * enumr, Iterable(uint32_t) x);
 
-Iterable(Pair(size_t, uint32_t))
-    prep_sizeu32zip(IterZip(size_t, uint32_t) * zipstr, Iterable(size_t) x, Iterable(uint32_t) y);
+Iterable(Pair(uint32_t, uint32_t))
+    prep_u32u32zip(IterZip(uint32_t, uint32_t) * zipstr, Iterable(uint32_t) x, Iterable(uint32_t) y);
 
 /*
 Macro to generate a generic selection association list element.
@@ -213,7 +211,7 @@ the arguments are the function's argument types.
  * @return Iterable of the same type as the source iterables.
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
-#define takewhile(it, pred)                                                                                           \
+#define takewhile(it, pred)                                                                                            \
     itrble_selection((it), (uint32_t, prep_u32tkwhl))(                                                                 \
         itrble_selection((it), (uint32_t, &(IterTakeWhile(uint32_t)){0})), (it), (pred))
 
@@ -228,7 +226,7 @@ the arguments are the function's argument types.
  * @return Iterable of the same type as the source iterables.
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
-#define dropwhile(it, pred)                                                                                           \
+#define dropwhile(it, pred)                                                                                            \
     itrble_selection((it), (uint32_t, prep_u32drpwhl))(                                                                \
         itrble_selection((it), (uint32_t, &(IterDropWhile(uint32_t)){0})), (it), (pred))
 
@@ -264,19 +262,6 @@ the arguments are the function's argument types.
 #define fold(it, init, fn) fold_selection((it), (fn), fold_str_str, fold_str_u32)((it), (init), (fn))
 
 /**
- * @def elem_indices(it)
- * @brief Build an iterable that consists of the indices of the elements in given iterable `it`.
- *
- * @param it The source iterable.
- *
- * @return Iterable yielding `size_t` elements.
- * @note Iterating over the returned iterable also progresses the given iterable.
- */
-#define elem_indices(it)                                                                                               \
-    itrble_selection((it), (uint32_t, prep_u32elmindcs))(                                                              \
-        itrble_selection((it), (uint32_t, &(IterElemIndices(uint32_t)){0})), (it))
-
-/**
  * @def enumerate(it)
  * @brief Build an iterable that consists of a Pair of the indices and the elements in given iterable `it`.
  *
@@ -300,8 +285,8 @@ the arguments are the function's argument types.
  * @note Iterating over the returned iterable also progresses the given iterables.
  */
 #define zip(itx, ity)                                                                                                  \
-    itrble_selection((itx), (size_t, itrble_selection((ity), (uint32_t, prep_sizeu32zip))))(                           \
-        itrble_selection((itx), (size_t, itrble_selection((ity), (uint32_t, &(IterZip(size_t, uint32_t)){0})))),       \
+    itrble_selection((itx), (uint32_t, itrble_selection((ity), (uint32_t, prep_u32u32zip))))(                          \
+        itrble_selection((itx), (uint32_t, itrble_selection((ity), (uint32_t, &(IterZip(uint32_t, uint32_t)){0})))),   \
         (itx), (ity))
 
 #endif /* !LIB_ITPLUS_SUGAR_H */

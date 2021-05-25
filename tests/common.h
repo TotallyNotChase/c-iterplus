@@ -10,7 +10,6 @@
 #include "itplus_collect.h"
 #include "itplus_drop.h"
 #include "itplus_dropwhile.h"
-#include "itplus_elemindices.h"
 #include "itplus_enumerate.h"
 #include "itplus_filter.h"
 #include "itplus_filtermap.h"
@@ -75,11 +74,9 @@ DefineIterChain(uint32_t);
 DefineIterTakeWhile(uint32_t);
 /* Define `IterDropWhile` struct for uint32_t iterables */
 DefineIterDropWhile(uint32_t);
-/* Define `IterElemIndices` struct for `uint32_t` iterables */
-DefineIterElemIndices(uint32_t);
 /* Define `IterEnumr` struct for `uint32_t` iterables */
 DefineIterEnumr(uint32_t);
-/* Define `IterZip` struct for (`size_t`, `uint32_t`) iterables */
-DefineIterZip(size_t, uint32_t);
+/* Define `IterZip` struct for (`uint32_t`, `uint32_t`) iterables */
+DefineIterZip(uint32_t, uint32_t);
 
 #endif /* !LIB_ITPLUS_COMMON_H */

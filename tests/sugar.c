@@ -84,14 +84,6 @@
         return implfunc(drpwhl);                                                                                       \
     }
 
-/* Macro to define a function that turns a pre-allocated IterElemIndices struct into iterable */
-#define prep_elmindcs(T, Name, implfunc)                                                                               \
-    Iterable(size_t) Name(IterElemIndices(T) * elmindcs, Iterable(T) x)                                                \
-    {                                                                                                                  \
-        elmindcs->src = x;                                                                                             \
-        return implfunc(elmindcs);                                                                                     \
-    }
-
 /* Macro to define a function that turns a pre-allocated IterEnumr struct into iterable */
 #define prep_enumr(T, Name, implfunc)                                                                                  \
     Iterable(Pair(size_t, T)) Name(IterEnumr(T) * enumr, Iterable(T) x)                                                \
@@ -129,8 +121,6 @@ prep_tkwhl(uint32_t, prep_u32tkwhl, u32tkwhl_to_itr)
 
 prep_drpwhl(uint32_t, prep_u32drpwhl, u32drpwhl_to_itr)
 
-prep_elmindcs(uint32_t, prep_u32elmindcs, u32elmindcs_to_itr)
-
 prep_enumr(uint32_t, prep_u32enumr, u32enumr_to_itr)
 
-prep_zip(size_t, uint32_t, prep_sizeu32zip, sizeu32zip_to_itr)
+prep_zip(uint32_t, uint32_t, prep_u32u32zip, u32u32zip_to_itr)

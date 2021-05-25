@@ -10,7 +10,7 @@
 
 #define FIBSEQ_MINSZ 10U
 
-#define TEST_COUNT 14U
+#define TEST_COUNT 13U
 
 #define DECIMAL_BASE 10
 
@@ -437,25 +437,6 @@ static bool test_fold(void)
     return true;
 }
 
-static bool test_elem_indices(void)
-{
-    /* Get the element enumrted of the first FIBSEQ_MINSZ number of items from the fibonacci sequence */
-    Iterable(size_t) indices = elem_indices(take(get_fibitr(), FIBSEQ_MINSZ));
-    size_t i                 = 0;
-    foreach (size_t, x, indices) {
-        if (x != i) {
-            fprintf(stderr, "%s: Expected: %zu Actual: %zu\n", __func__, i, x);
-            return false;
-        }
-        i++;
-    }
-    if (i != FIBSEQ_MINSZ) {
-        fprintf(stderr, "%s: Expected: %zu Actual: %zu\n", __func__, (size_t)FIBSEQ_MINSZ, i);
-        return false;
-    }
-    return true;
-}
-
 static bool test_enumerate(void)
 {
     /* Build a fibonacci array, for verification later */
@@ -488,17 +469,17 @@ static bool test_enumerate(void)
 static bool test_zip(void)
 {
     /* Build a fibonacci array, for verification later */
-    uint32_t fibarr[FIBSEQ_MINSZ] = {0, 1};
-    for (size_t i = 2; i < FIBSEQ_MINSZ; i++) {
+    uint32_t fibarr[FIBSEQ_MINSZ + 1] = {0, 1};
+    for (size_t i = 2; i < FIBSEQ_MINSZ + 1; i++) {
         fibarr[i] = fibarr[i - 1] + fibarr[i - 2];
     }
 
-    /* Simulate `enumerate` with `zip` and `elem_indices` */
-    Iterable(Pair(size_t, uint32_t)) enumrted = zip(elem_indices(get_fibitr()), take(get_fibitr(), FIBSEQ_MINSZ));
-    size_t i                                  = 0;
-    foreach (Pair(size_t, uint32_t), x, enumrted) {
-        if (fst(x) != i) {
-            fprintf(stderr, "%s: Expected: %zu Actual: %zu\n", __func__, i, fst(x));
+    /* Zip together 2 fibonacci iterators, the first of which is shifted to the right by one element */
+    Iterable(Pair(uint32_t, uint32_t)) enumrted = zip(drop(get_fibitr(), 1), take(get_fibitr(), FIBSEQ_MINSZ));
+    size_t i                                    = 0;
+    foreach (Pair(uint32_t, uint32_t), x, enumrted) {
+        if (fst(x) != fibarr[i + 1]) {
+            fprintf(stderr, "%s: Expected: %" PRIu32 " Actual: %" PRIu32 "\n", __func__, fibarr[i + 1], fst(x));
             return false;
         }
         if (snd(x) != fibarr[i]) {
@@ -549,9 +530,6 @@ int main(void)
         passed++;
     }
     if (test_fold()) {
-        passed++;
-    }
-    if (test_elem_indices()) {
         passed++;
     }
     if (test_enumerate()) {
