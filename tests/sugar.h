@@ -203,7 +203,7 @@ the arguments are the function's argument types.
 #define reduce(it, fn) itrble_selection((it), (uint32_t, reduce_u32))(it, fn)
 
 /**
- * @def take_while(it, pred)
+ * @def takewhile(it, pred)
  * @brief Build an iterable that continuously consumes elements from given `it` while `pred` is satisfied.
  *
  * @param it The source iterable.
@@ -213,7 +213,7 @@ the arguments are the function's argument types.
  * @return Iterable of the same type as the source iterables.
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
-#define take_while(it, pred)                                                                                           \
+#define takewhile(it, pred)                                                                                           \
     itrble_selection((it), (uint32_t, prep_u32tkwhl))(                                                                 \
         itrble_selection((it), (uint32_t, &(IterTakeWhile(uint32_t)){0})), (it), (pred))
 

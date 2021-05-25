@@ -301,7 +301,7 @@ static bool test_reduce(void)
     return true;
 }
 
-static bool test_take_while(void)
+static bool test_takewhile(void)
 {
     /* Build an array of the first odd fibonacci numbers, for verification later */
     uint32_t prev                       = 0;
@@ -318,7 +318,7 @@ static bool test_take_while(void)
     }
 
     /* Take the longest prefix of odd numbers from the infinite fibonacci sequence */
-    Iterable(uint32_t) first_odds = take_while(get_fibitr(), is_odd);
+    Iterable(uint32_t) first_odds = takewhile(get_fibitr(), is_odd);
 
     size_t i = 0;
     foreach (uint32_t, n, first_odds) {
@@ -355,7 +355,7 @@ static bool test_drop_while(void)
     }
 
     /* Take the longest prefix of odd numbers from the infinite fibonacci sequence */
-    Iterable(uint32_t) odds_after_evens = take_while(drop_while(get_fibitr(), is_even), is_odd);
+    Iterable(uint32_t) odds_after_evens = takewhile(drop_while(get_fibitr(), is_even), is_odd);
 
     size_t i = 0;
     foreach (uint32_t, n, odds_after_evens) {
@@ -539,7 +539,7 @@ int main(void)
     if (test_reduce()) {
         passed++;
     }
-    if (test_take_while()) {
+    if (test_takewhile()) {
         passed++;
     }
     if (test_drop_while()) {
