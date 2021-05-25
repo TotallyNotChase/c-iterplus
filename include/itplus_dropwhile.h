@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Macros for implementing the `takeWhile` abstraction using the `IterDropWhile` struct.
+ * @brief Macros for implementing the `dropWhile` abstraction using the `IterDropWhile` struct.
  *
  * https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#v:dropWhile
  * An IterDropWhile struct is a struct that stores a source iterable, a predicate function, and a flag to indicate
