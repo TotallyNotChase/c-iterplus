@@ -218,7 +218,7 @@ the arguments are the function's argument types.
         itrble_selection((it), (uint32_t, &(IterTakeWhile(uint32_t)){0})), (it), (pred))
 
 /**
- * @def drop_while(it, pred)
+ * @def dropwhile(it, pred)
  * @brief Build an iterable that continuously drops elements from given `it` until `pred` is no longer satisfied.
  *
  * @param it The source iterable.
@@ -228,7 +228,7 @@ the arguments are the function's argument types.
  * @return Iterable of the same type as the source iterables.
  * @note Iterating over the returned iterable also progresses the given iterable.
  */
-#define drop_while(it, pred)                                                                                           \
+#define dropwhile(it, pred)                                                                                           \
     itrble_selection((it), (uint32_t, prep_u32drpwhl))(                                                                \
         itrble_selection((it), (uint32_t, &(IterDropWhile(uint32_t)){0})), (it), (pred))
 
