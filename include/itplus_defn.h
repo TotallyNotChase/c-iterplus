@@ -10,7 +10,6 @@
 #include "itplus_collect.h"
 #include "itplus_drop.h"
 #include "itplus_dropwhile.h"
-#include "itplus_elemindices.h"
 #include "itplus_enumerate.h"
 #include "itplus_filter.h"
 #include "itplus_filtermap.h"
@@ -39,6 +38,7 @@
  * // Maybe(T)
  * // Pair(size_t, T)
  * // Pair(T, T)
+ * // Maybe(Pair(size_t, T))
  * // Maybe(Pair(T, T))
  * // Iterator(T)
  * // Iterator(Pair(size_t, T))
@@ -61,7 +61,7 @@
 #define Iterplus(T)                                                                                                    \
     DefineMaybe(T) DefinePair(size_t, T);                                                                              \
     DefinePair(T, T);                                                                                                  \
-    DefineMaybe(Pair(size_t, uint32_t)) DefineIteratorOf(T);                                                           \
+    DefineMaybe(Pair(size_t, T)) DefineMaybe(Pair(T, T)) DefineIteratorOf(T);                                          \
     DefineIteratorOf(Pair(size_t, T));                                                                                 \
     DefineIteratorOf(Pair(T, T));                                                                                      \
     DefineIterTake(T);                                                                                                 \
@@ -74,6 +74,7 @@
     DefineIterDropWhile(T);                                                                                            \
     DefineIterEnumr(T);                                                                                                \
     DefineIterZip(T, T)
+
 /**
  * @def DeclIterplus(T, takefn, dropfn, mapfn, filterfn, reducefn, foldfn, filter_mapfn, chainfn, takewhilefn,
  * dropwhilefn, enumeratefn, zipfn, collectfn)
