@@ -519,7 +519,9 @@ typedef enum
     }                                                                                                                  \
     impl_iterator(IterChain(T)*, T, Name, ITPL_CONCAT(IterChain(T), _nxt))
 
+#ifndef ITPLUS_COLLECT_BUFSZ
 #define ITPLUS_COLLECT_BUFSZ 64
+#endif /* !ITPLUS_COLLECT_BUFSZ */
 
 /**
  * @def define_itercollect_func(T, Name)

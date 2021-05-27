@@ -15,7 +15,9 @@
 
 #include <stdlib.h>
 
+#ifndef ITPLUS_COLLECT_BUFSZ
 #define ITPLUS_COLLECT_BUFSZ 64
+#endif /* !ITPLUS_COLLECT_BUFSZ */
 
 /**
  * @def define_itercollect_func(T, Name)
