@@ -154,4 +154,20 @@ typedef enum
  */
 #define from_just_(x) (x).val
 
+/**
+ * @def fmap_maybe(x, fn, R)
+ * @brief Map the function `fn` over `x` to construct a `Maybe(R)`.
+ *
+ * @param x The `Maybe` type to map over.
+ * @param fn The function to map over the value inside the `Maybe` (if any). Should be of type `R (*)(T x)`. Where `T`
+ * is the type of value contained within `x`.
+ * @param R The return type of the mapping function.
+ *
+ * @return If `x` had a value, a `Maybe(B)` with a `Just` value after mapping `fn`. Otherwise, a `Maybe(B)` as
+ * `Nothing`.
+ *
+ * @note This uses `x` twice. Do not use it with an `x` that may have side effects.
+ */
+#define fmap_maybe(x, fn, R) is_nothing(x) ? Nothing(R) : Just(fn(from_just_(x)), R)
+
 #endif /* !LIB_ITPLUS_MAYBE_H */
