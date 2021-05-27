@@ -81,7 +81,19 @@
  *
  * // Implement `Iterator` for `IterFiltMap(int, int)`
  * // The defined function has the signature- `Iterable(int) wrap_intitrfiltmp(IterFiltMap(int, int)* x)`
- * define_itertake_func(int, wrap_intitrfiltmp)
+ * define_iterfiltmap_func(int, int, wrap_intitrfiltmp)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Filter evens and then increment the even numbers
+ * static Maybe(int) is_even_incr(int x) { return x % 2 == 0 ? Just(x + 1, int) : Nothing(int); }
+ * @endcode
+ *
+ * @code
+ * // Filter Map `it` (of type `Iterable(int)`) by `is_even_incr`
+ * Iterable(int) incr_evens = wrap_intitrfiltmp(&(IterFiltMap(int, int)){ .f = is_even_incr, .src = it });
  * @endcode
  *
  * @param ElmntType The type of value the `Iterable` wrapped in this `IterFiltMap` will yield.

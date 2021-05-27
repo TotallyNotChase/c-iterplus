@@ -79,6 +79,13 @@
  * define_iterzip_func(int, char, wrap_intchrzip)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Zip together `intit` (of type `Iterable(int)`) and `chrit` (of type `Iterable(char)`)
+ * Iterable(Pair(int, char)) int_chr_it = wrap_intchrzip(&(IterZip(int, char)){ .asrc = intit, .bsrc = chrit });
+ * @endcode
+ *
  * @param T The type of value the first `Iterable` wrapped in this `IterZip` will yield.
  * @param U The type of value the second `Iterable` wrapped in this `IterZip` will yield.
  * @param Name Name to define the function as.

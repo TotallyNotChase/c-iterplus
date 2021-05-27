@@ -78,6 +78,13 @@
  * define_iterenumr_func(int, wrap_intenumr)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Enumerate `it` (of type `Iterable(int)`) to create a new iterable
+ * Iterable(Pair(size_t, int)) enumerated = wrap_intenumr(&(IterEnumr(int)){ .src = it });
+ * @endcode
+ *
  * @param T The type of value the first `Iterable` wrapped in this `IterEnumr` will yield.
  * @param Name Name to define the function as.
  *

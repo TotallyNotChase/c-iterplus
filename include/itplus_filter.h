@@ -74,6 +74,17 @@
  * define_iterfilt_func(int, wrap_intitrfilt)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * static bool is_even(int x) { return x % 2 == 0; }
+ * @endcode
+ *
+ * @code
+ * // Filter `it` (of type `Iterable(int)`) by `is_even`
+ * Iterable(int) evens = wrap_intitrfilt(&(IterFilt(int)){ .pred = is_even, .src = it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterFilt` will yield.
  * @param Name Name to define the function as.
  *

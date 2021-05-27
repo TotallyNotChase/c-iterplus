@@ -73,6 +73,13 @@
  * define_iterchain_func(int, wrap_intitrchn)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Chain together fst_it and snd_it (both of type `Iterable(int)`)
+ * Iterable(int) it = wrap_intitrchn(&(IterChain(int)){ .curr = fst_it, .nxt = snd_it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterChain` will yield.
  * @param Name Name to define the function as.
  *

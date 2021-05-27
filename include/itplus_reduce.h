@@ -23,6 +23,26 @@
  *
  * This defined function will consume the given iterable.
  *
+ * # Example
+ *
+ * @code
+ * // The defined function has the signature:-
+ * // `Maybe(int) int_reduce(Iterable(int), int (*f)(int acc, int x))`
+ * define_iterreduce_func(int, int_reduce)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Add 2 ints
+ * static int add(int a, int b) { return a + b; }
+ * @endcode
+ *
+ * @code
+ * // Reduce `it` (of type `Iterable(int)`) with `add`
+ * Maybe(int) maybe_sum = int_reduce(it, add);
+ * @endcode
+ *
  * @param T The type of value the `Iterable`, for which this is being implemented, yields.
  * @param Name Name to define the function as.
  *

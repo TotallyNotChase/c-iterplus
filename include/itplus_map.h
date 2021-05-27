@@ -76,7 +76,19 @@
  *
  * // Implement `Iterator` for `IterMap(int, int)`
  * // The defined function has the signature- `Iterable(int) wrap_intitrmp(IterMap(int, int)* x)`
- * define_itertake_func(int, wrap_intitrmp)
+ * define_itermap_func(int, int, wrap_intitrmp)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Decrement an int
+ * static int decr(int a) { return a - 1; }
+ * @endcode
+ *
+ * @code
+ * // Map `decr` over `it` (of type `Iterable(int)`)
+ * Iterable(int) decr_it = wrap_intitrmp(&(IterMap(int, int)){ .f = decr, .src = it });
  * @endcode
  *
  * @param ElmntType The type of value the `Iterable` wrapped in this `IterMap` will yield.

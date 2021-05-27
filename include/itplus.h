@@ -490,6 +490,13 @@ typedef enum
  * define_iterchain_func(int, wrap_intitrchn)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Chain together fst_it and snd_it (both of type `Iterable(int)`)
+ * Iterable(int) it = wrap_intitrchn(&(IterChain(int)){ .curr = fst_it, .nxt = snd_it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterChain` will yield.
  * @param Name Name to define the function as.
  *
@@ -523,11 +530,25 @@ typedef enum
  *
  * This defined function will consume the given iterable.
  *
- * The returned array must be freed.
+ * # Example
+ *
+ * @code
+ * // Defines a function with the signature- `int* collect_int(Iterable(int) x, size_t* len)`
+ * define_itercollect_func(int, collect_int)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * size_t arrlen = 0;
+ * // Collect `it` (of type `Iterable(int)`) into an array
+ * int* intarr = collect_int(it, &arrlen);
+ * @endcode
  *
  * @param T The type of value the `Iterable`, for which this is being implemented, yields.
  * @param Name Name to define the function as.
  *
+ * @note The returned array must be freed.
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  * @note An #Iterator(T) for the given `T` **must** also exist.
  */
@@ -614,6 +635,13 @@ typedef enum
  * define_iterdrop_func(int, wrap_intitrdrp)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Drop (skip) the first 10 elements from `it` (of type `Iterable(int)`) and create a new iterable
+ * Iterable(int) after10 = wrap_intitrdrp(&(IterDrop(int)){ .limit = 10, .src = it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterDrop` will yield.
  * @param Name Name to define the function as.
  *
@@ -694,6 +722,17 @@ typedef enum
  * // Implement `Iterator` for `IterDropWhile(int)`
  * // The defined function has the signature- `Iterable(int) wrap_intitrdrpwhl(IterDropWhile(int)* x)`
  * define_iterdropwhile_func(int, wrap_intitrdrpwhl)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * static bool is_even(int x) { return x % 2 == 0; }
+ * @endcode
+ *
+ * @code
+ * // Drop (skip) elements from `it` (of type `Iterable(int)`), while they satisfy `is_even`, and create a new iterable
+ * Iterable(int) after_evens = wrap_intitrdrpwhl(&(IterDropWhile(int)){ .pred = is_even, .src = it });
  * @endcode
  *
  * @param T The type of value the `Iterable` wrapped in this `IterDropWhile` will yield.
@@ -858,6 +897,13 @@ typedef enum
  * define_iterenumr_func(int, wrap_intenumr)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Enumerate `it` (of type `Iterable(int)`) to create a new iterable
+ * Iterable(Pair(size_t, int)) enumerated = wrap_intenumr(&(IterEnumr(int)){ .src = it });
+ * @endcode
+ *
  * @param T The type of value the first `Iterable` wrapped in this `IterEnumr` will yield.
  * @param Name Name to define the function as.
  *
@@ -934,6 +980,17 @@ typedef enum
  * // Implement `Iterator` for `IterFilt(int)`
  * // The defined function has the signature- `Iterable(int) wrap_intitrfilt(IterFilt(int)* x)`
  * define_iterfilt_func(int, wrap_intitrfilt)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * static bool is_even(int x) { return x % 2 == 0; }
+ * @endcode
+ *
+ * @code
+ * // Filter `it` (of type `Iterable(int)`) by `is_even`
+ * Iterable(int) evens = wrap_intitrfilt(&(IterFilt(int)){ .pred = is_even, .src = it });
  * @endcode
  *
  * @param T The type of value the `Iterable` wrapped in this `IterFilt` will yield.
@@ -1023,7 +1080,19 @@ typedef enum
  *
  * // Implement `Iterator` for `IterFiltMap(int, int)`
  * // The defined function has the signature- `Iterable(int) wrap_intitrfiltmp(IterFiltMap(int, int)* x)`
- * define_itertake_func(int, wrap_intitrfiltmp)
+ * define_iterfiltmap_func(int, int, wrap_intitrfiltmp)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Filter evens and then increment the even numbers
+ * static Maybe(int) is_even_incr(int x) { return x % 2 == 0 ? Just(x + 1, int) : Nothing(int); }
+ * @endcode
+ *
+ * @code
+ * // Filter Map `it` (of type `Iterable(int)`) by `is_even_incr`
+ * Iterable(int) incr_evens = wrap_intitrfiltmp(&(IterFiltMap(int, int)){ .f = is_even_incr, .src = it });
  * @endcode
  *
  * @param ElmntType The type of value the `Iterable` wrapped in this `IterFiltMap` will yield.
@@ -1064,6 +1133,28 @@ typedef enum
  * onto it.
  *
  * This defined function will consume the given iterable.
+ *
+ * # Example
+ *
+ * @code
+ * typedef struct boxint { int x; } BoxInt;
+ *
+ * // The defined function has the signature:-
+ * // `BoxInt int_boxint_fold(Iterable(int), BoxInt init, BoxInt (*f)(BoxInt acc, int x))`
+ * define_iterfold_func(int, boxint, int_boxint_fold)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Add 2 ints within 2 BoxInts
+ * static BoxInt boxed_add(BoxInt a, BoxInt b) { return (BoxInt){ .x = a.x + b.x }; }
+ * @endcode
+ *
+ * @code
+ * // Fold `it` with `boxed_add`
+ * BoxInt boxed_sum = int_boxint_fold(it, (BoxInt){0}, boxed_add);
+ * @endcode
  *
  * @param T The type of value the `Iterable`, for which this is being implemented, yields.
  * @param Acc The accumulator type the fold function being defined should work on.
@@ -1147,7 +1238,19 @@ typedef enum
  *
  * // Implement `Iterator` for `IterMap(int, int)`
  * // The defined function has the signature- `Iterable(int) wrap_intitrmp(IterMap(int, int)* x)`
- * define_itertake_func(int, wrap_intitrmp)
+ * define_itermap_func(int, int, wrap_intitrmp)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Decrement an int
+ * static int decr(int a) { return a - 1; }
+ * @endcode
+ *
+ * @code
+ * // Map `decr` over `it` (of type `Iterable(int)`)
+ * Iterable(int) decr_it = wrap_intitrmp(&(IterMap(int, int)){ .f = decr, .src = it });
  * @endcode
  *
  * @param ElmntType The type of value the `Iterable` wrapped in this `IterMap` will yield.
@@ -1181,6 +1284,26 @@ typedef enum
  * If the given iterable was empty, `Nothing` is returned. Otherwise, a `Just` value is returned.
  *
  * This defined function will consume the given iterable.
+ *
+ * # Example
+ *
+ * @code
+ * // The defined function has the signature:-
+ * // `Maybe(int) int_reduce(Iterable(int), int (*f)(int acc, int x))`
+ * define_iterreduce_func(int, int_reduce)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Add 2 ints
+ * static int add(int a, int b) { return a + b; }
+ * @endcode
+ *
+ * @code
+ * // Reduce `it` (of type `Iterable(int)`) with `add`
+ * Maybe(int) maybe_sum = int_reduce(it, add);
+ * @endcode
  *
  * @param T The type of value the `Iterable`, for which this is being implemented, yields.
  * @param Name Name to define the function as.
@@ -1263,6 +1386,13 @@ typedef enum
  * define_itertake_func(int, wrap_intitrtk)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Take the first 10 elements from `it` (of type `Iterable(int)`)
+ * Iterable(int) it10 = wrap_intitrtk(&(IterTake(int)){ .limit = 10, .src = it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterTake` will yield.
  * @param Name Name to define the function as.
  *
@@ -1339,8 +1469,19 @@ typedef enum
  * DefineIterTakeWhile(int);
  *
  * // Implement `Iterator` for `IterTakeWhile(int)`
- * // The defined function has the signature- `Iterable(int) wrap_intitrtk(IterTakeWhile(int)* x)`
- * define_itertakewhile_func(int, wrap_intitrtk)
+ * // The defined function has the signature- `Iterable(int) wrap_intitrtkwhl(IterTakeWhile(int)* x)`
+ * define_itertakewhile_func(int, wrap_intitrtkwhl)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * * @code
+ * static bool is_even(int x) { return x % 2 == 0; }
+ * @endcode
+ *
+ * @code
+ * // Take elements from `it` (of type `Iterable(int)`), while they satisfy `is_even`, and create a new iterable
+ * Iterable(int) first_evens = wrap_intitrtkwhl(&(IterTakeWhile(int)){ .pred = is_even, .src = it });
  * @endcode
  *
  * @param T The type of value the `Iterable` wrapped in this `IterTakeWhile` will yield.
@@ -1429,6 +1570,13 @@ typedef enum
  * // Implement `Iterator` for `IterZip(int, char)`
  * // The defined function has the signature- `Iterable(Pair(int, char)) wrap_intchrzip(IterZip(int, char)* x)`
  * define_iterzip_func(int, char, wrap_intchrzip)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Zip together `intit` (of type `Iterable(int)`) and `chrit` (of type `Iterable(char)`)
+ * Iterable(Pair(int, char)) int_chr_it = wrap_intchrzip(&(IterZip(int, char)){ .asrc = intit, .bsrc = chrit });
  * @endcode
  *
  * @param T The type of value the first `Iterable` wrapped in this `IterZip` will yield.

@@ -71,8 +71,19 @@
  * DefineIterTakeWhile(int);
  *
  * // Implement `Iterator` for `IterTakeWhile(int)`
- * // The defined function has the signature- `Iterable(int) wrap_intitrtk(IterTakeWhile(int)* x)`
- * define_itertakewhile_func(int, wrap_intitrtk)
+ * // The defined function has the signature- `Iterable(int) wrap_intitrtkwhl(IterTakeWhile(int)* x)`
+ * define_itertakewhile_func(int, wrap_intitrtkwhl)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * * @code
+ * static bool is_even(int x) { return x % 2 == 0; }
+ * @endcode
+ *
+ * @code
+ * // Take elements from `it` (of type `Iterable(int)`), while they satisfy `is_even`, and create a new iterable
+ * Iterable(int) first_evens = wrap_intitrtkwhl(&(IterTakeWhile(int)){ .pred = is_even, .src = it });
  * @endcode
  *
  * @param T The type of value the `Iterable` wrapped in this `IterTakeWhile` will yield.

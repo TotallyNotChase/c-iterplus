@@ -79,6 +79,13 @@
  * define_iterdrop_func(int, wrap_intitrdrp)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Drop (skip) the first 10 elements from `it` (of type `Iterable(int)`) and create a new iterable
+ * Iterable(int) after10 = wrap_intitrdrp(&(IterDrop(int)){ .limit = 10, .src = it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterDrop` will yield.
  * @param Name Name to define the function as.
  *

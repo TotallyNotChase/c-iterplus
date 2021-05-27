@@ -76,6 +76,17 @@
  * define_iterdropwhile_func(int, wrap_intitrdrpwhl)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * static bool is_even(int x) { return x % 2 == 0; }
+ * @endcode
+ *
+ * @code
+ * // Drop (skip) elements from `it` (of type `Iterable(int)`), while they satisfy `is_even`, and create a new iterable
+ * Iterable(int) after_evens = wrap_intitrdrpwhl(&(IterDropWhile(int)){ .pred = is_even, .src = it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterDropWhile` will yield.
  * @param Name Name to define the function as.
  *

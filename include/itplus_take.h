@@ -77,6 +77,13 @@
  * define_itertake_func(int, wrap_intitrtk)
  * @endcode
  *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Take the first 10 elements from `it` (of type `Iterable(int)`)
+ * Iterable(int) it10 = wrap_intitrtk(&(IterTake(int)){ .limit = 10, .src = it });
+ * @endcode
+ *
  * @param T The type of value the `Iterable` wrapped in this `IterTake` will yield.
  * @param Name Name to define the function as.
  *

@@ -21,6 +21,28 @@
  *
  * This defined function will consume the given iterable.
  *
+ * # Example
+ *
+ * @code
+ * typedef struct boxint { int x; } BoxInt;
+ *
+ * // The defined function has the signature:-
+ * // `BoxInt int_boxint_fold(Iterable(int), BoxInt init, BoxInt (*f)(BoxInt acc, int x))`
+ * define_iterfold_func(int, boxint, int_boxint_fold)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * // Add 2 ints within 2 BoxInts
+ * static BoxInt boxed_add(BoxInt a, BoxInt b) { return (BoxInt){ .x = a.x + b.x }; }
+ * @endcode
+ *
+ * @code
+ * // Fold `it` (of type `Iterable(int)`) with `boxed_add`
+ * BoxInt boxed_sum = int_boxint_fold(it, (BoxInt){0}, boxed_add);
+ * @endcode
+ *
  * @param T The type of value the `Iterable`, for which this is being implemented, yields.
  * @param Acc The accumulator type the fold function being defined should work on.
  * @param Name Name to define the function as.

@@ -22,15 +22,29 @@
  * @brief Define the `collect` function for an iterable.
  *
  * The defined function takes in an iterable of type `T`, and turns it into an array. Each element of said array
- * is of type `T`.
+ * is of type `T`. Nothing is implicitly cloned. The same values from the iterable are assigned to the array.
  *
  * This defined function will consume the given iterable.
  *
- * The returned array must be freed.
+ * # Example
+ *
+ * @code
+ * // Defines a function with the signature- `int* collect_int(Iterable(int) x, size_t* len)`
+ * define_itercollect_func(int, collect_int)
+ * @endcode
+ *
+ * Usage of the defined function-
+ *
+ * @code
+ * size_t arrlen = 0;
+ * // Collect `it` (of type `Iterable(int)`) into an array
+ * int* intarr = collect_int(it, &arrlen);
+ * @endcode
  *
  * @param T The type of value the `Iterable`, for which this is being implemented, yields.
  * @param Name Name to define the function as.
  *
+ * @note The returned array must be freed.
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
  * @note An #Iterator(T) for the given `T` **must** also exist.
  */
