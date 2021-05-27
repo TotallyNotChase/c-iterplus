@@ -6,7 +6,26 @@
 #ifndef LIB_ITPLUS_COMMON_H
 #define LIB_ITPLUS_COMMON_H
 
-#include "itplus.h"
+#include "itplus_chain.h"
+#include "itplus_collect.h"
+#include "itplus_defn.h"
+#include "itplus_drop.h"
+#include "itplus_dropwhile.h"
+#include "itplus_enumerate.h"
+#include "itplus_filter.h"
+#include "itplus_filtermap.h"
+#include "itplus_fold.h"
+#include "itplus_foreach.h"
+#include "itplus_iterator.h"
+#include "itplus_macro_utils.h"
+#include "itplus_map.h"
+#include "itplus_maybe.h"
+#include "itplus_pair.h"
+#include "itplus_reduce.h"
+#include "itplus_take.h"
+#include "itplus_takewhile.h"
+#include "itplus_typeclass.h"
+#include "itplus_zip.h"
 
 #include <stdint.h>
 
