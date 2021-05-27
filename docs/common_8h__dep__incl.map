@@ -1,0 +1,7 @@
+<map id="tests/common.h" name="tests/common.h">
+<area shape="rect" id="node1" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="125,5,241,32"/>
+<area shape="rect" id="node2" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="5,155,103,181"/>
+<area shape="rect" id="node3" href="$impls_8h.html" title="Declarations of utilities, structs, and functions for which iterator and iterplus utilities have been..." alt="" coords="92,80,189,107"/>
+<area shape="rect" id="node4" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="178,229,277,256"/>
+<area shape="rect" id="node5" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="178,155,277,181"/>
+</map>

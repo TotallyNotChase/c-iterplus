@@ -1,0 +1,23 @@
+<map id="include/itplus_typeclass.h" name="include/itplus_typeclass.h">
+<area shape="rect" id="node1" title="Utilities to define a typeclass and its instance." alt="" coords="815,5,987,32"/>
+<area shape="rect" id="node2" href="$itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="1074,229,1214,256"/>
+<area shape="rect" id="node3" href="$common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="1139,304,1255,331"/>
+<area shape="rect" id="node8" href="$itplus__iterator_8h.html" title="Utilities to define and implement an Iterable." alt="" coords="1120,80,1276,107"/>
+<area shape="rect" id="node4" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="1019,453,1116,480"/>
+<area shape="rect" id="node5" href="$impls_8h.html" title="Declarations of utilities, structs, and functions for which iterator and iterplus utilities have been..." alt="" coords="1106,379,1203,405"/>
+<area shape="rect" id="node6" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="1192,528,1290,555"/>
+<area shape="rect" id="node7" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="1192,453,1290,480"/>
+<area shape="rect" id="node9" href="$itplus__chain_8h.html" title="Macros for implementing the chain abstraction using the IterChain struct." alt="" coords="1341,155,1488,181"/>
+<area shape="rect" id="node10" href="$itplus__collect_8h.html" title="Macros for implementing the collect abstraction." alt="" coords="1512,155,1666,181"/>
+<area shape="rect" id="node11" href="$itplus__drop_8h.html" title="Macros for implementing the drop abstraction using the IterDrop struct." alt="" coords="1690,155,1832,181"/>
+<area shape="rect" id="node12" href="$itplus__dropwhile_8h.html" title="Macros for implementing the dropWhile abstraction using the IterDropWhile struct." alt="" coords="1856,155,2026,181"/>
+<area shape="rect" id="node13" href="$itplus__enumerate_8h.html" title="Macros for implementing the zip abstraction using the IterEnumr struct." alt="" coords="2051,155,2228,181"/>
+<area shape="rect" id="node14" href="$itplus__filter_8h.html" title="Macros for implementing the filter abstraction using the IterFilt struct." alt="" coords="2252,155,2392,181"/>
+<area shape="rect" id="node15" href="$itplus__filtermap_8h.html" title="Macros for implementing the filter_map abstraction." alt="" coords="29,155,194,181"/>
+<area shape="rect" id="node16" href="$itplus__fold_8h.html" title="Macros for implementing the foldl abstraction." alt="" coords="218,155,354,181"/>
+<area shape="rect" id="node17" href="$itplus__map_8h.html" title="Macros for implementing the map abstraction." alt="" coords="378,155,520,181"/>
+<area shape="rect" id="node18" href="$itplus__reduce_8h.html" title="Macros for implementing the reduce/foldl1 abstraction." alt="" coords="544,155,698,181"/>
+<area shape="rect" id="node19" href="$itplus__take_8h.html" title="Macros for implementing the take abstraction using the IterTake struct." alt="" coords="722,155,864,181"/>
+<area shape="rect" id="node20" href="$itplus__takewhile_8h.html" title="Macros for implementing the takeWhile abstraction using the IterTakeWhile struct." alt="" coords="938,155,1109,181"/>
+<area shape="rect" id="node21" href="$itplus__zip_8h.html" title="Macros for implementing the zip abstraction using the IterZip struct." alt="" coords="1184,155,1317,181"/>
+</map>

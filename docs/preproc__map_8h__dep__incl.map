@@ -1,0 +1,5 @@
+<map id="tests/preproc_map.h" name="tests/preproc_map.h">
+<area shape="rect" id="node1" title="Macro to map a given function/macro over VA_ARGS &#45; supports upto 8 arguments." alt="" coords="5,5,147,32"/>
+<area shape="rect" id="node2" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="27,80,125,107"/>
+<area shape="rect" id="node3" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="27,155,125,181"/>
+</map>

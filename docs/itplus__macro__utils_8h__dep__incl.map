@@ -1,0 +1,27 @@
+<map id="include/itplus_macro_utils.h" name="include/itplus_macro_utils.h">
+<area shape="rect" id="node1" title="General utility macros." alt="" coords="1595,5,1736,47"/>
+<area shape="rect" id="node2" href="$itplus__chain_8h.html" title="Macros for implementing the chain abstraction using the IterChain struct." alt="" coords="1632,244,1779,271"/>
+<area shape="rect" id="node4" href="$common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="1457,393,1573,420"/>
+<area shape="rect" id="node9" href="$itplus__drop_8h.html" title="Macros for implementing the drop abstraction using the IterDrop struct." alt="" coords="627,244,768,271"/>
+<area shape="rect" id="node10" href="$itplus__dropwhile_8h.html" title="Macros for implementing the dropWhile abstraction using the IterDropWhile struct." alt="" coords="221,244,392,271"/>
+<area shape="rect" id="node11" href="$itplus__enumerate_8h.html" title="Macros for implementing the zip abstraction using the IterEnumr struct." alt="" coords="2353,244,2530,271"/>
+<area shape="rect" id="node12" href="$itplus__filter_8h.html" title="Macros for implementing the filter abstraction using the IterFilt struct." alt="" coords="1803,244,1943,271"/>
+<area shape="rect" id="node13" href="$itplus__filtermap_8h.html" title="Macros for implementing the filter_map abstraction." alt="" coords="1968,244,2133,271"/>
+<area shape="rect" id="node14" href="$itplus__foreach_8h.html" title="Definition of the foreach macro." alt="" coords="537,169,695,196"/>
+<area shape="rect" id="node18" href="$itplus__iterator_8h.html" title="Utilities to define and implement an Iterable." alt="" coords="1299,169,1455,196"/>
+<area shape="rect" id="node19" href="$itplus__map_8h.html" title="Macros for implementing the map abstraction." alt="" coords="1149,244,1291,271"/>
+<area shape="rect" id="node20" href="$itplus__take_8h.html" title="Macros for implementing the take abstraction using the IterTake struct." alt="" coords="1416,244,1557,271"/>
+<area shape="rect" id="node21" href="$itplus__takewhile_8h.html" title="Macros for implementing the takeWhile abstraction using the IterTakeWhile struct." alt="" coords="2157,244,2328,271"/>
+<area shape="rect" id="node22" href="$itplus__zip_8h.html" title="Macros for implementing the zip abstraction using the IterZip struct." alt="" coords="2605,244,2739,271"/>
+<area shape="rect" id="node23" href="$itplus__maybe_8h.html" title="Utilities to define and use a Maybe type." alt="" coords="1531,95,1685,121"/>
+<area shape="rect" id="node24" href="$itplus__pair_8h.html" title="Utilities to define and use a Pair type." alt="" coords="2497,169,2634,196"/>
+<area shape="rect" id="node25" href="$preproc__map_8h.html" title="Macro to map a given function/macro over VA_ARGS &#45; supports upto 8 arguments." alt="" coords="5,319,147,345"/>
+<area shape="rect" id="node3" href="$itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="1391,319,1531,345"/>
+<area shape="rect" id="node5" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="1466,543,1563,569"/>
+<area shape="rect" id="node6" href="$impls_8h.html" title="Declarations of utilities, structs, and functions for which iterator and iterplus utilities have been..." alt="" coords="1379,468,1477,495"/>
+<area shape="rect" id="node7" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="1379,617,1477,644"/>
+<area shape="rect" id="node8" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="1292,543,1391,569"/>
+<area shape="rect" id="node15" href="$itplus__collect_8h.html" title="Macros for implementing the collect abstraction." alt="" coords="792,244,947,271"/>
+<area shape="rect" id="node16" href="$itplus__fold_8h.html" title="Macros for implementing the foldl abstraction." alt="" coords="467,244,603,271"/>
+<area shape="rect" id="node17" href="$itplus__reduce_8h.html" title="Macros for implementing the reduce/foldl1 abstraction." alt="" coords="971,244,1125,271"/>
+</map>

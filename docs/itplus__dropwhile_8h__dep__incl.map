@@ -1,0 +1,9 @@
+<map id="include/itplus_dropwhile.h" name="include/itplus_dropwhile.h">
+<area shape="rect" id="node1" title="Macros for implementing the dropWhile abstraction using the IterDropWhile struct." alt="" coords="98,5,269,32"/>
+<area shape="rect" id="node2" href="$itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="60,80,200,107"/>
+<area shape="rect" id="node3" href="$common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="125,155,241,181"/>
+<area shape="rect" id="node4" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="5,304,103,331"/>
+<area shape="rect" id="node5" href="$impls_8h.html" title="Declarations of utilities, structs, and functions for which iterator and iterplus utilities have been..." alt="" coords="92,229,189,256"/>
+<area shape="rect" id="node6" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="178,379,277,405"/>
+<area shape="rect" id="node7" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="178,304,277,331"/>
+</map>

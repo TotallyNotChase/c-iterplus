@@ -1,0 +1,6 @@
+<map id="tests/impls.h" name="tests/impls.h">
+<area shape="rect" id="node1" title="Declarations of utilities, structs, and functions for which iterator and iterplus utilities have been..." alt="" coords="92,5,189,32"/>
+<area shape="rect" id="node2" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="5,80,103,107"/>
+<area shape="rect" id="node3" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="134,155,233,181"/>
+<area shape="rect" id="node4" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="178,80,277,107"/>
+</map>
