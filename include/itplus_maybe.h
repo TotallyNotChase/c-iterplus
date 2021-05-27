@@ -90,7 +90,7 @@ typedef enum
  * @param T The type of value the `Maybe` will hold. Must be alphanumeric.
  *
  * @note If `T` is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only alphanumerics.
- * @note The value is simply assigned to the #Maybe(T) struct. No implicit copying is done.
+ * @note The value is simply assigned to the #Maybe(T) struct. No implicit cloning is done.
  */
 #define Just(v, T) ((Maybe(T)){.tag = MaybeTag_Just, .val = (v)})
 

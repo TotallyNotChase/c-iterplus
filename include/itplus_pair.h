@@ -71,7 +71,7 @@
  * @note If `T`, or `U`, is a pointer, it needs to be typedef-ed into a type that does not contain the `*`. Only
  * alphanumerics.
  * @note A #Pair(T, U) for given `T` and `U` must exist.
- * @note The values are simply assigned to the #Pair(T, U) struct. No implicit copying is done.
+ * @note The values are simply assigned to the #Pair(T, U) struct. No implicit cloning is done.
  */
 #define PairOf(x, y, T, U) ((Pair(T, U)){.a = (x), .b = (y)})
 
