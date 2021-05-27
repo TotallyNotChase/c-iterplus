@@ -219,6 +219,22 @@ typedef enum
 #define from_just_(x) (x).val
 
 /**
+ * @def fmap_maybe(x, fn, R)
+ * @brief Map the function `fn` over `x` to construct a `Maybe(R)`.
+ *
+ * @param x The `Maybe` type to map over.
+ * @param fn The function to map over the value inside the `Maybe` (if any). Should be of type `R (*)(T x)`. Where `T`
+ * is the type of value contained within `x`.
+ * @param R The return type of the mapping function.
+ *
+ * @return If `x` had a value, a `Maybe(B)` with a `Just` value after mapping `fn`. Otherwise, a `Maybe(B)` as
+ * `Nothing`.
+ *
+ * @note This uses `x` twice. Do not use it with an `x` that may have side effects.
+ */
+#define fmap_maybe(x, fn, R) is_nothing(x) ? Nothing(R) : Just(fn(from_just_(x)), R)
+
+/**
  * @def Iterator(T)
  * @brief Convenience macro to get the type of the Iterator (typeclass) with given element type.
  *
@@ -1193,10 +1209,7 @@ typedef enum
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
         Maybe(ElmntType) res            = srcit.tc->next(srcit.self);                                                  \
-        if (is_nothing(res)) {                                                                                         \
-            return Nothing(FnRetType);                                                                                 \
-        }                                                                                                              \
-        return Just(self->f(from_just_(res)), FnRetType);                                                              \
+        return fmap_maybe(res, self->f, FnRetType);                                                                    \
     }                                                                                                                  \
     impl_iterator(IterMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt))
 
@@ -1543,6 +1556,7 @@ typedef enum
  * // Maybe(T)
  * // Pair(size_t, T)
  * // Pair(T, T)
+ * // Maybe(Pair(size_t, T))
  * // Maybe(Pair(T, T))
  * // Iterator(T)
  * // Iterator(Pair(size_t, T))

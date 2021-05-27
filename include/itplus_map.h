@@ -105,10 +105,7 @@
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
         Maybe(ElmntType) res            = srcit.tc->next(srcit.self);                                                  \
-        if (is_nothing(res)) {                                                                                         \
-            return Nothing(FnRetType);                                                                                 \
-        }                                                                                                              \
-        return Just(self->f(from_just_(res)), FnRetType);                                                              \
+        return fmap_maybe(res, self->f, FnRetType);                                                                    \
     }                                                                                                                  \
     impl_iterator(IterMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt))
 
