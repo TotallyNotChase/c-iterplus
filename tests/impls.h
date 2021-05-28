@@ -50,7 +50,7 @@ Iterable(uint32_t) stru32filtmap_to_itr(IterFiltMap(string, uint32_t) * x);
 Iterable(NumType) strnumtypefiltmap_to_itr(IterFiltMap(string, NumType) * x);
 string fold_str_str(Iterable(string) it, string init, string (*f)(string acc, string x));
 uint32_t fold_str_u32(Iterable(string) it, uint32_t init, uint32_t (*f)(uint32_t acc, string x));
- 
+
 /* Declaration for `Iterplus(uint32_t)` map support to uint32_t -> NumType */
 Iterable(NumType) u32numtypemap_to_itr(IterMap(uint32_t, NumType) * x);
 

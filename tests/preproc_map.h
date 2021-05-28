@@ -1,7 +1,7 @@
 /**
  * @file
  * Macro to map a given function/macro over __VA_ARGS__ - supports upto 8 arguments.
- * 
+ *
  * https://stackoverflow.com/questions/1872220/is-it-possible-to-iterate-over-arguments-in-variadic-macros
  */
 
