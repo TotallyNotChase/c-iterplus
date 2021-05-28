@@ -3,8 +3,7 @@
  * @brief "Syntactic sugar". Convenience macros for using the iterplus utilities.
  *
  * These examples use C11's `_Generic` to statically dispatch to the correct functions based on the
- * type of the iterplus structs. Syntax sugar, as you may know them. This is the definitions of those sugar
- * macros.
+ * type of the iterplus structs. Syntax sugar, as you may know them. These are the definitions of those sugar macros.
  *
  * Unfortunately (or fortunately), `_Generic` resolves during compile time, not preprocess time. This means the
  * expressions allowed within `_Generic` are much stricter than what you'd be able to get away with in regular macros.

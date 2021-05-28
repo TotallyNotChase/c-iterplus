@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Macros for implementing the `map` abstraction.
+ * @brief Macros for implementing the `map` abstraction using the `IterMap` struct.
  *
  * https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#v:map
  * An IterMap struct is a struct that stores a mapping function within it, as well as the source iterable.

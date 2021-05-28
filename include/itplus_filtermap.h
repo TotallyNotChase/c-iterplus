@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Macros for implementing the `filter_map` abstraction.
+ * @brief Macros for implementing the `filter_map` abstraction using the `IterFiltMap` struct.
  *
  * https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter_map
  * An IterFiltMap struct is a struct that stores a filter-mapping function within it, as well as the source iterable.
