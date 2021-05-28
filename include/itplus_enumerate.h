@@ -1,8 +1,8 @@
 /**
  * @file
- * @brief Macros for implementing the `zip` abstraction using the `IterEnumr` struct.
+ * @brief Macros for implementing the `enumerate` abstraction using the `IterEnumr` struct.
  *
- * https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#v:zip
+ * https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate
  * An IterEnumr struct is a struct that stores an iterable, and its iteration index. Its `next` function implementation
  * that returns a `Pair` of 2 elements, first being the index, and second being an element from the source iterable.
  */
