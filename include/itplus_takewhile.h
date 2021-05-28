@@ -100,8 +100,8 @@
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \
         }                                                                                                              \
-        Iterable(T) srcit = self->src;                                                                                 \
-        Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
+        Iterable(T) const srcit = self->src;                                                                           \
+        Maybe(T) const res      = srcit.tc->next(srcit.self);                                                          \
         if (is_nothing(res) || !self->pred(from_just_(res))) {                                                         \
             self->done = true;                                                                                         \
             return Nothing(T);                                                                                         \

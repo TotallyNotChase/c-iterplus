@@ -97,7 +97,7 @@
 #define define_iterdrop_func(T, Name)                                                                                  \
     static Maybe(T) ITPL_CONCAT(IterDrop(T), _nxt)(IterDrop(T) * self)                                                 \
     {                                                                                                                  \
-        Iterable(T) srcit = self->src;                                                                                 \
+        Iterable(T) const srcit = self->src;                                                                           \
         foreach (T, x, srcit) {                                                                                        \
             if (self->i >= self->limit) {                                                                              \
                 return Just(x, T);                                                                                     \

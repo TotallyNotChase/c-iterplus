@@ -97,7 +97,7 @@
     {                                                                                                                  \
         if (self->i < self->limit) {                                                                                   \
             ++(self->i);                                                                                               \
-            Iterable(T) srcit = self->src;                                                                             \
+            Iterable(T) const srcit = self->src;                                                                       \
             return srcit.tc->next(srcit.self);                                                                         \
         }                                                                                                              \
         return Nothing(T);                                                                                             \

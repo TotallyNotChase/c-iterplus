@@ -53,7 +53,7 @@
 #define define_iterreduce_func(T, Name)                                                                                \
     Maybe(T) Name(Iterable(T) it, T (*f)(T acc, T x))                                                                  \
     {                                                                                                                  \
-        Maybe(T) res = it.tc->next(it.self);                                                                           \
+        Maybe(T) const res = it.tc->next(it.self);                                                                     \
         if (is_nothing(res)) {                                                                                         \
             return Nothing(T);                                                                                         \
         }                                                                                                              \

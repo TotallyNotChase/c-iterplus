@@ -91,8 +91,8 @@
 #define define_iterchain_func(T, Name)                                                                                 \
     static Maybe(T) ITPL_CONCAT(IterChain(T), _nxt)(IterChain(T) * self)                                               \
     {                                                                                                                  \
-        Iterable(T) srcit = self->curr;                                                                                \
-        Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
+        Iterable(T) const srcit = self->curr;                                                                          \
+        Maybe(T) const res      = srcit.tc->next(srcit.self);                                                          \
         if (is_just(res)) {                                                                                            \
             return res;                                                                                                \
         }                                                                                                              \

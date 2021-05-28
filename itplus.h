@@ -524,8 +524,8 @@ typedef enum
 #define define_iterchain_func(T, Name)                                                                                 \
     static Maybe(T) ITPL_CONCAT(IterChain(T), _nxt)(IterChain(T) * self)                                               \
     {                                                                                                                  \
-        Iterable(T) srcit = self->curr;                                                                                \
-        Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
+        Iterable(T) const srcit = self->curr;                                                                          \
+        Maybe(T) const res      = srcit.tc->next(srcit.self);                                                          \
         if (is_just(res)) {                                                                                            \
             return res;                                                                                                \
         }                                                                                                              \
@@ -671,7 +671,7 @@ typedef enum
 #define define_iterdrop_func(T, Name)                                                                                  \
     static Maybe(T) ITPL_CONCAT(IterDrop(T), _nxt)(IterDrop(T) * self)                                                 \
     {                                                                                                                  \
-        Iterable(T) srcit = self->src;                                                                                 \
+        Iterable(T) const srcit = self->src;                                                                           \
         foreach (T, x, srcit) {                                                                                        \
             if (self->i >= self->limit) {                                                                              \
                 return Just(x, T);                                                                                     \
@@ -767,7 +767,7 @@ typedef enum
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \
         }                                                                                                              \
-        Iterable(T) srcit = self->src;                                                                                 \
+        Iterable(T) const srcit = self->src;                                                                           \
         foreach (T, x, srcit) {                                                                                        \
             if (!self->pred(x)) {                                                                                      \
                 self->done = true;                                                                                     \
@@ -858,8 +858,8 @@ typedef enum
 #define define_iterenumr_func(T, Name)                                                                                 \
     static Maybe(Pair(size_t, T)) ITPL_CONCAT(IterEnumr(T), _nxt)(IterEnumr(T) * self)                                 \
     {                                                                                                                  \
-        Iterable(T) srcit = self->src;                                                                                 \
-        Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
+        Iterable(T) const srcit = self->src;                                                                           \
+        Maybe(T) const res      = srcit.tc->next(srcit.self);                                                          \
         return is_just(res) ? Just(PairOf(self->i++, from_just_(res), size_t, T), Pair(size_t, T))                     \
                             : Nothing(Pair(size_t, T));                                                                \
     }                                                                                                                  \
@@ -947,12 +947,12 @@ typedef enum
     static Maybe(T) ITPL_CONCAT(IterFilt(T), _nxt)(IterFilt(T) * self)                                                 \
     {                                                                                                                  \
         Iterable(T) const srcit = self->src;                                                                           \
-        while (1) {                                                                                                    \
-            Maybe(T) res = srcit.tc->next(srcit.self);                                                                 \
-            if (is_nothing(res) || self->pred(from_just_(res))) {                                                      \
-                return res;                                                                                            \
+        foreach (T, el, srcit) {                                                                                       \
+            if (self->pred(el)) {                                                                                      \
+                return Just(el, T);                                                                                    \
             }                                                                                                          \
         }                                                                                                              \
+        return Nothing(T);                                                                                             \
     }                                                                                                                  \
     impl_iterator(IterFilt(T)*, T, Name, ITPL_CONCAT(IterFilt(T), _nxt))
 
@@ -1052,16 +1052,13 @@ typedef enum
         ITPL_CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt)(IterFiltMap(ElmntType, FnRetType) * self)                 \
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
-        while (1) {                                                                                                    \
-            Maybe(ElmntType) res = srcit.tc->next(srcit.self);                                                         \
-            if (is_nothing(res)) {                                                                                     \
-                return Nothing(FnRetType);                                                                             \
-            }                                                                                                          \
-            Maybe(FnRetType) mapped = self->f(from_just_(res));                                                        \
+        foreach (ElmntType, el, srcit) {                                                                               \
+            Maybe(FnRetType) const mapped = self->f(el);                                                               \
             if (is_just(mapped)) {                                                                                     \
                 return mapped;                                                                                         \
             }                                                                                                          \
         }                                                                                                              \
+        return Nothing(FnRetType);                                                                                     \
     }                                                                                                                  \
     impl_iterator(                                                                                                     \
         IterFiltMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt))
@@ -1208,7 +1205,7 @@ typedef enum
     static Maybe(FnRetType) ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt)(IterMap(ElmntType, FnRetType) * self)     \
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
-        Maybe(ElmntType) res            = srcit.tc->next(srcit.self);                                                  \
+        Maybe(ElmntType) const res      = srcit.tc->next(srcit.self);                                                  \
         return fmap_maybe(res, self->f, FnRetType);                                                                    \
     }                                                                                                                  \
     impl_iterator(IterMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt))
@@ -1254,7 +1251,7 @@ typedef enum
 #define define_iterreduce_func(T, Name)                                                                                \
     Maybe(T) Name(Iterable(T) it, T (*f)(T acc, T x))                                                                  \
     {                                                                                                                  \
-        Maybe(T) res = it.tc->next(it.self);                                                                           \
+        Maybe(T) const res = it.tc->next(it.self);                                                                     \
         if (is_nothing(res)) {                                                                                         \
             return Nothing(T);                                                                                         \
         }                                                                                                              \
@@ -1345,7 +1342,7 @@ typedef enum
     {                                                                                                                  \
         if (self->i < self->limit) {                                                                                   \
             ++(self->i);                                                                                               \
-            Iterable(T) srcit = self->src;                                                                             \
+            Iterable(T) const srcit = self->src;                                                                       \
             return srcit.tc->next(srcit.self);                                                                         \
         }                                                                                                              \
         return Nothing(T);                                                                                             \
@@ -1437,8 +1434,8 @@ typedef enum
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \
         }                                                                                                              \
-        Iterable(T) srcit = self->src;                                                                                 \
-        Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
+        Iterable(T) const srcit = self->src;                                                                           \
+        Maybe(T) const res      = srcit.tc->next(srcit.self);                                                          \
         if (is_nothing(res) || !self->pred(from_just_(res))) {                                                         \
             self->done = true;                                                                                         \
             return Nothing(T);                                                                                         \
@@ -1531,13 +1528,13 @@ typedef enum
 #define define_iterzip_func(T, U, Name)                                                                                \
     static Maybe(Pair(T, U)) ITPL_CONCAT(IterZip(T, U), _nxt)(IterZip(T, U) * self)                                    \
     {                                                                                                                  \
-        Iterable(T) asrcit = self->asrc;                                                                               \
-        Iterable(U) bsrcit = self->bsrc;                                                                               \
-        Maybe(T) ares      = asrcit.tc->next(asrcit.self);                                                             \
+        Iterable(T) const asrcit = self->asrc;                                                                         \
+        Iterable(U) const bsrcit = self->bsrc;                                                                         \
+        Maybe(T) const ares      = asrcit.tc->next(asrcit.self);                                                       \
         if (is_nothing(ares)) {                                                                                        \
             return Nothing(Pair(T, U));                                                                                \
         }                                                                                                              \
-        Maybe(U) bres = bsrcit.tc->next(bsrcit.self);                                                                  \
+        Maybe(U) const bres = bsrcit.tc->next(bsrcit.self);                                                            \
         if (is_nothing(bres)) {                                                                                        \
             return Nothing(Pair(T, U));                                                                                \
         }                                                                                                              \

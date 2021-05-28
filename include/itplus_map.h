@@ -104,7 +104,7 @@
     static Maybe(FnRetType) ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt)(IterMap(ElmntType, FnRetType) * self)     \
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
-        Maybe(ElmntType) res            = srcit.tc->next(srcit.self);                                                  \
+        Maybe(ElmntType) const res      = srcit.tc->next(srcit.self);                                                  \
         return fmap_maybe(res, self->f, FnRetType);                                                                    \
     }                                                                                                                  \
     impl_iterator(IterMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterMap(ElmntType, FnRetType), _nxt))

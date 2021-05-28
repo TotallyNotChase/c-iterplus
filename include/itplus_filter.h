@@ -9,6 +9,7 @@
 #ifndef LIB_ITPLUS_FILT_H
 #define LIB_ITPLUS_FILT_H
 
+#include "itplus_foreach.h"
 #include "itplus_iterator.h"
 #include "itplus_macro_utils.h"
 #include "itplus_maybe.h"
@@ -97,12 +98,12 @@
     static Maybe(T) ITPL_CONCAT(IterFilt(T), _nxt)(IterFilt(T) * self)                                                 \
     {                                                                                                                  \
         Iterable(T) const srcit = self->src;                                                                           \
-        while (1) {                                                                                                    \
-            Maybe(T) res = srcit.tc->next(srcit.self);                                                                 \
-            if (is_nothing(res) || self->pred(from_just_(res))) {                                                      \
-                return res;                                                                                            \
+        foreach (T, el, srcit) {                                                                                       \
+            if (self->pred(el)) {                                                                                      \
+                return Just(el, T);                                                                                    \
             }                                                                                                          \
         }                                                                                                              \
+        return Nothing(T);                                                                                             \
     }                                                                                                                  \
     impl_iterator(IterFilt(T)*, T, Name, ITPL_CONCAT(IterFilt(T), _nxt))
 

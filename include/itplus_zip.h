@@ -99,13 +99,13 @@
 #define define_iterzip_func(T, U, Name)                                                                                \
     static Maybe(Pair(T, U)) ITPL_CONCAT(IterZip(T, U), _nxt)(IterZip(T, U) * self)                                    \
     {                                                                                                                  \
-        Iterable(T) asrcit = self->asrc;                                                                               \
-        Iterable(U) bsrcit = self->bsrc;                                                                               \
-        Maybe(T) ares      = asrcit.tc->next(asrcit.self);                                                             \
+        Iterable(T) const asrcit = self->asrc;                                                                         \
+        Iterable(U) const bsrcit = self->bsrc;                                                                         \
+        Maybe(T) const ares      = asrcit.tc->next(asrcit.self);                                                       \
         if (is_nothing(ares)) {                                                                                        \
             return Nothing(Pair(T, U));                                                                                \
         }                                                                                                              \
-        Maybe(U) bres = bsrcit.tc->next(bsrcit.self);                                                                  \
+        Maybe(U) const bres = bsrcit.tc->next(bsrcit.self);                                                            \
         if (is_nothing(bres)) {                                                                                        \
             return Nothing(Pair(T, U));                                                                                \
         }                                                                                                              \

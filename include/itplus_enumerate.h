@@ -97,8 +97,8 @@
 #define define_iterenumr_func(T, Name)                                                                                 \
     static Maybe(Pair(size_t, T)) ITPL_CONCAT(IterEnumr(T), _nxt)(IterEnumr(T) * self)                                 \
     {                                                                                                                  \
-        Iterable(T) srcit = self->src;                                                                                 \
-        Maybe(T) res      = srcit.tc->next(srcit.self);                                                                \
+        Iterable(T) const srcit = self->src;                                                                           \
+        Maybe(T) const res      = srcit.tc->next(srcit.self);                                                          \
         return is_just(res) ? Just(PairOf(self->i++, from_just_(res), size_t, T), Pair(size_t, T))                     \
                             : Nothing(Pair(size_t, T));                                                                \
     }                                                                                                                  \

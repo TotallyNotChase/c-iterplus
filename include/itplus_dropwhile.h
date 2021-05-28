@@ -101,7 +101,7 @@
         if (self->done) {                                                                                              \
             return Nothing(T);                                                                                         \
         }                                                                                                              \
-        Iterable(T) srcit = self->src;                                                                                 \
+        Iterable(T) const srcit = self->src;                                                                           \
         foreach (T, x, srcit) {                                                                                        \
             if (!self->pred(x)) {                                                                                      \
                 self->done = true;                                                                                     \

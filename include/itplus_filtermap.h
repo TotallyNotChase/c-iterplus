@@ -11,6 +11,7 @@
 #ifndef LIB_ITPLUS_FILTMAP_H
 #define LIB_ITPLUS_FILTMAP_H
 
+#include "itplus_foreach.h"
 #include "itplus_iterator.h"
 #include "itplus_macro_utils.h"
 #include "itplus_maybe.h"
@@ -111,16 +112,13 @@
         ITPL_CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt)(IterFiltMap(ElmntType, FnRetType) * self)                 \
     {                                                                                                                  \
         Iterable(ElmntType) const srcit = self->src;                                                                   \
-        while (1) {                                                                                                    \
-            Maybe(ElmntType) res = srcit.tc->next(srcit.self);                                                         \
-            if (is_nothing(res)) {                                                                                     \
-                return Nothing(FnRetType);                                                                             \
-            }                                                                                                          \
-            Maybe(FnRetType) mapped = self->f(from_just_(res));                                                        \
+        foreach (ElmntType, el, srcit) {                                                                               \
+            Maybe(FnRetType) const mapped = self->f(el);                                                               \
             if (is_just(mapped)) {                                                                                     \
                 return mapped;                                                                                         \
             }                                                                                                          \
         }                                                                                                              \
+        return Nothing(FnRetType);                                                                                     \
     }                                                                                                                  \
     impl_iterator(                                                                                                     \
         IterFiltMap(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(IterFiltMap(ElmntType, FnRetType), _nxt))
