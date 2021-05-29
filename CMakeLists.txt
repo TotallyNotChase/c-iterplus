@@ -29,9 +29,10 @@ set(LIBNAME iterplus)
 add_library(${LIBNAME} INTERFACE)
 
 # Add the headers to the library interface
-target_include_directories(${LIBNAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(${LIBNAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Set standard to C99
 target_compile_features(${LIBNAME} INTERFACE c_std_99)
 
 add_subdirectory(tests)
+add_subdirectory(samples)
