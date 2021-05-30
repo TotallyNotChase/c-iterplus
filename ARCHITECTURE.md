@@ -2,7 +2,7 @@
 This document aims to describe the file structure and contents of this project.
 
 # Root
-The root directory contains the `itplus.h` header file, which is a single header version of the full library.
+The root directory contains the `itplus.h` header file, which is a single header version of the full library. It contains every header present in [include](#include).
 
 # include
 The include directory contains all the header files for the `iterplus` interface library.

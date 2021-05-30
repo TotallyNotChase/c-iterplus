@@ -50,15 +50,15 @@ Output-
 > fl
 
 Just like the [polymorphic iterators](https://github.com/TotallyNotChase/c-iterators), most of the abstractions are also implemented using [The Typeclass Pattern](https://github.com/TotallyNotChase/c-iterators/Typeclass%20Pattern.md). A polymorphism pattern based around actions, similar to **Haskell typeclasses**, **Java/C# interfaces**, or **Rust traits**. This pattern aims for-
-* Extensibility (through static dispatch)
-* Minimal runtime cost (the only cost being the dynamic dispatch)
+* Extensibility (through dynamic dispatch)
+* Minimal runtime cost (the only *real cost* being the dynamic dispatch)
 * No dynamic memory allocations
 * Type safety is a first class concern
 
 The term "Iterplus" is shamelessly ~~stolen~~ borrowed from [the original iterplus](https://github.com/Aplet123/iterplus).
 
 Information about file structure and file contents is described in [ARCHITECTURE](./ARCHITECTURE.md).
-You can find the generated docs and general information [here]().
+You can find the generated docs and general information [here](https://totallynotchase.github.io/c-iterplus/).
 
 # Highlights
 * Wrtten in pure, standard C (C99 for the actual utilities, C11 for extra syntactic sugar)
@@ -86,7 +86,7 @@ You can also implement your own abstractions using the same pattern. Refer to [S
 # Usage
 Just include `itplus.h` and get to using it!
 
-Before anything, you should familiarize yourself with the basics of these iterators. Discussed in [c-iterators](https://github.com/TotallyNotChase/c-iterators). You just need to know how to iterate through iterables though.
+Before anything, you should familiarize yourself with the basics of these iterators. Discussed in [c-iterators](https://github.com/TotallyNotChase/c-iterators). You just need to know how to iterate through iterables though. TL;DR- you use the [`foreach`](./include/itplus_foreach.h) macro to iterate over an iterable.
 
 Refer to [tests](./tests/main.c) or [samples](./samples/main.c) to look at how to implement the utilities. In general the pattern goes like this-
 1. Define the iterplus structs required to define the specific utilities. Include it in a header.
@@ -107,12 +107,12 @@ Refer to [tests](./tests/main.c) or [samples](./samples/main.c) to look at how t
 
 There's also the `IterPlus`, `DeclIterPlus`, and `DefnIterPlus` macro to define/declare all iterplus utility structs, and utilities themselves at once, for a specific type.
 
-Most of these functions take in a pointer to an iterplus struct, that is filled with necessary information - and turns it into an iterable. For example, the defining the `take` utility using `define_itertake_func` will take in an `IterTake` struct, containing a specific type of iterable and the `limit` value (as well as `i` set to 0), and return an `Iterable` that has, at most `limit` amount of elements. All of these elements are consumed from the iterable put into the `IterTake` struct you passed to the function. The *lifetime of the returned iterable* is the **same as the lifetime of the `IterTake` struct** pointed to by the given pointer.
+Most of these functions take in a pointer to an iterplus struct, that is filled with necessary information - and turns it into an iterable. For example, the `define_itertake_func` macro defines a function that takes in an `IterTake` struct, containing a specific type of iterable and the `limit` value (as well as `i` set to 0), and returns an `Iterable` that has, at most `limit` amount of elements. All of these elements are consumed from the iterable put into the `IterTake` struct you passed to the function. The *lifetime of the returned iterable* is the **same as the lifetime of the `IterTake` struct** pointed to by the given pointer.
 
-Though I should mention, these abstractions are just for fun to see what I could do with [c-iterators](https://github.com/TotallyNotChase/c-iterators). I think the [the typeclass based polymorphism pattern](https://github.com/TotallyNotChase/c-iterators/Typeclass%20Pattern.md) is really useful. Even the regular lightweight iterators are certainly useful. But with the lack of closures, no way to capture types, and somewhat "meh" static dispatch support - there's **a LOT** of boilerplate needed to get you up on your feet even after including `itplus.h`. It's pretty fun once you actually define all of this boilerplate - but that's not a great thing.
+Though I should mention, these abstractions are just for fun. I wanted to see what I could do with [c-iterators](https://github.com/TotallyNotChase/c-iterators). I think the [the typeclass based polymorphism pattern](https://github.com/TotallyNotChase/c-iterators/Typeclass%20Pattern.md) is really useful. Even the regular lightweight iterators are certainly useful. But with the lack of closures, no way to capture types, and somewhat "meh" static dispatch support - there's **a LOT** of boilerplate needed to get you up on your feet even after including `itplus.h`. It's pretty fun once you actually define all of this boilerplate - but that's not a great thing.
 
 # Semantics and Explanation
-Most abstractions are documented in their own files. The general idea behind every abstraction is further explained in the ["Lazy Abstractions"](https://github.com/TotallyNotChase/c-iterators#lazy-abstractions) part of the c-iterators README.
+Most abstractions are documented in their own files, so you can view them in [docs](https://totallynotchase.github.io/c-iterplus/). The general idea behind every abstraction is further explained in the ["Lazy Abstractions"](https://github.com/TotallyNotChase/c-iterators#lazy-abstractions) part of the c-iterators README.
 
 # C11 Syntax Sugar
 With [`_Generic`](https://en.cppreference.com/w/c/language/generic) you can make macros to statically dispatch to the iterplus utility functions. Essentially making the usage be expression oriented, and certainly much better to use. But once again, more boilerplate, heh.
@@ -194,7 +194,7 @@ This is the core idea, it's expanded upon using a tiny bit of metaprogramming in
 
   This works great when chaining abstractions as well. Convert a array of pointers to an iterable, `zip` with another array of pointers (doesn't have to be the same type of pointers), `filter` it by a `predicate` function, `drop` the first `N` elements, `enumerate` them to get a final iterable. Now, when you iterate over this resulting iterable, every element is still the same elements from the original arrays. No need to manage the memory for these, leave that to whoever is handling the arrays themselves.
 
-  A problem may arise, however, when you use utilities such as `map`, or `filter_map`. Here, it's upto the user about what they return. You could `map` over an iterable to make another iterable where each element is actually heap allocated. In which case, you **do** need to free the elements extracted from the iterable. This should not be a problem however, since it's completely transparent. If you mapped over a function that heap allocates - well you *know* the elements will need to be freed. The function is provided by *you*.
+  A problem may arise, however, when you use utilities such as `map`, or `filter_map`. Here, it's upto the user about what they return. You could `map` over an iterable to make another iterable where each element is actually heap allocated. In which case, you **do** need to free the elements extracted from the iterable. This should not be a problem however, since it's completely transparent. If you mapped with a function that heap allocates - well you *know* the elements will need to be freed. The function is provided by *you*.
   
   But what happens if you need to feed this iterable into a general API function, an API function that adheres to the standard principle of **not freeing** the iterable's elements? In general, you should use the `collect` utility to collect the iterable's data into an array. Now the array contains the heap allocated data that you can free later. Convert this back to an iterable and feed it into the API function.
 
