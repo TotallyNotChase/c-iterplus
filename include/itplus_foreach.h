@@ -14,6 +14,16 @@
  * @def foreach(T, x, it)
  * @brief Iterate through given iterable and store each element in `x`
  *
+ * # Example
+ * 
+ * @code
+ * Iterable(int) it = ...;
+ * 
+ * foreach (int, element, it) {
+ *     printf("%d\n", element);
+ * }
+ * @endcode 
+ *
  * @param T Type of the elements the iterable yields.
  * @param x The variable name to store each element in. Available only inside the loop.
  * @param it The iterable to iterate over. This will be consumed.
