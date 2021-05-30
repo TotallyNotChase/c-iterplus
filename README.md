@@ -17,8 +17,7 @@ static char* cmn_prefx(string s1, string s2)
     size_t len = 0;
 
     char* const prefx = collect(
-        map(
-            takewhile(
+        map(takewhile(
                 zip(chrarr_to_iter(s1, strlen(s1)), chrarr_to_iter(s2, strlen(s2))),
             pair_is_equal),
         fst_chr),
@@ -40,7 +39,7 @@ int main(void)
     string arr[]  = {"flower", "flow", "flight"};
     size_t arrlen = sizeof(arr) / sizeof(*arr);
 
-    char* const lngest_prefx = fold(strarr_to_iter(arr + 1, arrlen - 1), strdup_(arr[0]), acc_cmn_prefx_sugar);
+    char* const lngest_prefx = fold(strarr_to_iter(arr + 1, arrlen - 1), strdup_(arr[0]), acc_cmn_prefx);
     puts(lngest_prefx); /* "fl" */ 
     free(lngest_prefx);
     return 0;
