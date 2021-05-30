@@ -178,13 +178,13 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <a class="code" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a>(<a class="code" href="itplus__pair_8h.html#a4760cf36bdc0a23827c20b1963186503">Pair</a>(T, U)) ITPL_CONCAT(<a class="code" href="itplus__zip_8h.html#aed4cf3e9b41350a8dbe6cb5a24d4d0d2">IterZip</a>(T, U), _nxt)(<a class="code" href="itplus__zip_8h.html#aed4cf3e9b41350a8dbe6cb5a24d4d0d2">IterZip</a>(T, U) * <span class="keyword">self</span>)                                    \</div>
 <div class="line">    {                                                                                                                  \</div>
-<div class="line">        Iterable(T) asrcit = <span class="keyword">self</span>-&gt;asrc;                                                                               \</div>
-<div class="line">        Iterable(U) bsrcit = <span class="keyword">self</span>-&gt;bsrc;                                                                               \</div>
-<div class="line">        Maybe(T) ares      = asrcit.tc-&gt;next(asrcit.self);                                                             \</div>
+<div class="line">        Iterable(T) <span class="keyword">const</span> asrcit = <span class="keyword">self</span>-&gt;asrc;                                                                         \</div>
+<div class="line">        Iterable(U) <span class="keyword">const</span> bsrcit = <span class="keyword">self</span>-&gt;bsrc;                                                                         \</div>
+<div class="line">        Maybe(T) <span class="keyword">const</span> ares      = asrcit.tc-&gt;next(asrcit.self);                                                       \</div>
 <div class="line">        if (<a class="code" href="itplus__maybe_8h.html#a1b03ece9f7b00fcbbe8e0dde45277c47">is_nothing</a>(ares)) {                                                                                        \</div>
 <div class="line">            return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(<a class="code" href="itplus__pair_8h.html#a4760cf36bdc0a23827c20b1963186503">Pair</a>(T, U));                                                                                \</div>
 <div class="line">        }                                                                                                              \</div>
-<div class="line">        Maybe(U) bres = bsrcit.tc-&gt;next(bsrcit.self);                                                                  \</div>
+<div class="line">        Maybe(U) <span class="keyword">const</span> bres = bsrcit.tc-&gt;next(bsrcit.self);                                                            \</div>
 <div class="line">        if (<a class="code" href="itplus__maybe_8h.html#a1b03ece9f7b00fcbbe8e0dde45277c47">is_nothing</a>(bres)) {                                                                                        \</div>
 <div class="line">            return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(<a class="code" href="itplus__pair_8h.html#a4760cf36bdc0a23827c20b1963186503">Pair</a>(T, U));                                                                                \</div>
 <div class="line">        }                                                                                                              \</div>

@@ -175,8 +175,8 @@ Macros</h2></td></tr>
 <div class="line">        if (self-&gt;done) {                                                                                              \</div>
 <div class="line">            return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(T);                                                                                         \</div>
 <div class="line">        }                                                                                                              \</div>
-<div class="line">        Iterable(T) srcit = <span class="keyword">self</span>-&gt;src;                                                                                 \</div>
-<div class="line">        Maybe(T) res      = srcit.tc-&gt;next(srcit.self);                                                                \</div>
+<div class="line">        Iterable(T) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;src;                                                                           \</div>
+<div class="line">        Maybe(T) <span class="keyword">const</span> res      = srcit.tc-&gt;next(srcit.self);                                                          \</div>
 <div class="line">        if (<a class="code" href="itplus__maybe_8h.html#a1b03ece9f7b00fcbbe8e0dde45277c47">is_nothing</a>(res) || !self-&gt;pred(<a class="code" href="itplus__maybe_8h.html#a16682b211c71e2ad917edc9bdd298154">from_just_</a>(res))) {                                                         \</div>
 <div class="line">            self-&gt;done = <span class="keyword">true</span>;                                                                                         \</div>
 <div class="line">            return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(T);                                                                                         \</div>

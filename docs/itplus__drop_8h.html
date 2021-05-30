@@ -172,7 +172,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <a class="code" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a>(T) ITPL_CONCAT(<a class="code" href="itplus__drop_8h.html#a6e55b9588c1634ec791b400eb4a9011e">IterDrop</a>(T), _nxt)(<a class="code" href="itplus__drop_8h.html#a6e55b9588c1634ec791b400eb4a9011e">IterDrop</a>(T) * <span class="keyword">self</span>)                                                 \</div>
 <div class="line">    {                                                                                                                  \</div>
-<div class="line">        Iterable(T) srcit = <span class="keyword">self</span>-&gt;src;                                                                                 \</div>
+<div class="line">        Iterable(T) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;src;                                                                           \</div>
 <div class="line">        foreach (T, x, srcit) {                                                                                        \</div>
 <div class="line">            if (self-&gt;i &gt;= self-&gt;limit) {                                                                              \</div>
 <div class="line">                return <a class="code" href="itplus__maybe_8h.html#ae0832f95d5a7ff6845381aa8795fd2a3">Just</a>(x, T);                                                                                     \</div>

@@ -110,14 +110,14 @@ $(document).ready(function(){initNavTree('itplus__map_8h.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 
-<p>Macros for implementing the <code>map</code> abstraction.  
+<p>Macros for implementing the <code>map</code> abstraction using the <code>IterMap</code> struct.  
 <a href="#details">More...</a></p>
 <div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="itplus__map_8h__dep__incl.png" border="0" usemap="#ainclude_2itplus__map_8hdep" alt=""/></div>
 <map name="ainclude_2itplus__map_8hdep" id="ainclude_2itplus__map_8hdep">
-<area shape="rect" title="Macros for implementing the map abstraction." alt="" coords="113,5,254,32"/>
+<area shape="rect" title="Macros for implementing the map abstraction using the IterMap struct." alt="" coords="113,5,254,32"/>
 <area shape="rect" href="itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="60,80,200,107"/>
 <area shape="rect" href="common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="125,155,241,181"/>
 <area shape="rect" href="impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="5,304,103,331"/>
@@ -142,7 +142,7 @@ Macros</h2></td></tr>
 <tr class="separator:a4dc643234203e036aa3e0dede29beb73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p class="">Macros for implementing the <code>map</code> abstraction. </p>
+<div class="textblock"><p class="">Macros for implementing the <code>map</code> abstraction using the <code>IterMap</code> struct. </p>
 <p class=""><a href="https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#v:map">https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#v:map</a> An IterMap struct is a struct that stores a mapping function within it, as well as the source iterable. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a4dc643234203e036aa3e0dede29beb73"></a>
@@ -179,7 +179,7 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <a class="code" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a>(FnRetType) ITPL_CONCAT(<a class="code" href="itplus__map_8h.html#a2ed8fd79978d16823dc7cd3ef43fce28">IterMap</a>(ElmntType, FnRetType), _nxt)(<a class="code" href="itplus__map_8h.html#a2ed8fd79978d16823dc7cd3ef43fce28">IterMap</a>(ElmntType, FnRetType) * <span class="keyword">self</span>)     \</div>
 <div class="line">    {                                                                                                                  \</div>
 <div class="line">        Iterable(ElmntType) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;src;                                                                   \</div>
-<div class="line">        Maybe(ElmntType) res            = srcit.tc-&gt;next(srcit.self);                                                  \</div>
+<div class="line">        Maybe(ElmntType) <span class="keyword">const</span> res      = srcit.tc-&gt;next(srcit.self);                                                  \</div>
 <div class="line">        return <a class="code" href="itplus__maybe_8h.html#a78cf196d6558cc31ef4f88e5cf47bdf9">fmap_maybe</a>(res, self-&gt;f, FnRetType);                                                                    \</div>
 <div class="line">    }                                                                                                                  \</div>
 <div class="line">    impl_iterator(<a class="code" href="itplus__map_8h.html#a2ed8fd79978d16823dc7cd3ef43fce28">IterMap</a>(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(<a class="code" href="itplus__map_8h.html#a2ed8fd79978d16823dc7cd3ef43fce28">IterMap</a>(ElmntType, FnRetType), _nxt))</div>

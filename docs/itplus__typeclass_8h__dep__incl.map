@@ -11,11 +11,11 @@
 <area shape="rect" id="node10" href="$itplus__collect_8h.html" title="Macros for implementing the collect abstraction." alt="" coords="1512,155,1666,181"/>
 <area shape="rect" id="node11" href="$itplus__drop_8h.html" title="Macros for implementing the drop abstraction using the IterDrop struct." alt="" coords="1690,155,1832,181"/>
 <area shape="rect" id="node12" href="$itplus__dropwhile_8h.html" title="Macros for implementing the dropWhile abstraction using the IterDropWhile struct." alt="" coords="1856,155,2026,181"/>
-<area shape="rect" id="node13" href="$itplus__enumerate_8h.html" title="Macros for implementing the zip abstraction using the IterEnumr struct." alt="" coords="2051,155,2228,181"/>
+<area shape="rect" id="node13" href="$itplus__enumerate_8h.html" title="Macros for implementing the enumerate abstraction using the IterEnumr struct." alt="" coords="2051,155,2228,181"/>
 <area shape="rect" id="node14" href="$itplus__filter_8h.html" title="Macros for implementing the filter abstraction using the IterFilt struct." alt="" coords="2252,155,2392,181"/>
-<area shape="rect" id="node15" href="$itplus__filtermap_8h.html" title="Macros for implementing the filter_map abstraction." alt="" coords="29,155,194,181"/>
+<area shape="rect" id="node15" href="$itplus__filtermap_8h.html" title="Macros for implementing the filter_map abstraction using the IterFiltMap struct." alt="" coords="29,155,194,181"/>
 <area shape="rect" id="node16" href="$itplus__fold_8h.html" title="Macros for implementing the foldl abstraction." alt="" coords="218,155,354,181"/>
-<area shape="rect" id="node17" href="$itplus__map_8h.html" title="Macros for implementing the map abstraction." alt="" coords="378,155,520,181"/>
+<area shape="rect" id="node17" href="$itplus__map_8h.html" title="Macros for implementing the map abstraction using the IterMap struct." alt="" coords="378,155,520,181"/>
 <area shape="rect" id="node18" href="$itplus__reduce_8h.html" title="Macros for implementing the reduce/foldl1 abstraction." alt="" coords="544,155,698,181"/>
 <area shape="rect" id="node19" href="$itplus__take_8h.html" title="Macros for implementing the take abstraction using the IterTake struct." alt="" coords="722,155,864,181"/>
 <area shape="rect" id="node20" href="$itplus__takewhile_8h.html" title="Macros for implementing the takeWhile abstraction using the IterTakeWhile struct." alt="" coords="938,155,1109,181"/>

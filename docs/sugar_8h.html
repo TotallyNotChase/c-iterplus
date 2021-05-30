@@ -229,7 +229,7 @@ uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><b>zipstr</b></td>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p class="">"Syntactic sugar". </p>
 <p class="">Convenience macros for using the iterplus utilities.</p>
-<p class="">These examples use C11's <code>_Generic</code> to statically dispatch to the correct functions based on the type of the iterplus structs. Syntax sugar, as you may know them. This is the definitions of those sugar macros.</p>
+<p class="">These examples use C11's <code>_Generic</code> to statically dispatch to the correct functions based on the type of the iterplus structs. Syntax sugar, as you may know them. These are the definitions of those sugar macros.</p>
 <p class="">Unfortunately (or fortunately), <code>_Generic</code> resolves during compile time, not preprocess time. This means the expressions allowed within <code>_Generic</code> are much stricter than what you'd be able to get away with in regular macros.</p>
 <p class="">For this reason, we need wrapper functions, that take a pre-allocated iterplus struct, the iterable to put into said struct (and other stuff if necessary), and return an Iterable corresponding to that iterplus struct.</p>
 <p class="">These wrapper functions are defined in <code><a class="el" href="sugar_8c.html" title="Wrapper functions to fill pre-allocated iterplus structs and turn them into Iterables.">sugar.c</a></code></p>
@@ -462,7 +462,7 @@ If a negative <code>n</code> is passed, usual unsigned wrap around takes place. 
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    itrble_selection((it), (uint32_t, prep_u32filt), (<span class="keywordtype">string</span>, prep_strfilt))(                                          \</div>
 <div class="line">        itrble_selection((it), (uint32_t, &amp;(<a class="code" href="itplus__filter_8h.html#a6a69fe586c6d8864d840c0658db0d363">IterFilt</a>(uint32_t)){0}), (<span class="keywordtype">string</span>, &amp;(<a class="code" href="itplus__filter_8h.html#a6a69fe586c6d8864d840c0658db0d363">IterFilt</a>(<span class="keywordtype">string</span>)){0})), (it), (pred))</div>
-<div class="ttc" id="aitplus__filter_8h_html_a6a69fe586c6d8864d840c0658db0d363"><div class="ttname"><a href="itplus__filter_8h.html#a6a69fe586c6d8864d840c0658db0d363">IterFilt</a></div><div class="ttdeci">#define IterFilt(T)</div><div class="ttdoc">Convenience macro to get the type of the IterFilt struct with given element type.</div><div class="ttdef"><b>Definition:</b> itplus_filter.h:34</div></div>
+<div class="ttc" id="aitplus__filter_8h_html_a6a69fe586c6d8864d840c0658db0d363"><div class="ttname"><a href="itplus__filter_8h.html#a6a69fe586c6d8864d840c0658db0d363">IterFilt</a></div><div class="ttdeci">#define IterFilt(T)</div><div class="ttdoc">Convenience macro to get the type of the IterFilt struct with given element type.</div><div class="ttdef"><b>Definition:</b> itplus_filter.h:35</div></div>
 </div><!-- fragment -->
 <p>Filter an iterable by given <code>pred</code> and make a new iterable. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -505,7 +505,7 @@ If a negative <code>n</code> is passed, usual unsigned wrap around takes place. 
 <b>Value:</b><div class="fragment"><div class="line">    filtmap_selection((it), (fn), prep_stru32fltmap, prep_strnumtypefltmap)(                                           \</div>
 <div class="line">        filtmap_selection((it), (fn), &amp;(<a class="code" href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a>(<span class="keywordtype">string</span>, uint32_t)){0}, &amp;(<a class="code" href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a>(<span class="keywordtype">string</span>, NumType)){0}), (it),  \</div>
 <div class="line">        (fn))</div>
-<div class="ttc" id="aitplus__filtermap_8h_html_a341ce8c4f7f92df65e6fdfde9e1ac575"><div class="ttname"><a href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a></div><div class="ttdeci">#define IterFiltMap(ElmntType, FnRetType)</div><div class="ttdoc">Convenience macro to get the type of the IterFiltMap struct with given element type and function raw ...</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:38</div></div>
+<div class="ttc" id="aitplus__filtermap_8h_html_a341ce8c4f7f92df65e6fdfde9e1ac575"><div class="ttname"><a href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a></div><div class="ttdeci">#define IterFiltMap(ElmntType, FnRetType)</div><div class="ttdoc">Convenience macro to get the type of the IterFiltMap struct with given element type and function raw ...</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:39</div></div>
 </div><!-- fragment -->
 <p>Map and filter an iterable at the same time. </p>
 <dl class="params"><dt>Parameters</dt><dd>

@@ -110,14 +110,14 @@ $(document).ready(function(){initNavTree('itplus__enumerate_8h.html',''); initRe
 </div><!--header-->
 <div class="contents">
 
-<p>Macros for implementing the <code>zip</code> abstraction using the <code>IterEnumr</code> struct.  
+<p>Macros for implementing the <code>enumerate</code> abstraction using the <code>IterEnumr</code> struct.  
 <a href="#details">More...</a></p>
 <div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="itplus__enumerate_8h__dep__incl.png" border="0" usemap="#ainclude_2itplus__enumerate_8hdep" alt=""/></div>
 <map name="ainclude_2itplus__enumerate_8hdep" id="ainclude_2itplus__enumerate_8hdep">
-<area shape="rect" title="Macros for implementing the zip abstraction using the IterEnumr struct." alt="" coords="95,5,272,32"/>
+<area shape="rect" title="Macros for implementing the enumerate abstraction using the IterEnumr struct." alt="" coords="95,5,272,32"/>
 <area shape="rect" href="itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="60,80,200,107"/>
 <area shape="rect" href="common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="125,155,241,181"/>
 <area shape="rect" href="impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="5,304,103,331"/>
@@ -142,8 +142,8 @@ Macros</h2></td></tr>
 <tr class="separator:a4c033b2db8a15dda35aebfb417950443"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p class="">Macros for implementing the <code>zip</code> abstraction using the <code>IterEnumr</code> struct. </p>
-<p class=""><a href="https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#v:zip">https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#v:zip</a> An IterEnumr struct is a struct that stores an iterable, and its iteration index. Its <code>next</code> function implementation that returns a <code>Pair</code> of 2 elements, first being the index, and second being an element from the source iterable. </p>
+<div class="textblock"><p class="">Macros for implementing the <code>enumerate</code> abstraction using the <code>IterEnumr</code> struct. </p>
+<p class=""><a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate">https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate</a> An IterEnumr struct is a struct that stores an iterable, and its iteration index. Its <code>next</code> function implementation that returns a <code>Pair</code> of 2 elements, first being the index, and second being an element from the source iterable. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a4c033b2db8a15dda35aebfb417950443"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4c033b2db8a15dda35aebfb417950443">&#9670;&nbsp;</a></span>define_iterenumr_func</h2>
@@ -172,8 +172,8 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <a class="code" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a>(<a class="code" href="itplus__pair_8h.html#a4760cf36bdc0a23827c20b1963186503">Pair</a>(<span class="keywordtype">size_t</span>, T)) ITPL_CONCAT(<a class="code" href="itplus__enumerate_8h.html#ae3969ffb53f197e7b65f90dce652cb5b">IterEnumr</a>(T), _nxt)(<a class="code" href="itplus__enumerate_8h.html#ae3969ffb53f197e7b65f90dce652cb5b">IterEnumr</a>(T) * <span class="keyword">self</span>)                                 \</div>
 <div class="line">    {                                                                                                                  \</div>
-<div class="line">        Iterable(T) srcit = <span class="keyword">self</span>-&gt;src;                                                                                 \</div>
-<div class="line">        Maybe(T) res      = srcit.tc-&gt;next(srcit.self);                                                                \</div>
+<div class="line">        Iterable(T) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;src;                                                                           \</div>
+<div class="line">        Maybe(T) <span class="keyword">const</span> res      = srcit.tc-&gt;next(srcit.self);                                                          \</div>
 <div class="line">        return <a class="code" href="itplus__maybe_8h.html#a8ae2e9c065fbca1cd3a603ad0a71d8f2">is_just</a>(res) ? <a class="code" href="itplus__maybe_8h.html#ae0832f95d5a7ff6845381aa8795fd2a3">Just</a>(<a class="code" href="itplus__pair_8h.html#ac6399a724fdf5a1af19dea3e3c25ec21">PairOf</a>(self-&gt;i++, <a class="code" href="itplus__maybe_8h.html#a16682b211c71e2ad917edc9bdd298154">from_just_</a>(res), <span class="keywordtype">size_t</span>, T), <a class="code" href="itplus__pair_8h.html#a4760cf36bdc0a23827c20b1963186503">Pair</a>(<span class="keywordtype">size_t</span>, T))                     \</div>
 <div class="line">                            : <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(<a class="code" href="itplus__pair_8h.html#a4760cf36bdc0a23827c20b1963186503">Pair</a>(<span class="keywordtype">size_t</span>, T));                                                                \</div>
 <div class="line">    }                                                                                                                  \</div>

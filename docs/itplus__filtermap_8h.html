@@ -110,14 +110,14 @@ $(document).ready(function(){initNavTree('itplus__filtermap_8h.html',''); initRe
 </div><!--header-->
 <div class="contents">
 
-<p>Macros for implementing the <code>filter_map</code> abstraction.  
+<p>Macros for implementing the <code>filter_map</code> abstraction using the <code>IterFiltMap</code> struct.  
 <a href="#details">More...</a></p>
 <div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="itplus__filtermap_8h__dep__incl.png" border="0" usemap="#ainclude_2itplus__filtermap_8hdep" alt=""/></div>
 <map name="ainclude_2itplus__filtermap_8hdep" id="ainclude_2itplus__filtermap_8hdep">
-<area shape="rect" title="Macros for implementing the filter_map abstraction." alt="" coords="101,5,266,32"/>
+<area shape="rect" title="Macros for implementing the filter_map abstraction using the IterFiltMap struct." alt="" coords="101,5,266,32"/>
 <area shape="rect" href="itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="60,80,200,107"/>
 <area shape="rect" href="common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="125,155,241,181"/>
 <area shape="rect" href="impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="5,304,103,331"/>
@@ -142,7 +142,7 @@ Macros</h2></td></tr>
 <tr class="separator:a1c7f3e9d5e37fe8fcf894f1795ebd1fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p class="">Macros for implementing the <code>filter_map</code> abstraction. </p>
+<div class="textblock"><p class="">Macros for implementing the <code>filter_map</code> abstraction using the <code>IterFiltMap</code> struct. </p>
 <p class=""><a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter_map">https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter_map</a> An IterFiltMap struct is a struct that stores a filter-mapping function within it, as well as the source iterable. The filter-mapping function is just a function that returns a <a class="el" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875" title="Convenience macro to get the type of the Maybe defined with a certain type.">Maybe(T)</a>. A <code>Just</code> value indicates that the raw value should be kept, a <code>Nothing</code> value indicates it should be filtered out. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a1c7f3e9d5e37fe8fcf894f1795ebd1fe"></a>
@@ -180,22 +180,17 @@ Macros</h2></td></tr>
 <div class="line">        ITPL_CONCAT(<a class="code" href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a>(ElmntType, FnRetType), _nxt)(<a class="code" href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a>(ElmntType, FnRetType) * <span class="keyword">self</span>)                 \</div>
 <div class="line">    {                                                                                                                  \</div>
 <div class="line">        Iterable(ElmntType) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;src;                                                                   \</div>
-<div class="line">        while (1) {                                                                                                    \</div>
-<div class="line">            Maybe(ElmntType) res = srcit.tc-&gt;next(srcit.self);                                                         \</div>
-<div class="line">            if (<a class="code" href="itplus__maybe_8h.html#a1b03ece9f7b00fcbbe8e0dde45277c47">is_nothing</a>(res)) {                                                                                     \</div>
-<div class="line">                return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(FnRetType);                                                                             \</div>
-<div class="line">            }                                                                                                          \</div>
-<div class="line">            Maybe(FnRetType) mapped = <span class="keyword">self</span>-&gt;f(<a class="code" href="itplus__maybe_8h.html#a16682b211c71e2ad917edc9bdd298154">from_just_</a>(res));                                                        \</div>
+<div class="line">        foreach (ElmntType, el, srcit) {                                                                               \</div>
+<div class="line">            Maybe(FnRetType) <span class="keyword">const</span> mapped = <span class="keyword">self</span>-&gt;f(el);                                                               \</div>
 <div class="line">            if (<a class="code" href="itplus__maybe_8h.html#a8ae2e9c065fbca1cd3a603ad0a71d8f2">is_just</a>(mapped)) {                                                                                     \</div>
 <div class="line">                return mapped;                                                                                         \</div>
 <div class="line">            }                                                                                                          \</div>
 <div class="line">        }                                                                                                              \</div>
+<div class="line">        return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(FnRetType);                                                                                     \</div>
 <div class="line">    }                                                                                                                  \</div>
 <div class="line">    impl_iterator(                                                                                                     \</div>
 <div class="line">        <a class="code" href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a>(ElmntType, FnRetType)*, FnRetType, Name, ITPL_CONCAT(<a class="code" href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a>(ElmntType, FnRetType), _nxt))</div>
-<div class="ttc" id="aitplus__filtermap_8h_html_a341ce8c4f7f92df65e6fdfde9e1ac575"><div class="ttname"><a href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a></div><div class="ttdeci">#define IterFiltMap(ElmntType, FnRetType)</div><div class="ttdoc">Convenience macro to get the type of the IterFiltMap struct with given element type and function raw ...</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:38</div></div>
-<div class="ttc" id="aitplus__maybe_8h_html_a16682b211c71e2ad917edc9bdd298154"><div class="ttname"><a href="itplus__maybe_8h.html#a16682b211c71e2ad917edc9bdd298154">from_just_</a></div><div class="ttdeci">#define from_just_(x)</div><div class="ttdoc">&quot;Unsafe&quot; version of from_just(x, T).</div><div class="ttdef"><b>Definition:</b> itplus_maybe.h:155</div></div>
-<div class="ttc" id="aitplus__maybe_8h_html_a1b03ece9f7b00fcbbe8e0dde45277c47"><div class="ttname"><a href="itplus__maybe_8h.html#a1b03ece9f7b00fcbbe8e0dde45277c47">is_nothing</a></div><div class="ttdeci">#define is_nothing(x)</div><div class="ttdoc">Check if the given Maybe type is tagged with Nothing.</div><div class="ttdef"><b>Definition:</b> itplus_maybe.h:120</div></div>
+<div class="ttc" id="aitplus__filtermap_8h_html_a341ce8c4f7f92df65e6fdfde9e1ac575"><div class="ttname"><a href="itplus__filtermap_8h.html#a341ce8c4f7f92df65e6fdfde9e1ac575">IterFiltMap</a></div><div class="ttdeci">#define IterFiltMap(ElmntType, FnRetType)</div><div class="ttdoc">Convenience macro to get the type of the IterFiltMap struct with given element type and function raw ...</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:39</div></div>
 <div class="ttc" id="aitplus__maybe_8h_html_a65cd69857cc806545d68c79464270a97"><div class="ttname"><a href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a></div><div class="ttdeci">#define Nothing(T)</div><div class="ttdoc">Wrap a Nothing value into a Maybe(T).</div><div class="ttdef"><b>Definition:</b> itplus_maybe.h:112</div></div>
 <div class="ttc" id="aitplus__maybe_8h_html_a8ae2e9c065fbca1cd3a603ad0a71d8f2"><div class="ttname"><a href="itplus__maybe_8h.html#a8ae2e9c065fbca1cd3a603ad0a71d8f2">is_just</a></div><div class="ttdeci">#define is_just(x)</div><div class="ttdoc">Check if the given Maybe type is tagged with Just.</div><div class="ttdef"><b>Definition:</b> itplus_maybe.h:127</div></div>
 <div class="ttc" id="aitplus__maybe_8h_html_af47a0e4269e370939835ecc0cf6c7875"><div class="ttname"><a href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a></div><div class="ttdeci">#define Maybe(T)</div><div class="ttdoc">Convenience macro to get the type of the Maybe defined with a certain type.</div><div class="ttdef"><b>Definition:</b> itplus_maybe.h:44</div></div>
@@ -209,8 +204,8 @@ Macros</h2></td></tr>
 <div class="line"><span class="comment">// Implement `Iterator` for `IterFiltMap(int, int)`</span></div>
 <div class="line"><span class="comment">// The defined function has the signature- `Iterable(int) wrap_intitrfiltmp(IterFiltMap(int, int)* x)`</span></div>
 <div class="line"><a class="code" href="itplus__filtermap_8h.html#a1c7f3e9d5e37fe8fcf894f1795ebd1fe">define_iterfiltmap_func</a>(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, wrap_intitrfiltmp)</div>
-<div class="ttc" id="aitplus__filtermap_8h_html_a1c7f3e9d5e37fe8fcf894f1795ebd1fe"><div class="ttname"><a href="itplus__filtermap_8h.html#a1c7f3e9d5e37fe8fcf894f1795ebd1fe">define_iterfiltmap_func</a></div><div class="ttdeci">#define define_iterfiltmap_func(ElmntType, FnRetType, Name)</div><div class="ttdoc">Define a function to turn an IterFiltMap(ElmntType, FnRetType) into an Iterable(FnRetType).</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:109</div></div>
-<div class="ttc" id="aitplus__filtermap_8h_html_aa00013069bf4e36640355ded3b293d72"><div class="ttname"><a href="itplus__filtermap_8h.html#aa00013069bf4e36640355ded3b293d72">DefineIterFiltMap</a></div><div class="ttdeci">#define DefineIterFiltMap(ElmntType, FnRetType)</div><div class="ttdoc">Define an IterFiltMap struct that maps a function of type FnRetType (*)(ElmntType) over an Iterable(E...</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:60</div></div>
+<div class="ttc" id="aitplus__filtermap_8h_html_a1c7f3e9d5e37fe8fcf894f1795ebd1fe"><div class="ttname"><a href="itplus__filtermap_8h.html#a1c7f3e9d5e37fe8fcf894f1795ebd1fe">define_iterfiltmap_func</a></div><div class="ttdeci">#define define_iterfiltmap_func(ElmntType, FnRetType, Name)</div><div class="ttdoc">Define a function to turn an IterFiltMap(ElmntType, FnRetType) into an Iterable(FnRetType).</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:110</div></div>
+<div class="ttc" id="aitplus__filtermap_8h_html_aa00013069bf4e36640355ded3b293d72"><div class="ttname"><a href="itplus__filtermap_8h.html#aa00013069bf4e36640355ded3b293d72">DefineIterFiltMap</a></div><div class="ttdeci">#define DefineIterFiltMap(ElmntType, FnRetType)</div><div class="ttdoc">Define an IterFiltMap struct that maps a function of type FnRetType (*)(ElmntType) over an Iterable(E...</div><div class="ttdef"><b>Definition:</b> itplus_filtermap.h:61</div></div>
 </div><!-- fragment --><p class="">Usage of the defined function-</p>
 <div class="fragment"><div class="line"><span class="comment">// Filter evens and then increment the even numbers</span></div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a>(<span class="keywordtype">int</span>) is_even_incr(<span class="keywordtype">int</span> x) { <span class="keywordflow">return</span> x % 2 == 0 ? <a class="code" href="itplus__maybe_8h.html#ae0832f95d5a7ff6845381aa8795fd2a3">Just</a>(x + 1, <span class="keywordtype">int</span>) : <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(int); }</div>

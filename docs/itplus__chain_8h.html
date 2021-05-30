@@ -172,8 +172,8 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <a class="code" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a>(T) ITPL_CONCAT(<a class="code" href="itplus__chain_8h.html#a57f7569f7996a4aa3ae1aa3d0327ec75">IterChain</a>(T), _nxt)(<a class="code" href="itplus__chain_8h.html#a57f7569f7996a4aa3ae1aa3d0327ec75">IterChain</a>(T) * <span class="keyword">self</span>)                                               \</div>
 <div class="line">    {                                                                                                                  \</div>
-<div class="line">        Iterable(T) srcit = <span class="keyword">self</span>-&gt;curr;                                                                                \</div>
-<div class="line">        Maybe(T) res      = srcit.tc-&gt;next(srcit.self);                                                                \</div>
+<div class="line">        Iterable(T) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;curr;                                                                          \</div>
+<div class="line">        Maybe(T) <span class="keyword">const</span> res      = srcit.tc-&gt;next(srcit.self);                                                          \</div>
 <div class="line">        if (<a class="code" href="itplus__maybe_8h.html#a8ae2e9c065fbca1cd3a603ad0a71d8f2">is_just</a>(res)) {                                                                                            \</div>
 <div class="line">            return res;                                                                                                \</div>
 <div class="line">        }                                                                                                              \</div>

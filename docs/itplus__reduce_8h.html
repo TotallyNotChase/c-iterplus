@@ -166,7 +166,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="itplus__maybe_8h.html#af47a0e4269e370939835ecc0cf6c7875">Maybe</a>(T) Name(<a class="code" href="itplus__iterator_8h.html#a78f1cf949c0e970b2105124f691f5c2a">Iterable</a>(T) it, T (*f)(T acc, T x))                                                                  \</div>
 <div class="line">    {                                                                                                                  \</div>
-<div class="line">        Maybe(T) res = it.tc-&gt;next(it.self);                                                                           \</div>
+<div class="line">        Maybe(T) <span class="keyword">const</span> res = it.tc-&gt;next(it.self);                                                                     \</div>
 <div class="line">        if (<a class="code" href="itplus__maybe_8h.html#a1b03ece9f7b00fcbbe8e0dde45277c47">is_nothing</a>(res)) {                                                                                         \</div>
 <div class="line">            return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(T);                                                                                         \</div>
 <div class="line">        }                                                                                                              \</div>

@@ -174,7 +174,7 @@ Macros</h2></td></tr>
 <div class="line">    {                                                                                                                  \</div>
 <div class="line">        if (self-&gt;i &lt; self-&gt;limit) {                                                                                   \</div>
 <div class="line">            ++(<span class="keyword">self</span>-&gt;i);                                                                                               \</div>
-<div class="line">            Iterable(T) srcit = <span class="keyword">self</span>-&gt;src;                                                                             \</div>
+<div class="line">            Iterable(T) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;src;                                                                       \</div>
 <div class="line">            return srcit.tc-&gt;next(srcit.self);                                                                         \</div>
 <div class="line">        }                                                                                                              \</div>
 <div class="line">        return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(T);                                                                                             \</div>

@@ -175,7 +175,7 @@ Macros</h2></td></tr>
 <div class="line">        if (self-&gt;done) {                                                                                              \</div>
 <div class="line">            return <a class="code" href="itplus__maybe_8h.html#a65cd69857cc806545d68c79464270a97">Nothing</a>(T);                                                                                         \</div>
 <div class="line">        }                                                                                                              \</div>
-<div class="line">        Iterable(T) srcit = <span class="keyword">self</span>-&gt;src;                                                                                 \</div>
+<div class="line">        Iterable(T) <span class="keyword">const</span> srcit = <span class="keyword">self</span>-&gt;src;                                                                           \</div>
 <div class="line">        foreach (T, x, srcit) {                                                                                        \</div>
 <div class="line">            if (!self-&gt;pred(x)) {                                                                                      \</div>
 <div class="line">                self-&gt;done = <span class="keyword">true</span>;                                                                                     \</div>

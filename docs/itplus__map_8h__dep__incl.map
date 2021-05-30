@@ -1,5 +1,5 @@
 <map id="include/itplus_map.h" name="include/itplus_map.h">
-<area shape="rect" id="node1" title="Macros for implementing the map abstraction." alt="" coords="113,5,254,32"/>
+<area shape="rect" id="node1" title="Macros for implementing the map abstraction using the IterMap struct." alt="" coords="113,5,254,32"/>
 <area shape="rect" id="node2" href="$itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="60,80,200,107"/>
 <area shape="rect" id="node3" href="$common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="125,155,241,181"/>
 <area shape="rect" id="node4" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="5,304,103,331"/>

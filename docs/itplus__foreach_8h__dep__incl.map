@@ -1,14 +1,16 @@
 <map id="include/itplus_foreach.h" name="include/itplus_foreach.h">
-<area shape="rect" id="node1" title="Definition of the foreach macro." alt="" coords="314,5,472,32"/>
-<area shape="rect" id="node2" href="$itplus__collect_8h.html" title="Macros for implementing the collect abstraction." alt="" coords="36,80,190,107"/>
-<area shape="rect" id="node3" href="$itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="327,155,467,181"/>
-<area shape="rect" id="node4" href="$common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="339,229,455,256"/>
-<area shape="rect" id="node9" href="$itplus__drop_8h.html" title="Macros for implementing the drop abstraction using the IterDrop struct." alt="" coords="214,80,356,107"/>
-<area shape="rect" id="node10" href="$itplus__dropwhile_8h.html" title="Macros for implementing the dropWhile abstraction using the IterDropWhile struct." alt="" coords="430,80,601,107"/>
-<area shape="rect" id="node11" href="$itplus__fold_8h.html" title="Macros for implementing the foldl abstraction." alt="" coords="625,80,761,107"/>
-<area shape="rect" id="node12" href="$itplus__reduce_8h.html" title="Macros for implementing the reduce/foldl1 abstraction." alt="" coords="785,80,940,107"/>
-<area shape="rect" id="node5" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="219,379,316,405"/>
-<area shape="rect" id="node6" href="$impls_8h.html" title="Declarations of utilities, structs, and functions for which iterator and iterplus utilities have been..." alt="" coords="306,304,403,331"/>
-<area shape="rect" id="node7" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="392,453,490,480"/>
-<area shape="rect" id="node8" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="392,379,490,405"/>
+<area shape="rect" id="node1" title="Definition of the foreach macro." alt="" coords="499,5,657,32"/>
+<area shape="rect" id="node2" href="$itplus__collect_8h.html" title="Macros for implementing the collect abstraction." alt="" coords="26,80,181,107"/>
+<area shape="rect" id="node3" href="$itplus__defn_8h.html" title="Helpers for implementing all iterplus utilities at once, for given type." alt="" coords="508,155,648,181"/>
+<area shape="rect" id="node4" href="$common_8h.html" title="Declarations of iterator and iterplus structs used in the test executable." alt="" coords="520,229,636,256"/>
+<area shape="rect" id="node9" href="$itplus__drop_8h.html" title="Macros for implementing the drop abstraction using the IterDrop struct." alt="" coords="205,80,346,107"/>
+<area shape="rect" id="node10" href="$itplus__dropwhile_8h.html" title="Macros for implementing the dropWhile abstraction using the IterDropWhile struct." alt="" coords="370,80,541,107"/>
+<area shape="rect" id="node11" href="$itplus__filter_8h.html" title="Macros for implementing the filter abstraction using the IterFilt struct." alt="" coords="616,80,756,107"/>
+<area shape="rect" id="node12" href="$itplus__filtermap_8h.html" title="Macros for implementing the filter_map abstraction using the IterFiltMap struct." alt="" coords="781,80,946,107"/>
+<area shape="rect" id="node13" href="$itplus__fold_8h.html" title="Macros for implementing the foldl abstraction." alt="" coords="970,80,1106,107"/>
+<area shape="rect" id="node14" href="$itplus__reduce_8h.html" title="Macros for implementing the reduce/foldl1 abstraction." alt="" coords="1130,80,1285,107"/>
+<area shape="rect" id="node5" href="$impls_8c.html" title="Implementations of iterables and iterplus utilities." alt="" coords="400,379,497,405"/>
+<area shape="rect" id="node6" href="$impls_8h.html" title="Declarations of utilities, structs, and functions for which iterator and iterplus utilities have been..." alt="" coords="487,304,584,331"/>
+<area shape="rect" id="node7" href="$sugar_8c.html" title="Wrapper functions to fill pre&#45;allocated iterplus structs and turn them into Iterables." alt="" coords="573,453,671,480"/>
+<area shape="rect" id="node8" href="$sugar_8h.html" title="&quot;Syntactic sugar&quot;." alt="" coords="573,379,671,405"/>
 </map>
