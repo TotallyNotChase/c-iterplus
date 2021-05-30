@@ -115,12 +115,12 @@ $(document).ready(function(){initNavTree('itplus__foreach_8h_source.html',''); i
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define UNIQVAR(x) ITPL_CONCAT(ITPL_CONCAT(x, _4x2_), __LINE__) </span><span class="comment">/* &quot;Unique&quot; variable name */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="itplus__foreach_8h.html#a80a0308d3d97154ab14aa4025fcbacd0">   25</a></span>&#160;<span class="preprocessor">#define foreach(T, x, it)                                                                                              \</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">    Maybe(T) UNIQVAR(res) = (it).tc-&gt;next((it).self);                                                                  \</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">    for (T x          = from_just_(UNIQVAR(res)); is_just(UNIQVAR(res));                                               \</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">         UNIQVAR(res) = (it).tc-&gt;next((it).self), x = from_just_(UNIQVAR(res)))</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !LIB_ITPLUS_FOREACH_UTILS_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="itplus__foreach_8h.html#a80a0308d3d97154ab14aa4025fcbacd0">   35</a></span>&#160;<span class="preprocessor">#define foreach(T, x, it)                                                                                              \</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">    Maybe(T) UNIQVAR(res) = (it).tc-&gt;next((it).self);                                                                  \</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">    for (T x          = from_just_(UNIQVAR(res)); is_just(UNIQVAR(res));                                               \</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">         UNIQVAR(res) = (it).tc-&gt;next((it).self), x = from_just_(UNIQVAR(res)))</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !LIB_ITPLUS_FOREACH_UTILS_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aitplus__macro__utils_8h_html"><div class="ttname"><a href="itplus__macro__utils_8h.html">itplus_macro_utils.h</a></div><div class="ttdoc">General utility macros.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
