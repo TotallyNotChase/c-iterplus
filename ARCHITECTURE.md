@@ -379,3 +379,8 @@ The `tests/` directory contains usage tests (essentially examples) for the libra
   </td>
 </tr>
 </table>
+
+# samples
+This is more or less a subset of tests. It contains examples of solving 2 problems-
+* Finding longest common prefix of a string array
+* Calculating the dot product of 2 arrays and then summing it.
