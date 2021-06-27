@@ -119,11 +119,15 @@
  * @note This should not be delimited by a semicolon.
  */
 #define impl_iterator(IterType, ElmntType, Name, next_f)                                                               \
-    Iterable(ElmntType) Name(IterType x)                                                                               \
+    static inline Maybe(ElmntType) ITPL_CONCAT(next_f, __)(void* self)                                                 \
     {                                                                                                                  \
         Maybe(ElmntType) (*const next_)(IterType self) = (next_f);                                                     \
         (void)next_;                                                                                                   \
-        static Iterator(ElmntType) const tc = {.next = (Maybe(ElmntType)(*const)(void*))(next_f)};                     \
+        return (next_f)(self);                                                                                         \
+    }                                                                                                                  \
+    Iterable(ElmntType) Name(IterType x)                                                                               \
+    {                                                                                                                  \
+        static Iterator(ElmntType) const tc = {.next = (ITPL_CONCAT(next_f, __))};                                     \
         return (Iterable(ElmntType)){.tc = &tc, .self = x};                                                            \
     }
 
