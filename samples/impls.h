@@ -27,7 +27,7 @@ Iterable(char) map_chrchr_chr(IterMap(Pair(char, char), char) * x);
 DefineMaybe(string)
 DefineIteratorOf(string);
 // clang-format on
-char* str_fold(Iterable(string) it, char* init, char* (*acc)(char* acc, string x));
+char* str_fold(Iterable(string) it, char* init, char* (*f)(char* acc, string x));
 
 /* Also define `Iterable(uint64_t)` with some utilities */
 // clang-format off
